@@ -1,6 +1,6 @@
 namespace Instagram.Domain.Entities;
 
-public class Comments : BaseAuditableEntity
+public class Comment : BaseAuditableEntity
 {
     //int or guid?
     public int CommentsId { get; set; }

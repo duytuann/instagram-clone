@@ -1,6 +1,7 @@
 namespace Instagram.Domain.Entities;
 
-public class Followers : BaseAuditableEntity
+public class Like : BaseAuditableEntity
 {
+    public Guid PostId { get; set; }
     public Guid UserId { get; set; }
 }
