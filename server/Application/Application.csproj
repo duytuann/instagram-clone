@@ -19,4 +19,11 @@
         <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Comments\Queries\" />
+      <Folder Include="Common\Interfaces\" />
+      <Folder Include="Common\Queries\" />
+      <Folder Include="Users\Queries\" />
+    </ItemGroup>
+
 </Project>
