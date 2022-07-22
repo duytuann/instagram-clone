@@ -3,17 +3,17 @@ import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import clsx from 'clsx';
 
 import { ROUTES } from '~/constants';
 import { loginSchema } from '~/helpers/formSchemas';
 import { LoginInput, useLoginMutation } from '~/types/generated';
 import { withRoute } from '~/hocs';
-import { toast } from '~/store/toast';
 import { useUserSelector } from '~/redux/selectors';
 import { useStoreDispatch } from '~/redux/store';
 import { userActions } from '~/redux/slices/userSlice';
 
-//import { SpinnerRing } from '~/components/Spinner';
+import { SpinnerRing } from '@/components/Spinner';
 import AuthLayout from '@/layouts/AuthLayout';
 import FormField from '@/components/FormField';
 import ButtonFacebook from '@/pages/Login/components/ButtonFacebook';
@@ -21,7 +21,6 @@ import ButtonGoogle from '@/pages/Login/components/ButtonGoogle';
 import FormDivider from '@/components/FormDivider';
 import LoginScreenshot from '@/features/Login/LoginScreenshot';
 import { logo } from '@/assets/images';
-import { LoginContainer } from './styles';
 
 const Login = () => {
     const { isLoggedIn } = useUserSelector();
@@ -82,7 +81,7 @@ const Login = () => {
 
     return (
         <AuthLayout title="Login">
-            <LoginContainer>
+            <div className={clsx('flex justify-center lg:w-container-w mx-auto')}>
                 <LoginScreenshot />
                 <div className={clsx('w-form-w py-9')}>
                     <div className="wrapper-border px-10 py-12">
@@ -129,7 +128,7 @@ const Login = () => {
                         </NextLink>
                     </div>
                 </div>
-            </LoginContainer>
+            </div>
         </AuthLayout>
     );
 };

@@ -1,7 +1,5 @@
-import clsx from 'clsx';
-
-// types
 import { IconProps } from '@/utils/types';
+import clsx from 'clsx';
 
 const SpinnerLogo = ({ className }: IconProps) => {
     return (
