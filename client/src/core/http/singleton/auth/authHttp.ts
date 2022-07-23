@@ -1,5 +1,5 @@
 import HttpClient from '@/core/http';
-import { RESTFUL_AUTH_URL } from '@/helper/apiConst';
+import { RESTFUL_AUTH_URL } from '@/helpers/apiConst';
 
 export default class HttpAuth extends HttpClient {
     private static classInstance?: HttpAuth;

@@ -3,8 +3,8 @@ import { loginApi } from '@/core/http/apis/auth';
 // import { getOneByUserIDApi, updateAvatarUserApi } from 'core/http/apis/user';
 import LoginInterface from '@/core/models/Login';
 import { ResultResponse } from '@/core/models/ResultResponse';
-import { ACCESS_TOKEN_KEY } from '@/helper/consts';
-import Storage from '@/helper/storage';
+import { ACCESS_TOKEN_KEY } from '@/helpers/consts';
+import Storage from '@/helpers/storage';
 
 import {
     loginFailed,

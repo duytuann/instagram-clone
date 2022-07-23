@@ -1,8 +1,8 @@
-import { API_REQUEST_TIMEOUT, RESPONSE_CODE } from '@/helper/consts';
+import { API_REQUEST_TIMEOUT, RESPONSE_CODE } from '@/helpers/consts';
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 // import qs from "qs";
 // import { refershTokenUrl } from "./apis/auth/urls";
-import storage from '@/helper/storage';
+import storage from '@/helpers/storage';
 import { loadProgressBar } from 'x-axios-progress-bar';
 import { HttpError } from './types';
 // const RESTFUL_BASE_URL = process.env.REACT_APP_RESTFUL_BASE_URL || '';
