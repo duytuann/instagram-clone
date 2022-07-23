@@ -1,0 +1,60 @@
+@layer base {
+  html {
+    font-family: 'Roboto', sans-serif;
+
+    @apply text-lg leading-tight
+    text-base-black;
+  }
+
+  body {
+    @apply bg-body;
+  }
+
+  img,
+  button {
+    @apply select-none;
+  }
+
+  input,
+  textarea {
+    @apply outline-0
+    bg-transparent;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-neutral-100;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-400;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-500;
+  }
+
+  @font-face {
+    font-family: Roboto;
+    src: url('/fonts/Roboto-Regular.ttf');
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: Roboto;
+    src: url('/fonts/Roboto-Medium.ttf');
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: Roboto;
+    src: url('/fonts/Roboto-Bold.ttf');
+    font-weight: 700;
+  }
+}

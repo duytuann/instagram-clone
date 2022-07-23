@@ -1,17 +1,17 @@
 ﻿using Instagram.Application.Common.Interfaces;
 using Instagram.Infrastructure.Persistence;
-using Instagram.WebUI.Filters;
-using Instagram.WebUI.Services;
+// using Instagram.WebAPI.Filters;
+using Instagram.WebAPI.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using NSwag;
-using NSwag.Generation.Processors.Security;
+// using NSwag;
+// using NSwag.Generation.Processors.Security;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddWebUIServices(this IServiceCollection services)
+    public static IServiceCollection AddWebAPIServices(this IServiceCollection services)
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -22,9 +22,9 @@ public static class ConfigureServices
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
 
-        services.AddControllersWithViews(options =>
-            options.Filters.Add<ApiExceptionFilterAttribute>())
-                .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+        // services.AddControllersWithViews(options =>
+        //     options.Filters.Add<ApiExceptionFilterAttribute>())
+        //         .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
         services.AddRazorPages();
 
@@ -32,19 +32,19 @@ public static class ConfigureServices
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
-        services.AddOpenApiDocument(configure =>
-        {
-            configure.Title = "Instagram API";
-            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-            {
-                Type = OpenApiSecuritySchemeType.ApiKey,
-                Name = "Authorization",
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Type into the textbox: Bearer {your JWT token}."
-            });
+        // services.AddOpenApiDocument(configure =>
+        // {
+        //     configure.Title = "Instagram API";
+        //     configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+        //     {
+        //         Type = OpenApiSecuritySchemeType.ApiKey,
+        //         Name = "Authorization",
+        //         In = OpenApiSecurityApiKeyLocation.Header,
+        //         Description = "Type into the textbox: Bearer {your JWT token}."
+        //     });
 
-            configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
-        });
+        //     configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+        // });
 
         return services;
     }

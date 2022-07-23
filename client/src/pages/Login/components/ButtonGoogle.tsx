@@ -1,30 +1,29 @@
+import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import styled from 'styled-components';
 
 interface ButtonGoogleProps {
     disabled?: boolean;
     className?: string;
 }
 
-const Button = styled.button`
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    width: 100%;
-    column-gap: 0.5rem;
-    color: #ffffff;
-    background-color: rgb(248 113 113);
-`;
-
 const ButtonGoogle = ({ disabled, className }: ButtonGoogleProps) => {
     // Logic login with google
     // Just UI :(
 
     return (
-        <Button onClick={() => {}}>
-            <FontAwesomeIcon icon={faGoogle} style={{ color: '#fff' }} size="lg" />
+        <button
+            onClick={() => {}}
+            className={clsx(
+                'btn text-sm w-full gap-x-2 h-auth-btn-h',
+                'text-white bg-base-red',
+                disabled && 'btn--disabled',
+                className,
+            )}
+        >
+            <FontAwesomeIcon icon={faGoogle} className="text-white" size="1x" />
             <span>Log in with Google</span>
-        </Button>
+        </button>
     );
 };
 

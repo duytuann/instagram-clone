@@ -5,6 +5,7 @@
         <RootNamespace>Instagram.Application</RootNamespace>
         <AssemblyName>Instagram.Application</AssemblyName>
         <ImplicitUsings>enable</ImplicitUsings>
+        <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
@@ -20,10 +21,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Comments\Queries\" />
-      <Folder Include="Common\Interfaces\" />
-      <Folder Include="Common\Queries\" />
-      <Folder Include="Users\Queries\" />
+        <Folder Include="Comments\Queries\" />
+        <Folder Include="Common\Interfaces\" />
+        <Folder Include="Common\Queries\" />
+        <Folder Include="Users\Queries\" />
     </ItemGroup>
 
 </Project>

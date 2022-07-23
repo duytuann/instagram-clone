@@ -1,0 +1,24 @@
+@layer utilities {
+  .abs-center-y {
+    @apply absolute top-1/2
+    -translate-y-1/2;
+  }
+
+  .abs-center-x {
+    @apply absolute left-1/2
+    -translate-x-1/2;
+  }
+
+  .abs-center {
+    @apply absolute left-1/2 top-1/2
+    -translate-x-1/2 -translate-y-1/2;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+}

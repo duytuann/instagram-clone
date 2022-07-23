@@ -1,0 +1,36 @@
+@layer components {
+  .wrapper-border {
+    @apply border-1 border-line
+    bg-white;
+  }
+
+  .btn {
+    @apply flex items-center justify-center font-bold rounded
+    select-none;
+
+    &:active {
+      @apply opacity-70;
+    }
+
+    &--primary {
+      @apply text-white bg-primary;
+    }
+
+    &--disabled {
+      @apply opacity-50 
+      cursor-default pointer-events-none;
+    }
+
+    &--pending {
+      @apply cursor-default pointer-events-none;
+
+      &:active {
+        @apply opacity-100;
+      }
+    }
+  }
+}
+
+.inbox-height {
+  height: calc(100vh - theme('spacing.header-h'));
+}
