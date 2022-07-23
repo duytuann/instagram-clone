@@ -1,8 +1,7 @@
 namespace Instagram.Domain.Entities;
 
-public class User : BaseAuditableEntity
+public class UserProfile : BaseAuditableEntity
 {
-    // GUID
     public Guid UserId { get; set; }
     public string? EmailAddress { get; set; }
 

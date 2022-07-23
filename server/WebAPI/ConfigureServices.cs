@@ -1,15 +1,51 @@
-﻿using Instagram.Application;
-//using Instagram.Application.Common.Interfaces;
+﻿using Instagram.Application.Common.Interfaces;
+using Instagram.Infrastructure.Persistence;
+using Instagram.WebUI.Filters;
+using Instagram.WebUI.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 
-namespace Instagram.WebAPI;
+namespace Microsoft.Extensions.DependencyInjection;
 
-public class Startup
+public static class ConfigureServices
 {
-    public Startup(IConfiguration configuration)
+    public static IServiceCollection AddWebUIServices(this IServiceCollection services)
     {
-        Configuration = configuration;
-    }
+        services.AddDatabaseDeveloperPageExceptionFilter();
 
-    public IConfiguration Configuration { get; }
+        services.AddSingleton<ICurrentUserService, CurrentUserService>();
+
+        services.AddHttpContextAccessor();
+
+        services.AddHealthChecks()
+            .AddDbContextCheck<ApplicationDbContext>();
+
+        services.AddControllersWithViews(options =>
+            options.Filters.Add<ApiExceptionFilterAttribute>())
+                .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+
+        services.AddRazorPages();
+
+        // Customise default API behaviour
+        services.Configure<ApiBehaviorOptions>(options =>
+            options.SuppressModelStateInvalidFilter = true);
+
+        services.AddOpenApiDocument(configure =>
+        {
+            configure.Title = "Instagram API";
+            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+            {
+                Type = OpenApiSecuritySchemeType.ApiKey,
+                Name = "Authorization",
+                In = OpenApiSecurityApiKeyLocation.Header,
+                Description = "Type into the textbox: Bearer {your JWT token}."
+            });
+
+            configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+        });
+
+        return services;
+    }
 }
