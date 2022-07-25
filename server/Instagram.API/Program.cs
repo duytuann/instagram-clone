@@ -1,13 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Instagram.API.Persistence.Contexts;
 
 namespace Instagram.API;
 
@@ -15,13 +6,17 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        CreateHostBuilder(args).Build();
+        var host = CreateHostBuilder(args).Build();
+        using (var scope = host.Services.CreateScope())
+        using (var context = scope.ServiceProvider.GetRequiredService<AppDbContext>()) ;
+
+        host.Run();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
-    Host.CreateDefaultBuilder(args)
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-            webBuilder.UseStartup<Startup>();
-        });
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
 }

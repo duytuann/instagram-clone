@@ -23,12 +23,16 @@ public class Startup
     {
         services.AddControllers();
 
+
         services.AddDbContext<AppDbContext>(options =>
         {
-            options.UseSqlServer(Configuration.GetConnectionString("InstagramDatabase"));
+            // options.UseSqlServer(Configuration.GetConnectionString("InstagramDatabase"));
+            options.UseNpgsql("Server=localhost;Database=instagram;Port=5432;User ID=postgres;Password=duytuan208");
         });
 
-        
+        // * dependency injection
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserService, UserService>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,6 +40,11 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            app.UseHsts();
         }
 
         // app.UseCustomSwagger();
