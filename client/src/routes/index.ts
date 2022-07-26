@@ -14,4 +14,4 @@ import Login from '@/pages/Login';
 export const publicRoutes: RouterConfig[] = [{ path: routes.home, page: Home, layout: MainLayout }];
 
 // Private Router
-export const privateRoutes = [{ path: routes.login, page: Login, layout: AuthLayout }];
+export const privateRoutes: RouterConfig[] = [{ path: routes.logIn, page: Login, layout: AuthLayout }];

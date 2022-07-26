@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Instagram.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220725171733_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220726072156_initDb")]
+    partial class initDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,8 +48,9 @@ namespace Instagram.API.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("integer");
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -57,7 +58,7 @@ namespace Instagram.API.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }

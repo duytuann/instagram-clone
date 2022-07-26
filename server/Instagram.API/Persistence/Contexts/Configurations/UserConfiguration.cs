@@ -8,14 +8,14 @@ namespace Supermarket.API.Persistence.Contexts.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("User");
+            builder.ToTable("Users");
             builder.HasKey(u => u.UserId);
             builder.Property(u => u.UserId).IsRequired().ValueGeneratedOnAdd();
             builder.Property(u => u.Email).IsRequired();
             builder.Property(u => u.PassWord).IsRequired();
             builder.Property(u => u.Username).IsRequired();
             builder.Property(u => u.Bio).HasMaxLength(300);
-            builder.Property(u => u.PhoneNumber);
+            builder.Property(u => u.PhoneNumber).HasMaxLength(10);
         }
     }
 }

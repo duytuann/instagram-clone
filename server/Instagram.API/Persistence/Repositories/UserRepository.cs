@@ -13,7 +13,8 @@ public class UserRepository : BaseRepository, IUserRepository
     }
 
     public async Task<IEnumerable<User>> ListAsync()
-    {
-        return await _context.Users.ToListAsync();
-    }
+        => await _context.Users.AsNoTracking().ToListAsync();
+
+    public async Task AddAsync(User user)
+        => await _context.Users.AddAsync(user);
 }

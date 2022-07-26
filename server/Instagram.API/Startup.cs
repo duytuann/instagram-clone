@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using AutoMapper;
 //using Instagram.API.Controllers.Config;
 using Instagram.API.Domain.Repositories;
 using Instagram.API.Domain.Services;
@@ -21,18 +24,39 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
 
+                ValidIssuer = "https://localhost:5001",
+                ValidAudience = "https://localhost:5001",
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@123"))
+            };
+        });
+
+        services.AddControllers();
 
         services.AddDbContext<AppDbContext>(options =>
         {
             // options.UseSqlServer(Configuration.GetConnectionString("InstagramDatabase"));
-            options.UseNpgsql("Server=localhost;Database=instagram;Port=5432;User ID=postgres;Password=duytuan208");
+            options.UseNpgsql(Configuration.GetConnectionString("postgresSqlConnection"));
         });
 
         // * dependency injection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
+
+        services.AddAutoMapper(typeof(Startup));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -51,6 +75,7 @@ public class Startup
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

@@ -1,4 +1,7 @@
 export const routes = {
     home: '/',
-    login: '/',
+    logIn: '/accounts/login/',
+    logOut: '/accounts/logout',
+    forgotPassword: '/accounts/password/reset',
+    signUp: '/accounts/signup'
 };

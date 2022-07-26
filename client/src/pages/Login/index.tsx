@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 
-// import { ROUTES } from '~/constants';
+import { routes } from '@/routes/routes';
 import { loginSchema } from '@/helpers/formSchemas';
 import { LoginInput } from '@/utils/types';
 // import { withRoute } from '~/hocs';
@@ -70,18 +70,18 @@ const Login = () => {
                         <ButtonFacebook disabled={loginUserLoading || isLoggedIn} className="mt-6" />
                         <ButtonGoogle disabled={loginUserLoading || isLoggedIn} className="mt-3" />
 
-                        {/* <NextLink href={ROUTES.FORGOT_PASSWORD}>
+                        <Link to={routes.forgotPassword}>
                             <a className={clsx('block text-sm-1 w-full text-center mt-7', 'text-primary')}>
                                 Forgot password?
                             </a>
-                        </NextLink> */}
+                        </Link>
                     </div>
 
                     <div className="wrapper-border flex-center text-sm py-6 mt-3">
                         Don&apos;t have an account?
-                        {/* <NextLink href={ROUTES.REGISTER}>
+                        <Link to={routes.signUp}>
                             <a className={clsx('ml-1', 'text-primary')}>Sign up</a>
-                        </NextLink> */}
+                        </Link> 
                     </div>
                 </div>
             </div>
