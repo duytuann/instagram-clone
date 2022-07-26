@@ -6,7 +6,6 @@ using AutoMapper;
 //using Instagram.API.Controllers.Config;
 using Instagram.API.Domain.Repositories;
 using Instagram.API.Domain.Services;
-//using Instagram.API.Extensions;
 using Instagram.API.Persistence.Contexts;
 using Instagram.API.Persistence.Repositories;
 using Instagram.API.Services;
@@ -24,6 +23,11 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            options.UseNpgsql(Configuration.GetConnectionString("postgresSqlConnection"));
+        });
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -46,15 +50,12 @@ public class Startup
 
         services.AddControllers();
 
-        services.AddDbContext<AppDbContext>(options =>
-        {
-            // options.UseSqlServer(Configuration.GetConnectionString("InstagramDatabase"));
-            options.UseNpgsql(Configuration.GetConnectionString("postgresSqlConnection"));
-        });
 
-        // * dependency injection
+
+        // dependency injection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddAutoMapper(typeof(Startup));
     }

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Instagram.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220726072156_initDb")]
+    [Migration("20220726170357_initDb")]
     partial class initDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -6,6 +6,10 @@ namespace Instagram.API.Resources
     {
         [Required]
         [MaxLength(20)]
+        public string? Name { get; set; }
+
+        [Required]
+        [MaxLength(20)]
         public string? Email { get; set; }
 
         [Required]

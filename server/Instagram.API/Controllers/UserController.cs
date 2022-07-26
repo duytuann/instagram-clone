@@ -12,9 +12,10 @@ public class UserController : BaseApiController
     private readonly IUserService? _userService;
     private readonly IMapper _mapper;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, IMapper mapper)
     {
         _userService = userService;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -36,6 +37,9 @@ public class UserController : BaseApiController
     public async Task<IActionResult> PostAsync([FromBody] SaveUserResource resource)
     {
         var user = _mapper.Map<SaveUserResource, User>(resource);
+        // Hash Password
+        user.PassWord = BCrypt.Net.BCrypt.HashPassword(user.PassWord);
+
         var result = await _userService.SaveAsync(user);
 
         if (!result.Success)
