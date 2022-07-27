@@ -1,13 +1,11 @@
 import { API_REQUEST_TIMEOUT, RESPONSE_CODE } from '@/helpers/consts';
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
-// import qs from "qs";
-// import { refershTokenUrl } from "./apis/auth/urls";
 import storage from '@/helpers/storage';
 import { loadProgressBar } from 'x-axios-progress-bar';
 import { HttpError } from './types';
-// const RESTFUL_BASE_URL = process.env.REACT_APP_RESTFUL_BASE_URL || '';
-const RESTFUL_BASE_URL = (window as any)?.env?.API || '';
 
+// const RESTFUL_BASE_URL = (window as any)?.env?.API || '';
+const RESTFUL_BASE_URL = 'http://localhost:5000/api/';
 enum LogType {
     REQUEST = 'req',
     RESPONSE = 'res',
@@ -117,18 +115,8 @@ abstract class HttpClient {
             description: serverMessage, // default message cho intl
         };
         if (!httpCode || [404, 403].includes(httpCode)) {
-            // toast({
-            //   title: "Có lỗi xảy ra trong quá trình kết nối máy chủ (404 | 403)",
-            //   status: "error",
-            //   duration: 2000,
-            //   position: "bottom-right",
-            //   isClosable: true,
-            // });
         }
-        // if (config.url === refershTokenUrl) {
-        //   storage.logOut();
-        //   return Promise.reject(errorData);
-        // }
+
         if (httpCode === RESPONSE_CODE.TOKEN_EXPIRED) {
             storage.logOut();
         }

@@ -1,6 +1,5 @@
 export interface ResultResponse<T> {
-    Status: number;
-    isError: boolean;
-    isOk: boolean;
-    Object: T;
+    success: boolean;
+    message: string;
+    resource: T;
 }

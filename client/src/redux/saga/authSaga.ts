@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
-import { loginApi } from '@/core/http/apis/auth';
+import { loginApi, logoutApi } from '@/core/http/apis/auth';
 // import { getOneByUserIDApi, updateAvatarUserApi } from 'core/http/apis/user';
 import LoginInterface from '@/core/models/Login';
 import { ResultResponse } from '@/core/models/ResultResponse';
@@ -27,40 +27,39 @@ import {
 function* loginSaga(action: ReturnType<typeof loginStart>) {
     try {
         const resLogin: ResultResponse<any> = yield call(loginApi, action.payload);
-        if (resLogin.isOk) {
+        if (resLogin.success) {
             const {
-                Object: { User, UserToken },
+                resource,
             } = resLogin;
-            yield Storage.set(ACCESS_TOKEN_KEY, UserToken.Token || '');
+            yield Storage.set(ACCESS_TOKEN_KEY, resource.Token || '');
             yield put({
                 type: loginSuccess,
-                payload: { user: User, userToken: UserToken },
+                payload: resource,
             });
         } else {
-            yield put({ type: loginFailed, payload: resLogin.Object });
+            yield put({ type: loginFailed, payload: resLogin.message });
         }
     } catch (error) {
         yield put({ type: loginFailed, payload: error });
     }
 }
 
-// function* logoutSaga(action: ReturnType<typeof logoutStart>) {
-//     try {
-//         const resLogout: ResultResponse<any> = yield call(logoutApi);
-//         if (resLogout.isOk) {
-//             yield put({
-//                 type: logoutSuccess,
-//                 payload: resLogout.Object,
-//             });
-//             yield Storage.remove(ACCESS_TOKEN_KEY);
-//         } else {
-//             toast.error(resLogout.Object);
-//             yield put({ type: logoutFailed, payload: resLogout.Object });
-//         }
-//     } catch (error) {
-//         yield put({ type: logoutFailed, payload: error });
-//     }
-// }
+function* logoutSaga(action: ReturnType<typeof logoutStart>) {
+    try {
+        const resLogout: ResultResponse<any> = yield call(logoutApi);
+        if (resLogout.success) {
+            yield put({
+                type: logoutSuccess,
+                payload: resLogout.resource,
+            });
+            yield Storage.remove(ACCESS_TOKEN_KEY);
+        } else {
+            yield put({ type: logoutFailed, payload: resLogout.message });
+        }
+    } catch (error) {
+        yield put({ type: logoutFailed, payload: error });
+    }
+}
 
 // function* changePasswordSaga(action: ReturnType<typeof changePasswordStart>) {
 //     try {
@@ -112,9 +111,9 @@ function* loginSaga(action: ReturnType<typeof loginStart>) {
 function* watchLogin() {
     yield takeLatest(loginStart.type, loginSaga);
 }
-// function* watchLogout() {
-//     yield takeLatest(logoutStart.type, logoutSaga);
-// }
+function* watchLogout() {
+    yield takeLatest(logoutStart.type, logoutSaga);
+}
 
 // function* watchChangePassword() {
 //     yield takeLatest(changePasswordStart.type, changePasswordSaga);
@@ -127,5 +126,5 @@ function* watchLogin() {
 // }
 
 export default function* authSaga() {
-    yield all([watchLogin()]);
+    yield all([watchLogin(), watchLogout()]);
 }

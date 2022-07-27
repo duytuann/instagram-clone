@@ -1,7 +1,7 @@
 export const routes = {
     home: '/',
-    logIn: '/accounts/login/',
-    logOut: '/accounts/logout',
+    logIn: '/',
+    logOut: '/logout',
     forgotPassword: '/accounts/password/reset',
-    signUp: '/accounts/signup'
+    signUp: '/accounts/signup',
 };

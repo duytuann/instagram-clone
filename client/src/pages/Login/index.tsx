@@ -1,16 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link , useNavigate} from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 
+import { ReduxStateType } from '@/redux/types';
 import { routes } from '@/routes/routes';
 import { loginSchema } from '@/helpers/formSchemas';
 import { LoginInput } from '@/utils/types';
-// import { withRoute } from '~/hocs';
-// import { useUserSelector } from '~/redux/selectors';
-// import { useStoreDispatch } from '~/redux/store';
-// import { userActions } from '~/redux/slices/userSlice';
-
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { LoginParams } from '@/core/http/apis/auth/types';
+import { loginStart } from "@/redux/slices/authSlice"
 import { SpinnerRing } from '@/components/Spinner';
 import AuthLayout from '@/layouts/AuthLayout';
 import FormField from '@/components/FormField';
@@ -21,8 +21,13 @@ import LoginScreenshot from '@/features/Login/LoginScreenshot';
 import { logo } from '@/assets/images';
 
 const Login = () => {
-    const isLoggedIn = false;
-    const loginUserLoading = false;
+    let navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    
+    const {
+        data: { isAuthenticated },
+        status,
+    } = useAppSelector(state => state.auth);
 
     const {
         register,
@@ -35,6 +40,19 @@ const Login = () => {
         resolver: yupResolver(loginSchema),
     });
 
+    const handleLoginSubmit = async ({ password, username }: LoginParams) => {
+        if (isAuthenticated) 
+            return;
+    
+        dispatch(loginStart({  username,password }));
+    };
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/');
+        }
+      }, [isAuthenticated, navigate]);
+
     return (
         <AuthLayout>
             <div className={clsx('flex justify-center lg:w-container-w mx-auto')}>
@@ -43,7 +61,7 @@ const Login = () => {
                     <div className="wrapper-border px-10 py-12">
                         <img className="mx-auto" src={logo} alt="Logo" />
 
-                        <form className="flex flex-col gap-y-3 mt-10" onSubmit={() => {}}>
+                        <form className="flex flex-col gap-y-3 mt-10" onSubmit={handleSubmit(handleLoginSubmit)}>
                             <FormField register={register('username')} placeholder="Username" errors={errors} />
                             <FormField
                                 register={register('password')}
@@ -57,18 +75,18 @@ const Login = () => {
                                 className={clsx(
                                     'btn text-sm w-full gap-x-2 h-auth-btn-h mt-2',
                                     'text-white bg-primary',
-                                    isLoggedIn && 'btn--disabled',
-                                    loginUserLoading && ['cursor-default pointer-events-none'],
+                                    isAuthenticated && 'btn--disabled',
+                                    status === ReduxStateType.LOADING && ['cursor-default pointer-events-none'],
                                 )}
                             >
-                                {loginUserLoading ? <SpinnerRing className="text-white" /> : 'Log in'}
+                                {status === ReduxStateType.LOADING ? <SpinnerRing className="text-white" /> : 'Log in'}
                             </button>
                         </form>
 
                         <FormDivider className="my-3" />
 
-                        <ButtonFacebook disabled={loginUserLoading || isLoggedIn} className="mt-6" />
-                        <ButtonGoogle disabled={loginUserLoading || isLoggedIn} className="mt-3" />
+                        <ButtonFacebook disabled={status === ReduxStateType.LOADING || isAuthenticated} className="mt-6" />
+                        <ButtonGoogle disabled={status === ReduxStateType.LOADING || isAuthenticated} className="mt-3" />
 
                         <Link to={routes.forgotPassword}>
                             <a className={clsx('block text-sm-1 w-full text-center mt-7', 'text-primary')}>

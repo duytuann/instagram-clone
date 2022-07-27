@@ -1,33 +1,22 @@
+import { ExecOptionsWithStringEncoding } from "child_process";
+
 export interface User {
-    CreateDate?: string;
-    CreateDateTick?: string;
-    CreateUser?: string;
-    Email?: string;
-    FullName?: string;
-    FullNameNoMark?: string;
-    IsDelete?: boolean;
-    LastUpdate?: string;
-    LastUpdateTick?: string;
-    Password?: string;
-    PhoneNumber?: string;
-    PositionId?: number;
-    Gender?: number;
-    UpdateUser?: string;
-    UserID?: string;
-    UserName?: string;
-}
-export interface UserToken {
-    CountriesCode?: string;
-    CreateDate?: string;
-    ExpiredDate?: string;
-    ID?: string;
-    IpAddress?: string;
-    IsRememberPassword?: boolean;
-    Language?: string;
-    TimeUpdateExpiredDateToDB?: string;
+    Created?: string;
+    CreatedBy?: string;
+    LastModified?: string;
+    LastModifiedBy?: string;
     Token?: string;
-    UserID?: string;
+    UserId?: string;
     Username?: string;
+    Email?: string;
+    Gender?: string;
+    Name ?: string;
+    Bio?: string;
+    PhoneNumber?: string;
+}
+
+export interface UserToken {
+    Token?: string;
 }
 export interface UserGetList {
     DeptName?: string;

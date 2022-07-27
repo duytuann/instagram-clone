@@ -1,2 +1,2 @@
-export const loginUrl = '/signin';
-export const logoutUrl = '/signout';
+export const loginUrl = '/login';
+export const logoutUrl = '/logout';

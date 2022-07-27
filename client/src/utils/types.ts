@@ -9,8 +9,8 @@ export type Scalars = {
 };
 
 export type LoginInput = {
-    password: Scalars['String'];
-    username: Scalars['String'];
+    password: string;
+    username: string;
 };
 
 export interface IconProps {

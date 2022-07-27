@@ -3,9 +3,11 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+
 using Instagram.API.Domain.Models;
 using Instagram.API.Resources;
 using Instagram.API.Domain.Services;
+using Instagram.API.Domain.Services.Communication;
 
 namespace Instagram.API.Controllers;
 
@@ -21,11 +23,11 @@ public class AuthController : BaseApiController
     [HttpPost]
     [ProducesResponseType(typeof(AuthResource), 200)]
     [ProducesResponseType(typeof(ErrorResource), 400)]
-    public IActionResult Login([FromBody] Login login)
+    public AuthResponse Login([FromBody] Login login)
     {
         var result = _authService.AuthAsync(login);
         if (result == null)
-            return Unauthorized();
+            return new AuthResponse("Unauthorized");
 
 
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@123"));
@@ -40,7 +42,7 @@ public class AuthController : BaseApiController
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
 
-        return Ok(new AuthResource
+        return new AuthResponse(new AuthResource
         {
             Token = tokenString,
             UserId = result.UserId,
