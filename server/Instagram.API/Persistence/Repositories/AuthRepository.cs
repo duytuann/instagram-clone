@@ -16,7 +16,7 @@ namespace Instagram.API.Persistence.Repositories
             // Find User
             User userAccount = _context.Users.FirstOrDefault(u => u.Email == login.UserName || u.Username == login.UserName);
 
-            // Hash Password -> Comapre
+            // Virify Password 
             bool verified = BCrypt.Net.BCrypt.Verify(login.Password, userAccount.PassWord);
 
             if (userAccount == null)

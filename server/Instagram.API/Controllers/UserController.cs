@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
+
 using Instagram.API.Domain.Services;
 using Instagram.API.Domain.Models;
 using Instagram.API.Resources;
@@ -19,6 +21,7 @@ public class UserController : BaseApiController
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IEnumerable<User>> GetAllAsync()
     {
         var userList = await _userService.ListAsync();

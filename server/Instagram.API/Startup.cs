@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AutoMapper;
+
 //using Instagram.API.Controllers.Config;
 using Instagram.API.Domain.Repositories;
 using Instagram.API.Domain.Services;
@@ -42,11 +43,21 @@ public class Startup
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
 
-                ValidIssuer = "https://localhost:5001",
-                ValidAudience = "https://localhost:5001",
+                ValidIssuer = "http://localhost:5000",
+                ValidAudience = "http://localhost:5000",
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@123"))
             };
         });
+
+        services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
         services.AddControllers();
 
@@ -80,6 +91,7 @@ public class Startup
         app.UseRouting();
 
         app.UseAuthentication();
+
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
