@@ -5,5 +5,5 @@ namespace Instagram.API.Domain.Repositories;
 public interface IUserRepository
 {
     Task<IEnumerable<User>> ListAsync();
-    Task AddAsync(User user);
+    Task<string> AddAsync(User user);
 }

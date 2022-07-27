@@ -54,8 +54,11 @@ public class Startup
 
         // dependency injection
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthService, AuthService>();
 
         services.AddAutoMapper(typeof(Startup));
     }

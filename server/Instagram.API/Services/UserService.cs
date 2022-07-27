@@ -24,10 +24,12 @@ public class UserService : IUserService
     {
         try
         {
-            await _userRepository.AddAsync(user);
+            var res = await _userRepository.AddAsync(user);
             await _unitOfWork.CompleteAsync();
 
-            return new UserResponse(user);
+            if (res == "Done")
+                return new UserResponse(user);
+            return new UserResponse(res);
         }
         catch (Exception e)
         {
