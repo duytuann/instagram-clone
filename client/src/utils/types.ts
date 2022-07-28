@@ -18,3 +18,37 @@ export interface IconProps {
     className?: string;
     onClick?: () => void;
 }
+
+export type BaseUserFragment = {
+    __typename?: 'User';
+    _id: string;
+    email: string;
+    username: string;
+    account: string;
+    avatar?: string | null;
+};
+
+export type UserFragment = {
+    __typename?: 'User';
+    _id: string;
+    email: string;
+    username: string;
+    account: string;
+    avatar?: string | null;
+    followers: Array<{
+        __typename?: 'User';
+        _id: string;
+        email: string;
+        username: string;
+        account: string;
+        avatar?: string | null;
+    }>;
+    following: Array<{
+        __typename?: 'User';
+        _id: string;
+        email: string;
+        username: string;
+        account: string;
+        avatar?: string | null;
+    }>;
+};
