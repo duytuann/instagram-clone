@@ -1,7 +1,5 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
 import { loginApi, logoutApi } from '@/core/http/apis/auth';
-// import { getOneByUserIDApi, updateAvatarUserApi } from 'core/http/apis/user';
-import LoginInterface from '@/core/models/Login';
 import { ResultResponse } from '@/core/models/ResultResponse';
 import { ACCESS_TOKEN_KEY } from '@/helpers/consts';
 import Storage from '@/helpers/storage';
@@ -13,12 +11,12 @@ import {
     logoutStart,
     logoutSuccess,
     logoutFailed,
-    changePasswordStart,
-    changePasswordSuccess,
-    changePasswordFailed,
-    getInfoUserByIDStart,
-    getInfoUserByIDSuccess,
-    getInfoUserByIDFailed,
+    // changePasswordStart,
+    // changePasswordSuccess,
+    // changePasswordFailed,
+    // getInfoUserByIDStart,
+    // getInfoUserByIDSuccess,
+    // getInfoUserByIDFailed,
     // updateAvatarUserStart,
     // updateAvatarUserSuccess,
     // updateAvatarUserFailed,
@@ -28,9 +26,7 @@ function* loginSaga(action: ReturnType<typeof loginStart>) {
     try {
         const resLogin: ResultResponse<any> = yield call(loginApi, action.payload);
         if (resLogin.success) {
-            const {
-                resource,
-            } = resLogin;
+            const { resource } = resLogin;
             yield Storage.set(ACCESS_TOKEN_KEY, resource.Token || '');
             yield put({
                 type: loginSuccess,

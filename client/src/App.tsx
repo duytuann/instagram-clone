@@ -1,11 +1,10 @@
 import React from 'react';
 import { Routes, Route, Router } from 'react-router-dom';
 
+import { publicRoutes, privateRoutes } from './routes';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import MainLayout from '@/layouts/MainLayout';
 import AuthLayout from '@/layouts/AuthLayout';
-import { publicRoutes, privateRoutes } from './routes';
-
 import './styles/index.scss';
 
 function App() {
