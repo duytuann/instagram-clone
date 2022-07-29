@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
-import { MenuContainer } from './styles';
+import { useClickOutside } from '@/hooks';
 import { routes } from '@/routes/routes';
 import { avatar } from '@/assets/images';
 import IconCompass from '@/components/Icon/IconCompass';
@@ -20,11 +20,14 @@ const Menu: React.FC = () => {
     const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
     let navigate = useNavigate();
+    
     const menuRef = useRef<HTMLDivElement>(null);
     const avatarRef = useRef<HTMLDivElement>(null);
 
+    useClickOutside([menuRef, avatarRef], () => setIsShowMenu(false));
+
     return (
-        <MenuContainer>
+        <div className="flex items-center justify-end gap-x-5">
             <IconHome onClick={() => navigate(routes.home)} />
             <IconMessenger />
             <IconCreate
@@ -45,7 +48,7 @@ const Menu: React.FC = () => {
                 />
                 {isShowMenu && <HeaderRightMenu ref={menuRef} />}
             </div>
-        </MenuContainer>
+        </div>
     );
 };
 

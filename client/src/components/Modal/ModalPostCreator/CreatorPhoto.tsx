@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 
 import { isImageFormat } from '@/helpers/string';
-// import { toast } from '@/store/toast';
 import IconPhotoVideo from '@/components/Icon/IconPhotoVideo';
 import DropZone from '@/components/DropZone';
 import Skeleton from '@/components/Skeleton';
@@ -20,8 +19,6 @@ const CreatorPhoto = ({ preview, oldPhoto, onSetPreview }: CreatorPhotoProps) =>
         if (file == null) return;
 
         if (!isImageFormat(file)) {
-            // toast({ messageType: 'invalidImage', status: 'warning' });
-
             return;
         }
 

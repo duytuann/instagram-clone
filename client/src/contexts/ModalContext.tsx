@@ -24,20 +24,10 @@ export type ModalType = keyof typeof MODAL_TYPES;
 
 export const MODAL_TYPES = {
     POST_CREATOR: 'POST_CREATOR',
-    // POST_DETAIL: 'POST_DETAIL',
-    // POST_ACTIONS: 'POST_ACTIONS',
-    // COMMENT_ACTIONS: 'COMMENT_ACTIONS',
-    // NEW_MESSAGE: 'NEW_MESSAGE',
-    // UNFOLLOW: 'UNFOLLOW',
 } as const;
 
 const MODALS = {
     [MODAL_TYPES.POST_CREATOR]: <ModalPostCreator key={MODAL_TYPES.POST_CREATOR} />,
-    // [MODAL_TYPES.POST_DETAIL]: <ModalPostDetail key={MODAL_TYPES.POST_DETAIL} />,
-    // [MODAL_TYPES.POST_ACTIONS]: <ModalPostActions key={MODAL_TYPES.POST_ACTIONS} />,
-    // [MODAL_TYPES.COMMENT_ACTIONS]: <ModalCommentActions key={MODAL_TYPES.COMMENT_ACTIONS} />,
-    // [MODAL_TYPES.NEW_MESSAGE]: <ModalNewMessage key={MODAL_TYPES.NEW_MESSAGE} />,
-    // [MODAL_TYPES.UNFOLLOW]: <ModalUnfollow key={MODAL_TYPES.UNFOLLOW} />,
 } as const;
 
 const ModalContext = createContext<ModalInitState>({
@@ -58,10 +48,12 @@ const ModalProvider = ({ children }: ModalProviderProps) => {
     };
 
     const hideModal = (modalType: ModalType | ModalType[], callback?: () => void) => {
-        if (Array.isArray(modalType)) setModalTypes(modalTypes.filter((type) => !modalType.includes(type)));
-        else setModalTypes(modalTypes.filter((type) => type !== modalType));
-
-        dispatch(setCurrentAction(null));
+        if (Array.isArray(modalType)) {
+            setModalTypes(modalTypes.filter((type) => !modalType.includes(type)));
+        } else {
+            setModalTypes(modalTypes.filter((type) => type !== modalType));
+        }
+        // dispatch(setCurrentAction(null));
 
         if (callback) callback();
     };
@@ -70,8 +62,6 @@ const ModalProvider = ({ children }: ModalProviderProps) => {
         <ModalContext.Provider value={{ modalTypes, showModal, hideModal }}>
             {children}
             {modalTypes.map((type) => MODALS[type])}
-
-            {/* <ToastContainer /> */}
         </ModalContext.Provider>
     );
 };

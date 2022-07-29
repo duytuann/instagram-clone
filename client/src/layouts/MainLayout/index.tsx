@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { useNavigate } from 'react-router-dom';
 
 import Header from '@/layouts/components/Header';
+import ModalPostCreator from '@/components/Modal/ModalPostCreator';
 
 interface IMainLayoutProps {
     children: React.ReactNode;
@@ -24,6 +25,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
             <Header />
             <div>
                 <div>{children}</div>
+                <ModalPostCreator />
             </div>
         </>
     );
