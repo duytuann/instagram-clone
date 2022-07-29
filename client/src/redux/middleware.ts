@@ -1,3 +1,4 @@
+import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga';
 
@@ -13,7 +14,10 @@ const getDevMiddlewares = () => {
     //     const logger = createLogger();
     //     return [logger];
     // }
-    return [];
+
+    // only development
+    const logger = createLogger();
+    return [logger];
 };
 
 /**

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Instagram.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220728145858_initDb")]
+    [Migration("20220729181655_initDb")]
     partial class initDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,7 @@ namespace Instagram.API.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PassWord")

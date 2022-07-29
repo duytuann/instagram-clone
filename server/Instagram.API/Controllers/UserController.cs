@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 
+using Instagram.API.Domain.Services.Communication;
 using Instagram.API.Domain.Services;
 using Instagram.API.Domain.Models;
 using Instagram.API.Resources;
@@ -22,12 +23,12 @@ public class UserController : BaseApiController
     [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(IEnumerable<UserResource>), 200)]
-    public async Task<IEnumerable<UserResource>> GetAllAsync()
+    public async Task<UserGetListResponse> GetAllAsync()
     {
         var userList = await _userService.ListAsync();
         var resources = _mapper.Map<IEnumerable<User>, IEnumerable<UserResource>>(userList);
 
-        return resources;
+        return new UserGetListResponse(resources);
     }
 
     /// <summary>
@@ -38,19 +39,12 @@ public class UserController : BaseApiController
     [HttpPost]
     [ProducesResponseType(typeof(UserResource), 201)]
     [ProducesResponseType(typeof(ErrorResource), 400)]
-    public async Task<IActionResult> signUpAsync([FromBody] SaveUserResource resource)
+    public async Task<UserResponse> signUpAsync([FromBody] SaveUserResource resource)
     {
         var user = _mapper.Map<SaveUserResource, User>(resource);
         // Hash Password
         user.PassWord = BCrypt.Net.BCrypt.HashPassword(user.PassWord);
 
-        var result = await _userService.SaveAsync(user);
-
-        if (!result.Success)
-        {
-            return BadRequest(new ErrorResource(result.Message));
-        }
-
-        return Ok("Successfully Registered");
+        return await _userService.SaveAsync(user);
     }
 }

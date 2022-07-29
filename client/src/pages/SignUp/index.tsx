@@ -19,12 +19,16 @@ import { logo } from '@/assets/images';
 
 const SignUp = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const {
         data: { isAuthenticated },
     } = useAppSelector((state) => state.auth);
 
-    const { status } = useAppSelector((state) => state.user);
+    const {
+        data: { isCreateDone },
+        status,
+    } = useAppSelector((state) => state.user);
 
     const {
         register,
@@ -36,13 +40,17 @@ const SignUp = () => {
         resolver: yupResolver(registerSchema),
     });
 
-    const navigate = useNavigate();
-
     const handleRegisterSubmit = ({ email, password, username, name }: signUpParams) => {
         dispatch(createUserStart({ email, password, username, name }));
     };
 
     useEffect(() => setFocus('email'), [setFocus]);
+
+    useEffect(() => {
+        if (isCreateDone === true) {
+            navigate('/');
+        }
+    }, [isCreateDone]);
 
     return (
         <div className={clsx('w-form-w mx-auto py-9')}>

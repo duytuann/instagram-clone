@@ -27,8 +27,8 @@ public class UserService : IUserService
             var res = await _userRepository.AddAsync(user);
             await _unitOfWork.CompleteAsync();
 
-            if (res == "Done")
-                return new UserResponse(user);
+            if (res == null)
+                return new UserResponse("Failed to Create User"); // wrong logic, should be return success : false;
             return new UserResponse(res);
         }
         catch (Exception e)

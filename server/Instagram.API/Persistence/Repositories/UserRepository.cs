@@ -16,7 +16,7 @@ public class UserRepository : BaseRepository, IUserRepository
     public async Task<IEnumerable<User>> ListAsync()
         => await _context.Users.AsNoTracking().ToListAsync();
 
-    public async Task<string> AddAsync(User user)
+    public async Task<User> AddAsync(User user)
     {
         // Create a pattern for a word that: 
         // Usernames can only use letters, numbers, underscores and periods
@@ -24,15 +24,15 @@ public class UserRepository : BaseRepository, IUserRepository
         Regex validUsername = new Regex(strRegexUsername);
         if (!Regex.IsMatch(user.Username, strRegexUsername))
         {
-            return "Usernames can only use letters, numbers, underscores and periods.";
+            return null;
         }
         var isValid = _context.Users.FirstOrDefault(u => u.Email == user.Email || u.Username == user.Username);
         if (isValid != null)
         {
-            return "Email or Username already exists.";
+            return null;
         }
 
         await _context.Users.AddAsync(user);
-        return "Done";
+        return user;
     }
 }

@@ -2,14 +2,14 @@ using Instagram.API.Resources;
 
 namespace Instagram.API.Domain.Services.Communication;
 
-public class AuthResponse : BaseResponse<AuthResource>
+public class UserGetListResponse : BaseResponse<IEnumerable<UserResource>>
 {
     /// <summary>
     /// Creates a success response.
     /// </summary>
-    /// <param name="category">Saved category.</param>
+    /// <param name="user">Saved category.</param>
     /// <returns>Response.</returns>
-    public AuthResponse(AuthResource authResource) : base(authResource)
+    public UserGetListResponse(IEnumerable<UserResource> user) : base(user)
     { }
 
     /// <summary>
@@ -17,6 +17,6 @@ public class AuthResponse : BaseResponse<AuthResource>
     /// </summary>
     /// <param name="message">Error message.</param>
     /// <returns>Response.</returns>
-    public AuthResponse(string message) : base(message)
+    public UserGetListResponse(string message) : base(message)
     { }
 }

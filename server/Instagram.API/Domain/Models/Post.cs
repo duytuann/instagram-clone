@@ -9,6 +9,5 @@ public class Post
     
     // public IList<Like> Likes { get; private set; } = new List<Like>();
     // public IList<Comment> Comments { get; private set; } = new List<Comment>();
-
     public User User { get; set; }
 }

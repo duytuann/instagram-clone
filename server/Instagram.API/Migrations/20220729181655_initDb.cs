@@ -18,7 +18,7 @@ namespace Instagram.API.Migrations
                     PassWord = table.Column<string>(type: "text", nullable: false),
                     Gender = table.Column<string>(type: "text", nullable: true),
                     Username = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     Bio = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
                     PhoneNumber = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true)
                 },

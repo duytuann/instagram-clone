@@ -2,25 +2,32 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { signUpParams } from '@/core/http/apis/user/types';
 import { ReduxData, ReduxStateType } from '@/redux/types';
 
-export interface userState {}
+export interface userState {
+    isCreateDone: boolean;
+}
 const initialState: ReduxData<userState> = {
-    data: {},
+    data: {
+        isCreateDone: false,
+    },
     status: ReduxStateType.INIT,
 };
 const userSlice = createSlice({
     name: 'userSlice',
     initialState,
     reducers: {
+        createUserReset: (state, action: PayloadAction<signUpParams>) => {
+            state.data.isCreateDone = false;
+        },
         createUserStart: (state, action: PayloadAction<signUpParams>) => {
             state.status = ReduxStateType.LOADING;
         },
         createUserSuccess: (state, action: PayloadAction<any>) => {
             state.status = ReduxStateType.SUCCESS;
-            // update state
+            state.data.isCreateDone = true;
         },
         createUserFailed: (state, action: PayloadAction<Error>) => {
             state.status = ReduxStateType.ERROR;
-            // update state
+            state.data.isCreateDone = false;
         },
     },
 });
