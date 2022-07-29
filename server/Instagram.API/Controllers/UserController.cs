@@ -8,7 +8,6 @@ using Instagram.API.Resources;
 
 namespace Instagram.API.Controllers;
 
-[Route("/api/[controller]")]
 public class UserController : BaseApiController
 {
     private readonly IUserService? _userService;
@@ -22,11 +21,13 @@ public class UserController : BaseApiController
 
     [HttpGet]
     [Authorize]
-    public async Task<IEnumerable<User>> GetAllAsync()
+    [ProducesResponseType(typeof(IEnumerable<UserResource>), 200)]
+    public async Task<IEnumerable<UserResource>> GetAllAsync()
     {
         var userList = await _userService.ListAsync();
+        var resources = _mapper.Map<IEnumerable<User>, IEnumerable<UserResource>>(userList);
 
-        return userList;
+        return resources;
     }
 
     /// <summary>
@@ -37,7 +38,7 @@ public class UserController : BaseApiController
     [HttpPost]
     [ProducesResponseType(typeof(UserResource), 201)]
     [ProducesResponseType(typeof(ErrorResource), 400)]
-    public async Task<IActionResult> PostAsync([FromBody] SaveUserResource resource)
+    public async Task<IActionResult> signUpAsync([FromBody] SaveUserResource resource)
     {
         var user = _mapper.Map<SaveUserResource, User>(resource);
         // Hash Password

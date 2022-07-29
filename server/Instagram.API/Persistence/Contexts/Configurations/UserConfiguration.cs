@@ -16,6 +16,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Email).IsRequired();
         builder.Property(u => u.PassWord).IsRequired();
         builder.Property(u => u.Username).IsRequired();
+        builder.Property(u => u.Name).IsRequired();
         builder.Property(u => u.Bio).HasMaxLength(300);
         builder.Property(u => u.PhoneNumber).HasMaxLength(10);
         builder.HasMany(u => u.Posts).WithOne(p => p.User).HasForeignKey(p => p.UserId);

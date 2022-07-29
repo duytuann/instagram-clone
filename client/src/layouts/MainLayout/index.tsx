@@ -25,7 +25,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
             <Header />
             <div>
                 <div>{children}</div>
-                <ModalPostCreator />
+                {/* <ModalPostCreator /> */}
             </div>
         </>
     );

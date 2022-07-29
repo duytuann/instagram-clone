@@ -8,10 +8,14 @@ import AuthLayout from '@/layouts/AuthLayout';
 // Pages
 import Home from '@/pages/Home';
 import Login from '@/pages/Login';
+import SignUp from '@/pages/SignUp';
 
 // <path : string, Component>
 // Public Router
 export const publicRoutes: RouterConfig[] = [{ path: routes.home, page: Home, layout: MainLayout }];
 
 // Private Router
-export const privateRoutes: RouterConfig[] = [{ path: routes.logIn, page: Login, layout: AuthLayout }];
+export const privateRoutes: RouterConfig[] = [
+    { path: routes.logIn, page: Login, layout: AuthLayout },
+    { path: routes.signUp, page: SignUp, layout: AuthLayout },
+];
