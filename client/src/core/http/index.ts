@@ -4,8 +4,8 @@ import storage from '@/helpers/storage';
 import { loadProgressBar } from 'x-axios-progress-bar';
 import { HttpError } from './types';
 
-// const RESTFUL_BASE_URL = (window as any)?.env?.API || '';
-const RESTFUL_BASE_URL = 'http://localhost:5000/api/';
+const RESTFUL_BASE_URL = (window as any)?.env?.API || import.meta.env.VITE_APP_RESTFUL_BASE_URL;
+
 enum LogType {
     REQUEST = 'req',
     RESPONSE = 'res',

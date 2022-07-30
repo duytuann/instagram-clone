@@ -11,7 +11,7 @@ function App() {
     const {
         data: { isAuthenticated },
     } = useAppSelector((state) => state.auth);
-
+    
     return (
         <div className="App">
             <Routes>
