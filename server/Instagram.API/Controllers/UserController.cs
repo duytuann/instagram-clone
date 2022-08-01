@@ -20,6 +20,10 @@ public class UserController : BaseApiController
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Lists all existing User.
+    /// </summary>
+    /// <returns>List of Users.</returns>
     [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(IEnumerable<UserResource>), 200)]

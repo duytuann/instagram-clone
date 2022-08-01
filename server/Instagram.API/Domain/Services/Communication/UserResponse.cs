@@ -7,7 +7,7 @@ public class UserResponse : BaseResponse<User>
     /// <summary>
     /// Creates a success response.
     /// </summary>
-    /// <param name="user">Saved category.</param>
+    /// <param name="user">User information.</param>
     /// <returns>Response.</returns>
     public UserResponse(User user) : base(user)
     { }

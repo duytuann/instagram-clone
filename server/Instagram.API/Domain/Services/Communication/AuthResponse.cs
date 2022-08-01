@@ -7,7 +7,7 @@ public class AuthResponse : BaseResponse<AuthResource>
     /// <summary>
     /// Creates a success response.
     /// </summary>
-    /// <param name="category">Saved category.</param>
+    /// <param name="AuthResource">Authentication.</param>
     /// <returns>Response.</returns>
     public AuthResponse(AuthResource authResource) : base(authResource)
     { }

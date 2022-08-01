@@ -23,12 +23,11 @@ public class AuthController : BaseApiController
     [HttpPost]
     [ProducesResponseType(typeof(AuthResource), 200)]
     [ProducesResponseType(typeof(ErrorResource), 400)]
-    public AuthResponse Login([FromBody] Login login)
+    public ActionResult<BaseResponse<AuthResource>> Login([FromBody] Login login)
     {
         var result = _authService.AuthAsync(login);
         if (result == null)
-            return new AuthResponse("Unauthorized");
-
+            return BadRequest(new BaseResponse<string>("Unauthorization"));
 
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@123"));
         var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -41,8 +40,7 @@ public class AuthController : BaseApiController
         );
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-
-        return new AuthResponse(new AuthResource
+        var resource = new AuthResource
         {
             Token = tokenString,
             UserId = result.UserId,
@@ -52,6 +50,8 @@ public class AuthController : BaseApiController
             Name = result.Name,
             Bio = result.Bio,
             PhoneNumber = result.PhoneNumber
-        });
+        };
+
+        return new OkObjectResult(new BaseResponse<AuthResource>(resource));
     }
 }

@@ -26,6 +26,10 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
             <div>
                 <div>{children}</div>
                 {/* <ModalPostCreator /> */}
+                <img
+                    style={{ width: '470px', height: '470px' }}
+                    src="https://duytuan.blob.core.windows.net/instagram-clone/290418079_387937063428269_8094398343802477794_n.png"
+                />
             </div>
         </>
     );

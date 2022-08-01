@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using AutoMapper;
 
 //using Instagram.API.Controllers.Config;
 using Instagram.API.Domain.Repositories;
@@ -70,6 +69,7 @@ public class Startup
 
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IPostService, PostService>();
 
         services.AddAutoMapper(typeof(Startup));
     }
