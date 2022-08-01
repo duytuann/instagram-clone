@@ -27,12 +27,12 @@ public class UserController : BaseApiController
     [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(IEnumerable<UserResource>), 200)]
-    public async Task<UserGetListResponse> GetAllAsync()
+    public async Task<ActionResult<BaseResponse<IEnumerable<UserResource>>>> GetAllAsync()
     {
         var userList = await _userService.ListAsync();
         var resources = _mapper.Map<IEnumerable<User>, IEnumerable<UserResource>>(userList);
 
-        return new UserGetListResponse(resources);
+        return new OkObjectResult(new BaseResponse<IEnumerable<UserResource>>(resources));
     }
 
     /// <summary>
@@ -43,12 +43,16 @@ public class UserController : BaseApiController
     [HttpPost]
     [ProducesResponseType(typeof(UserResource), 201)]
     [ProducesResponseType(typeof(ErrorResource), 400)]
-    public async Task<UserResponse> signUpAsync([FromBody] SaveUserResource resource)
+    public async Task<ActionResult<BaseResponse<User>>> signUpAsync([FromBody] SaveUserResource resource)
     {
         var user = _mapper.Map<SaveUserResource, User>(resource);
         // Hash Password
         user.PassWord = BCrypt.Net.BCrypt.HashPassword(user.PassWord);
 
-        return await _userService.SaveAsync(user);
+        var newUser = await _userService.SaveAsync(user);
+        if (newUser == null)
+            return BadRequest(new BaseResponse<string>("Failed to create new user"));
+
+        return new OkObjectResult(new BaseResponse<User>(newUser));
     }
 }

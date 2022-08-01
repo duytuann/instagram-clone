@@ -20,21 +20,13 @@ public class UserService : IUserService
         return await _userRepository.ListAsync();
     }
 
-    public async Task<UserResponse> SaveAsync(User user)
+    public async Task<User> SaveAsync(User user)
     {
-        try
-        {
-            var res = await _userRepository.AddAsync(user);
-            await _unitOfWork.CompleteAsync();
+        var res = await _userRepository.AddAsync(user);
+        await _unitOfWork.CompleteAsync();
 
-            if (res == null)
-                return new UserResponse("Failed to Create User"); // wrong logic, should be return success : false;
-            return new UserResponse(res);
-        }
-        catch (Exception e)
-        {
-            // Do some logging stuff
-            return new UserResponse($"An error occurred when saving User: {e.Message}");
-        }
+        if (res == null)
+            return null; // wrong logic, should be return success : false;
+        return res;
     }
 }

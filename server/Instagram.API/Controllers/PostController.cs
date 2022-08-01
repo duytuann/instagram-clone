@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
+using Instagram.API.Domain.Models;
 using Instagram.API.Domain.Services;
-
+using Instagram.API.Resources;
+using Instagram.API.Domain.Services.Communication;
+using System.Diagnostics;
 namespace Instagram.API.Controllers;
 
 public class PostController : BaseApiController
@@ -13,8 +16,24 @@ public class PostController : BaseApiController
         _postService = postService;
     }
 
-    public async Task<IActionResult> SaveAsync()
+    [HttpGet]
+
+    /// <summary>
+    /// Upload file from form-data.
+    /// </summary>
+    /// <returns>List of Users.</returns>
+    [HttpPost]
+    public async Task<ActionResult<BaseResponse<Post>>> SaveAsync()
     {
+        // var formCollection = await Request.ReadFormAsync();
+        // try
+        // {
+        //     formCollection["caption"]
+        // }
+        // catch (Exception e)
+        // {
+        //     Console.WriteLine(e);
+        // }
         try
         {
             var formCollection = await Request.ReadFormAsync();
