@@ -1,18 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
+using AutoMapper;
 using Instagram.API.Domain.Models;
 using Instagram.API.Domain.Services;
 using Instagram.API.Resources;
 using Instagram.API.Domain.Services.Communication;
-using System.Diagnostics;
 namespace Instagram.API.Controllers;
 
 public class PostController : BaseApiController
 {
     private readonly IPostService? _postService;
+    private readonly IMapper? _mapper;
 
-    public PostController(IPostService postService)
+    public PostController(IPostService postService, IMapper mapper)
     {
+        _mapper = mapper;
         _postService = postService;
     }
 
@@ -21,37 +23,35 @@ public class PostController : BaseApiController
     /// <summary>
     /// Upload file from form-data.
     /// </summary>
-    /// <returns>List of Users.</returns>
+    /// <returns>Response for the request: new Post.</returns>
     [HttpPost]
-    public async Task<ActionResult<BaseResponse<Post>>> SaveAsync()
+    public async Task<ActionResult<BaseResponse<PostResource>>> SaveAsync()
     {
-        // var formCollection = await Request.ReadFormAsync();
-        // try
-        // {
-        //     formCollection["caption"]
-        // }
-        // catch (Exception e)
-        // {
-        //     Console.WriteLine(e);
-        // }
+        var formCollection = await Request.ReadFormAsync();
+        var file = formCollection.Files.First();
+        string Content = formCollection["Caption"];
+        string UserId = formCollection["UserId"];
+
         try
         {
-            var formCollection = await Request.ReadFormAsync();
-            var file = formCollection.Files.First();
             if (file.Length > 0)
             {
                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                string fileURL = await _postService.SaveAsync(file.OpenReadStream(), fileName, file.ContentType);
-                return Ok(new { fileURL });
+
+                Post newPost = await _postService.SaveAsync(file.OpenReadStream(), fileName, file.ContentType, Content, UserId);
+
+                var resources = _mapper.Map<Post, PostResource>(newPost);
+
+                return new OkObjectResult(new BaseResponse<PostResource>(resources));
             }
             else
             {
-                return BadRequest();
+                return BadRequest(new BaseResponse<string>("you need to upload your photo"));
             }
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Internal server error: {ex}");
+            return BadRequest(new BaseResponse<string>($"Internal server error: {ex}"));
         }
     }
 }
