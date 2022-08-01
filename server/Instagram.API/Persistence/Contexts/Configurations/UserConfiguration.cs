@@ -12,6 +12,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasKey(u => u.UserId);
         builder.HasIndex(u => u.Email).IsUnique(true);
         builder.HasIndex(u => u.Username).IsUnique(true);
+        builder.Property(u => u.Created).HasDefaultValueSql("NOW()");
+        builder.Property(u => u.LastModified).HasDefaultValueSql("NOW()");
         builder.Property(u => u.UserId).IsRequired().ValueGeneratedOnAdd();
         builder.Property(u => u.Email).IsRequired();
         builder.Property(u => u.PassWord).IsRequired();

@@ -9,6 +9,7 @@ namespace Instagram.API.Mapping
         public ModelToResourceProfile()
         {
             CreateMap<User, UserResource>();
+            CreateMap<Post, PostResource>();
         }
     }
 }

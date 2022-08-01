@@ -20,7 +20,9 @@ namespace Instagram.API.Migrations
                     Username = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Bio = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
-                    PhoneNumber = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true)
+                    PhoneNumber = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    LastModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, defaultValueSql: "NOW()")
                 },
                 constraints: table =>
                 {
@@ -34,7 +36,9 @@ namespace Instagram.API.Migrations
                     PostId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Caption = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    MediaPath = table.Column<string>(type: "text", nullable: false)
+                    MediaPath = table.Column<string>(type: "text", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    LastModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, defaultValueSql: "NOW()")
                 },
                 constraints: table =>
                 {

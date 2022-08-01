@@ -36,7 +36,7 @@ public class PostController : BaseApiController
         {
             if (file.Length > 0)
             {
-                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                string fileName = Path.GetRandomFileName();
 
                 Post newPost = await _postService.SaveAsync(file.OpenReadStream(), fileName, file.ContentType, Content, UserId);
 
