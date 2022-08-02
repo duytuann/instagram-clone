@@ -18,9 +18,7 @@ const CreatorPhoto = ({ preview, oldPhoto, onSetPreview }: CreatorPhotoProps) =>
     const handleSetFile = (file?: File) => {
         if (file == null) return;
 
-        if (!isImageFormat(file)) {
-            return;
-        }
+        if (!isImageFormat(file)) return;
 
         const reader = new FileReader();
 

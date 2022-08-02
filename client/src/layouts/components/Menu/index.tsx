@@ -6,7 +6,6 @@ import { useClickOutside } from '@/hooks';
 import { routes } from '@/routes/routes';
 import { avatar } from '@/assets/images';
 import IconCompass from '@/components/Icon/IconCompass';
-import { MODAL_TYPES, useModalContext } from '@/contexts/ModalContext';
 import IconCreate from '@/components/Icon/IconCreate';
 import IconHeart from '@/components/Icon/IconHeart';
 import IconHome from '@/components/Icon/IconHome';
@@ -17,8 +16,6 @@ import ModalPostCreator from '@/components/Modal/ModalPostCreator';
 
 const Menu: React.FC = () => {
     const [isShowCreatePostModal, setIsShowCreatePostModal] = useState<boolean>(false);
-
-    const { modalTypes, showModal } = useModalContext();
 
     const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
