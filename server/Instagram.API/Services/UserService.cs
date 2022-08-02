@@ -29,4 +29,30 @@ public class UserService : IUserService
             return null; // wrong logic, should be return success : false;
         return res;
     }
+
+    public async Task<User> UpdateAsync(Guid id, User user)
+    {
+        var existingUser = await _userRepository.FindByIdAsync(id);
+
+        if (existingUser == null)
+            return null; // Don't have User in Db
+
+        existingUser.Username = user.Username;
+        existingUser.Bio = user.Bio;
+        existingUser.PhoneNumber = user.PhoneNumber;
+        existingUser.Gender = user.Gender;
+        existingUser.LastModified = DateTime.Now;
+
+        try
+        {
+            _userRepository.Update(existingUser);
+            await _unitOfWork.CompleteAsync();
+
+            return existingUser;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
 }

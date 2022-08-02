@@ -10,6 +10,7 @@ namespace Supermarket.API.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveUserResource, User>();
+            CreateMap<UpdateUserResource, User>();
         }
     }
 }

@@ -5,8 +5,5 @@ namespace Instagram.API.Controllers
     [Route("/api/[controller]/[action]")]
     [Produces("application/json")]
     [ApiController]
-    public class BaseApiController : ControllerBase
-    {
-
-    }
+    public class BaseApiController : ControllerBase { }
 }

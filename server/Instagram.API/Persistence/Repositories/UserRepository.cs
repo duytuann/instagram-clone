@@ -35,4 +35,15 @@ public class UserRepository : BaseRepository, IUserRepository
         await _context.Users.AddAsync(user);
         return user;
     }
+
+    public async Task<User> FindByIdAsync(Guid id)
+    {
+        return await _context.Users
+                            .FirstOrDefaultAsync(u => u.UserId == id);
+    }
+
+    public void Update(User user)
+    {
+        _context.Users.Update(user);
+    }
 }

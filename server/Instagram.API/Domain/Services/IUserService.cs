@@ -7,4 +7,5 @@ public interface IUserService
 {
     Task<IEnumerable<User>> ListAsync();
     Task<User> SaveAsync(User user);
+    Task<User> UpdateAsync(Guid id, User user);
 }

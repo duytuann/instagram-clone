@@ -41,8 +41,8 @@ public class UserController : BaseApiController
     /// <param name="resource">User data.</param>
     /// <returns>Response for the request.</returns>
     [HttpPost]
-    [ProducesResponseType(typeof(UserResource), 201)]
-    [ProducesResponseType(typeof(ErrorResource), 400)]
+    [ProducesResponseType(typeof(BaseResponse<User>), 201)]
+    [ProducesResponseType(typeof(BaseResponse<string>), 400)]
     public async Task<ActionResult<BaseResponse<User>>> signUpAsync([FromBody] SaveUserResource resource)
     {
         var user = _mapper.Map<SaveUserResource, User>(resource);
@@ -54,5 +54,23 @@ public class UserController : BaseApiController
             return BadRequest(new BaseResponse<string>("Failed to create new user"));
 
         return new OkObjectResult(new BaseResponse<User>(newUser));
+    }
+
+    /// <sumary>
+    /// Update a new User/Account
+    /// </sumary>
+    /// <param name="resource">User data.</param>
+    /// <returns> Reponse for the request.</returns>
+    [ProducesResponseType(typeof(BaseResponse<User>), 201)]
+    [ProducesResponseType(typeof(BaseResponse<string>), 400)]
+    public async Task<ActionResult<BaseResponse<User>>> updateAsync([FromBody] UpdateUserResource resource)
+    {
+        var user = _mapper.Map<UpdateUserResource, User>(resource);
+        var result = await _userService.UpdateAsync(Guid.Parse(resource.UserId), user);
+
+        if (result == null)
+            return BadRequest(new BaseResponse<string>("Failed to update User"));
+
+        return new OkObjectResult(new BaseResponse<User>(result));
     }
 }

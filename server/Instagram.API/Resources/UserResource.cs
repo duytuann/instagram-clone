@@ -6,4 +6,6 @@ public class UserResource
     public string? email { get; set; }
     public string? username { get; set; }
     public string? name { get; set; }
+    public DateTime Created { get; set; }
+    public DateTime LastModified { get; set; }
 }
