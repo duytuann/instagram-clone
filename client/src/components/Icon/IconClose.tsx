@@ -8,10 +8,10 @@ const IconClose = (props: IconProps) => {
             aria-label="Close"
             color="#ffffff"
             fill="#ffffff"
-            height="24"
+            height="16"
             role="img"
             viewBox="0 0 24 24"
-            width="24"
+            width="16"
         >
             <polyline
                 fill="none"

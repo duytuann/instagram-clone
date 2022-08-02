@@ -32,11 +32,9 @@ const postSlice = createSlice({
         },
         createPostSuccess: (state, action: PayloadAction<any>) => {
             state.status = ReduxStateType.SUCCESS;
-            // update state
         },
         createPostFailed: (state, action: PayloadAction<Error>) => {
             state.status = ReduxStateType.ERROR;
-            // update state
         },
     },
 });

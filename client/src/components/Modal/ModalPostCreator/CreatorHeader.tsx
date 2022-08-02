@@ -16,7 +16,7 @@ const CreatorHeader = ({ onCreateOrUpdateSubmit }: CreatorHeaderProps) => {
                 onClick={onCreateOrUpdateSubmit}
                 className={clsx('abs-center-y right-3', 'btn float-right', 'text-primary')}
             >
-                {'Done'}
+                {'Share'}
             </button>
         </div>
     );

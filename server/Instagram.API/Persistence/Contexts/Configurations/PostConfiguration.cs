@@ -14,6 +14,6 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
         builder.Property(p => p.LastModified).HasDefaultValueSql("NOW()");
         builder.Property(p => p.PostId).IsRequired().ValueGeneratedOnAdd();
         builder.Property(p => p.MediaPath).IsRequired();
-        builder.Property(p => p.Caption).HasMaxLength(500);
+        builder.Property(p => p.Caption).HasMaxLength(2200);
     }
 }

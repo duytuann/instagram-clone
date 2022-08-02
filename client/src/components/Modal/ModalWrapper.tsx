@@ -1,12 +1,10 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 
-import { ModalType, useModalContext } from '@/contexts/ModalContext';
 import IconClose from '@/components/Icon/IconClose';
 
 interface ModalProps {
     children: ReactNode;
-    modalType: ModalType;
     lightOverlay?: boolean;
     hideCloseButton?: boolean;
     canClose?: boolean;
@@ -16,19 +14,17 @@ interface ModalProps {
 
 const ModalWrapper = ({
     className,
-    modalType,
     hideCloseButton = false,
     lightOverlay = false,
     canClose = true,
     children,
     closeHandler,
 }: ModalProps) => {
-    const { hideModal } = useModalContext();
-
+    
     const closeModal = () => {
         if (closeHandler) closeHandler();
 
-        if (canClose) hideModal(modalType);
+        // if (canClose) hideModal(modalType);
     };
 
     return (

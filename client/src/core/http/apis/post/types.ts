@@ -1,4 +1,5 @@
 export interface CreatePostParams {
-    caption: string;
-    mediaPath: string;
+    UserId?: string;
+    Caption: string;
+    FileImage: File;
 }

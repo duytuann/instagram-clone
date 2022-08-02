@@ -1,19 +1,19 @@
-import { ExecOptionsWithStringEncoding } from "child_process";
+import { ExecOptionsWithStringEncoding } from 'child_process';
 
 export interface User {
     Created?: string;
     CreatedBy?: string;
     LastModified?: string;
     LastModifiedBy?: string;
-    Token?: string;
-    UserId?: string;
-    Username?: string;
-    Email?: string;
-    Avatar?: string;
-    Gender?: string;
-    Name ?: string;
-    Bio?: string;
-    PhoneNumber?: string;
+    token?: string;
+    userId?: string;
+    username?: string;
+    email?: string;
+    avatar?: string;
+    gender?: string;
+    name?: string;
+    bio?: string;
+    phoneNumber?: string;
 }
 
 export interface UserToken {

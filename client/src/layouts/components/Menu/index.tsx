@@ -2,7 +2,8 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
-import { useClickOutside } from '@/hooks';
+import { useClickOutside, useAppSelector, useAppDispatch } from '@/hooks';
+import { setShowModalPostCreator } from '@/redux/slices/globalSlice';
 import { routes } from '@/routes/routes';
 import { avatar } from '@/assets/images';
 import IconCompass from '@/components/Icon/IconCompass';
@@ -15,7 +16,11 @@ import HeaderRightMenu from '@/layouts/components/HeaderRightMenu';
 import ModalPostCreator from '@/components/Modal/ModalPostCreator';
 
 const Menu: React.FC = () => {
-    const [isShowCreatePostModal, setIsShowCreatePostModal] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
+
+    const {
+        data: { showModalPostCreator },
+    } = useAppSelector((state) => state.global);
 
     const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
@@ -33,7 +38,7 @@ const Menu: React.FC = () => {
             <IconCreate
                 className={clsx('flex-shrink-0', 'cursor-pointer')}
                 onClick={() => {
-                    setIsShowCreatePostModal(!isShowCreatePostModal);
+                    dispatch(setShowModalPostCreator(true));
                 }}
             />
             <IconCompass />
@@ -49,7 +54,7 @@ const Menu: React.FC = () => {
                 />
                 {isShowMenu && <HeaderRightMenu ref={menuRef} />}
             </div>
-            {isShowCreatePostModal ? <ModalPostCreator /> : null}
+            {showModalPostCreator ? <ModalPostCreator /> : null}
         </div>
     );
 };
