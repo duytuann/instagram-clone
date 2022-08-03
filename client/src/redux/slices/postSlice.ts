@@ -26,8 +26,7 @@ const postSlice = createSlice({
         setCurrentAction: (state, action: PayloadAction<CurrentAction>) => {
             state.data.currentAction = action.payload;
         },
-
-        createPostStart: (state, action: PayloadAction<CreatePostParams>) => {
+        createPostStart: (state, action: PayloadAction<FormData>) => {
             state.status = ReduxStateType.LOADING;
         },
         createPostSuccess: (state, action: PayloadAction<any>) => {

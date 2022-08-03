@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
 import { createPostApi } from '@/core/http/apis/post';
 import { ResultResponse } from '@/core/models/ResultResponse';
-
+import { setShowModalPostCreator } from '@/redux/slices/globalSlice';
 import { createPostStart, createPostSuccess, createPostFailed } from '@/redux/slices/postSlice';
 
 function* createPostSaga(action: ReturnType<typeof createPostStart>) {
@@ -12,6 +12,10 @@ function* createPostSaga(action: ReturnType<typeof createPostStart>) {
             yield put({
                 type: createPostSuccess,
                 payload: resource,
+            });
+            yield put({
+                type: setShowModalPostCreator,
+                payload: false,
             });
         } else {
             yield put({ type: createPostFailed, payload: resLogin.message });

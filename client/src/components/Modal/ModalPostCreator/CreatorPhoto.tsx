@@ -10,9 +10,10 @@ interface CreatorPhotoProps {
     preview: string;
     oldPhoto: string;
     onSetPreview: (preview: string) => void;
+    onSetFile: (file: File) => void;
 }
 
-const CreatorPhoto = ({ preview, oldPhoto, onSetPreview }: CreatorPhotoProps) => {
+const CreatorPhoto = ({ preview, oldPhoto, onSetPreview, onSetFile }: CreatorPhotoProps) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleSetFile = (file?: File) => {
@@ -20,10 +21,13 @@ const CreatorPhoto = ({ preview, oldPhoto, onSetPreview }: CreatorPhotoProps) =>
 
         if (!isImageFormat(file)) return;
 
+        onSetFile(file);
         const reader = new FileReader();
 
         reader.readAsDataURL(file);
-        reader.onloadend = () => onSetPreview(reader.result as string);
+        reader.onloadend = () => {
+            onSetPreview(reader.result as string);
+        };
     };
 
     useEffect(() => () => URL.revokeObjectURL(preview), [preview]);
