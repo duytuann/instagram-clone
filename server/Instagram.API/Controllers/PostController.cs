@@ -18,7 +18,18 @@ public class PostController : BaseApiController
         _postService = postService;
     }
 
+    /// <summary>
+    /// List all Post in database.
+    /// </summary>
+    /// <returns>Response for the request: getAllPost</returns>
     [HttpGet]
+    public async Task<ActionResult<BaseResponse<PostResource>>> GetAllAsync()
+    {
+        var postList = await _postService.GetAllAsync();
+        var resources = _mapper.Map<IEnumerable<Post>, IEnumerable<PostResource>>(postList);
+
+        return new OkObjectResult(new BaseResponse<IEnumerable<PostResource>>(resources)); ;
+    }
 
     /// <summary>
     /// Upload file from form-data.

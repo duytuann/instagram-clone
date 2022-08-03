@@ -9,9 +9,7 @@ namespace Instagram.API.Persistence.Repositories;
 public class UserRepository : BaseRepository, IUserRepository
 {
     // The repository inherits the BaseRepository and implements ICategoryRepository.
-    public UserRepository(AppDbContext context) : base(context)
-    {
-    }
+    public UserRepository(AppDbContext context) : base(context) { }
 
     public async Task<IEnumerable<User>> ListAsync()
         => await _context.Users.AsNoTracking().ToListAsync();

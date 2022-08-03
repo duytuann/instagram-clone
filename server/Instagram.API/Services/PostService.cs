@@ -18,6 +18,11 @@ public class PostService : IPostService
         _unitOfWork = unitOfWork;
     }
 
+    public async Task<IEnumerable<Post>> GetAllAsync()
+    {
+        return await _postRepository.GetAllAsync();
+    }
+
     public async Task<Post> SaveAsync(Stream fileStream, string fileName, string contentType, string Caption, string UserId)
     {
         var newPost = new Post();
