@@ -59,7 +59,8 @@ public class Startup
             });
 
         services.AddControllers();
-
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
 
 
         // dependency injection
@@ -80,6 +81,8 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
         else
         {

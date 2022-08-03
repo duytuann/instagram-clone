@@ -61,6 +61,7 @@ public class UserController : BaseApiController
     /// </sumary>
     /// <param name="resource">User data.</param>
     /// <returns> Reponse for the request.</returns>
+    [HttpPut]
     [ProducesResponseType(typeof(BaseResponse<User>), 201)]
     [ProducesResponseType(typeof(BaseResponse<string>), 400)]
     public async Task<ActionResult<BaseResponse<User>>> updateAsync([FromBody] UpdateUserResource resource)
