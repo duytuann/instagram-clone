@@ -1,17 +1,20 @@
 import React from 'react';
-import { Routes, Route, Router } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+// import { config } from '@fortawesome/fontawesome-svg-core';
 
-import { publicRoutes, privateRoutes } from './routes';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { publicRoutes, privateRoutes } from '@/routes';
+import { useAppSelector } from '@/hooks';
 import MainLayout from '@/layouts/MainLayout';
 import AuthLayout from '@/layouts/AuthLayout';
-import './styles/index.scss';
+import '@/styles/index.scss';
+
+// config.autoAddCss = false;
 
 function App() {
     const {
         data: { isAuthenticated },
     } = useAppSelector((state) => state.auth);
-    
+
     return (
         <div className="App">
             <Routes>

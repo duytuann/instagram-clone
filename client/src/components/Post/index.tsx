@@ -1,44 +1,21 @@
 import { memo, useState } from 'react';
-
 import clsx from 'clsx';
 
-import { PostFragment, useCreateCommentMutation } from '~/types/generated';
-import { useStoreDispatch } from '~/redux/store';
-import { commentActions } from '~/redux/slices/commentSlice';
-import { postActions } from '~/redux/slices/postSlice';
-import PostBody from './PostBody';
-import PostHeader from './PostHeader';
-import PostPhoto from './PostPhoto';
-import CommentField from '../CommentField';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+// import { commentActions } from '~/redux/slices/commentSlice';
+// import { postActions } from '~/redux/slices/postSlice';
+import PostBody from '@/components/Post/PostBody';
+import PostHeader from '@/components/Post/PostHeader';
+import PostPhoto from '@/components/Post/PostPhoto';
+import CommentField from '@/components/CommentField';
 
-const Post = (props: PostFragment) => {
-    const { _id: postId } = props;
-
+const Post = (props: any) => {
     const [caption, setCaption] = useState<string>('');
 
-    const [createComment, { loading: createCommentLoading }] = useCreateCommentMutation();
-    const dispatch = useStoreDispatch();
+    const dispatch = useAppDispatch();
 
-    const handleCreateComment = async () => {
-        const response = await createComment({
-            variables: {
-                caption,
-                postId,
-            },
-        });
-
-        const data = response.data?.createComment;
-
-        if (!data?.success) return;
-
-        dispatch(
-            postActions.increaseCommentCounts({
-                postId,
-            }),
-        );
-        setCaption('');
-
-        dispatch(commentActions.addDisplayedComment({ postId, comment: data.comment! }));
+    const handleCreateComment = () => {
+        // dispatch acction create Comment
     };
 
     return (
@@ -46,12 +23,12 @@ const Post = (props: PostFragment) => {
             <PostHeader {...props} />
             <PostPhoto {...props} />
             <PostBody {...props} />
-            <CommentField
-                loading={createCommentLoading}
+            {/* <CommentField
+                // loading={createCommentLoading}
                 onSubmit={handleCreateComment}
                 caption={caption}
                 onSetCaption={setCaption}
-            />
+            /> */}
         </div>
     );
 };

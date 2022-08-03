@@ -1,32 +1,30 @@
 import { useState } from 'react';
-
 import clsx from 'clsx';
 
-import PostPhotoError from './PostPhotoError';
-import { PostFragment } from '~/types/generated';
-import { usePost, useDoubleTab } from '@/hooks';
+import PostPhotoError from '@/components/Post/PostPhotoError';
+import { useDoubleTab } from '@/hooks';
 import Skeleton from '@/components/Skeleton';
 import IconHeart from '@/components/Icon/IconHeart';
 
-const PostPhoto = (post: PostFragment) => {
+const PostPhoto = (post: any) => {
     const [isHearted, setIsHearted] = useState<boolean>(false);
 
-    const { photo, caption } = post;
+    const { mediaPath, caption } = post;
 
-    const { isLiked, reactPost } = usePost(post);
+    // const { isLiked, reactPost } = usePost(post);
     const [doubleTab] = useDoubleTab();
 
     const handleReactPost = () => {
         const callback = () => {
             setIsHearted(true);
 
-            if (!isLiked) reactPost();
+            // if (!isLiked) reactPost();
         };
 
         doubleTab(callback);
     };
 
-    if (!photo) return <h2 className={clsx('px-4 text-2xl')}>{caption}</h2>;
+    if (!mediaPath) return <h2 className={clsx('px-4 text-2xl')}>{caption}</h2>;
 
     return (
         <div className={'relative'} onClick={handleReactPost}>
@@ -34,12 +32,13 @@ const PostPhoto = (post: PostFragment) => {
                 {isHearted && (
                     <IconHeart
                         white
-                        onAnimationEnd={() => setIsHearted(false)}
+                        // onAnimationEnd={() => setIsHearted(false)}
                         className={clsx('w-20 h-20 drop-shadow-xl', 'animate-like-feed')}
                     />
                 )}
             </div>
-            <Skeleton placeholderError={PostPhotoError} src={photo} alt="Thumbnail" draggable={false} />
+            {/* placeholderError={PostPhotoError} for Skeleton */}
+            <Skeleton src={mediaPath} alt="Thumbnail" draggable={false} />
         </div>
     );
 };

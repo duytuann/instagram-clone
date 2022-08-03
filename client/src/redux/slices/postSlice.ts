@@ -1,21 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CreatePostParams } from '@/core/http/apis/post/types';
+import { Post } from '@/core/models/Post';
 import { ReduxData, ReduxStateType } from '@/redux/types';
 
 export type CurrentAction = 'create' | 'update' | 'delete' | null;
 
 export interface postState {
-    posts: [];
-    cursor: any;
-    selectedPost: any;
-    currentAction: any;
+    posts: Post[];
 }
 const initialState: ReduxData<postState> = {
     data: {
         posts: [],
-        cursor: null,
-        selectedPost: null,
-        currentAction: null,
+        // cursor: null,
+        // selectedPost: null,
+        // currentAction: null,
     },
     status: ReduxStateType.INIT,
 };
@@ -23,8 +20,15 @@ const postSlice = createSlice({
     name: 'postSlice',
     initialState,
     reducers: {
-        setCurrentAction: (state, action: PayloadAction<CurrentAction>) => {
-            state.data.currentAction = action.payload;
+        getAllPostStart: (state, action: PayloadAction) => {
+            state.status = ReduxStateType.LOADING;
+        },
+        getAllPostSuccess: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.SUCCESS;
+            state.data.posts = action.payload;
+        },
+        getAllPostFailed: (state, action: PayloadAction<Error>) => {
+            state.status = ReduxStateType.ERROR;
         },
         createPostStart: (state, action: PayloadAction<FormData>) => {
             state.status = ReduxStateType.LOADING;
@@ -38,5 +42,12 @@ const postSlice = createSlice({
     },
 });
 
-export const { setCurrentAction, createPostStart, createPostSuccess, createPostFailed } = postSlice.actions;
+export const {
+    getAllPostStart,
+    getAllPostSuccess,
+    getAllPostFailed,
+    createPostStart,
+    createPostSuccess,
+    createPostFailed,
+} = postSlice.actions;
 export default postSlice.reducer;

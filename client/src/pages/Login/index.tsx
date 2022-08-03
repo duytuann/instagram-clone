@@ -17,7 +17,7 @@ import FormField from '@/components/FormField';
 import ButtonFacebook from '@/pages/Login/components/ButtonFacebook';
 import ButtonGoogle from '@/pages/Login/components/ButtonGoogle';
 import FormDivider from '@/components/FormDivider';
-import LoginScreenshot from '@/features/Login/LoginScreenshot';
+import LoginScreenshot from '@/pages/Login/components/LoginScreenshot';
 import { logo } from '@/assets/images';
 
 const Login = () => {
