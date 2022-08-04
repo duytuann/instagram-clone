@@ -11,7 +11,7 @@ export const Logo = styled.img`
 
 export const HeaderContainer = styled.div`
     height: 60px;
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

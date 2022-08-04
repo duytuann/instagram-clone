@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SearchBarContainer = styled.div`
-    margin-left: 145px;
+    margin-left: 50px;
     display: none;
     height: 36px;
     width: 268px;

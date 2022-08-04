@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/hooks';
 
 import Header from '@/layouts/components/Header';
-import ModalPostCreator from '@/components/Modal/ModalPostCreator';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 
 interface IMainLayoutProps {
-    children: React.ReactNode;
+    children: any;
 }
 
 const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
@@ -21,10 +20,10 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
         if (!isAuthenticated) navigate('/login');
     }, [isAuthenticated]);
     return (
-        <>
+        <div>
             <Header />
             <div>{children}</div>
-        </>
+        </div>
     );
 };
 

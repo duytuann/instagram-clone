@@ -36,7 +36,7 @@ public class PostController : BaseApiController
     /// </summary>
     /// <returns>Response for the request: new Post.</returns>
     [HttpPost]
-    public async Task<ActionResult<BaseResponse<PostResource>>> SaveAsync()
+    public async Task<ActionResult<BaseResponse<PostResource>>> CreateAsync()
     {
         var formCollection = await Request.ReadFormAsync();
         var file = formCollection.Files.First();
