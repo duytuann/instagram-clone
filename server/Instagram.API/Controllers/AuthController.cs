@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -20,6 +21,11 @@ public class AuthController : BaseApiController
         _authService = authService;
     }
 
+    /// <sumary>
+    /// Authentication user
+    /// </sumary>
+    /// <param name="resource">Username/Email and Password.</param>
+    /// <returns> Response: Token and User data.</returns>
     [HttpPost]
     [ProducesResponseType(typeof(AuthResource), 200)]
     [ProducesResponseType(typeof(ErrorResource), 400)]
@@ -53,5 +59,20 @@ public class AuthController : BaseApiController
         };
 
         return new OkObjectResult(new BaseResponse<AuthResource>(resource));
+    }
+
+    /// <sumary>
+    /// Logout: Remove access Token.
+    /// </sumary>
+    /// <param name="resource">Token.</param>
+    /// <returns> Response: Remove token -> Logout success.</returns>
+    [Authorize]
+    [HttpPost]
+    public ActionResult<BaseResponse<AuthResource>> Logout([FromBody] string Token)
+    {
+        if (string.IsNullOrEmpty(Token))
+            return BadRequest(new BaseResponse<string>("Failed to Logout"));
+
+        return new OkObjectResult(new BaseResponse<AuthResource>(new AuthResource()));
     }
 }

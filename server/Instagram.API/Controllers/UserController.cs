@@ -43,7 +43,7 @@ public class UserController : BaseApiController
     [HttpPost]
     [ProducesResponseType(typeof(BaseResponse<User>), 201)]
     [ProducesResponseType(typeof(BaseResponse<string>), 400)]
-    public async Task<ActionResult<BaseResponse<User>>> signUpAsync([FromBody] SaveUserResource resource)
+    public async Task<ActionResult<BaseResponse<User>>> SignUpAsync([FromBody] SaveUserResource resource)
     {
         var user = _mapper.Map<SaveUserResource, User>(resource);
         // Hash Password
@@ -64,7 +64,7 @@ public class UserController : BaseApiController
     [HttpPut]
     [ProducesResponseType(typeof(BaseResponse<User>), 201)]
     [ProducesResponseType(typeof(BaseResponse<string>), 400)]
-    public async Task<ActionResult<BaseResponse<User>>> updateAsync([FromBody] UpdateUserResource resource)
+    public async Task<ActionResult<BaseResponse<User>>> UpdateAsync([FromBody] UpdateUserResource resource)
     {
         var user = _mapper.Map<UpdateUserResource, User>(resource);
         var result = await _userService.UpdateAsync(Guid.Parse(resource.UserId), user);
