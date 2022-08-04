@@ -75,4 +75,46 @@ public class UserController : BaseApiController
 
         return new OkObjectResult(new BaseResponse<User>(result));
     }
+
+    /// <sumary>
+    /// User follow other User
+    /// </sumary>
+    /// <param name="resource">UserId that the user wants to follow.</param>
+    /// <returns>Reponse for the request.</returns>
+    [HttpPost]
+    [Authorize]
+    [ProducesResponseType(typeof(BaseResponse<String>), 201)]
+    [ProducesResponseType(typeof(BaseResponse<string>), 400)]
+    public async Task<ActionResult<BaseResponse<String>>> FollowAsync(string UserId)
+    {
+        Guid _userId1 = this.GetUserId();
+        Guid _userId2 = Guid.Parse(UserId);
+        bool isFollowOk = await _userService.FollowAsync(_userId1, _userId2);
+
+        if (!isFollowOk)
+            return BadRequest(new BaseResponse<string>("Failed to follow User"));
+
+        return new OkObjectResult(new BaseResponse<String>(new String("Successful to follow User")));
+    }
+
+    /// <sumary>
+    /// User unfollow other User
+    /// </sumary>
+    /// <param name="resource">UserId that the user wants to unfollow.</param>
+    /// <returns>Reponse for the request.</returns>
+    [HttpPost]
+    [Authorize]
+    [ProducesResponseType(typeof(BaseResponse<String>), 201)]
+    [ProducesResponseType(typeof(BaseResponse<string>), 400)]
+    public async Task<ActionResult<BaseResponse<String>>> UnfollowAsync(string UserId)
+    {
+        Guid _userId1 = this.GetUserId();
+        Guid _userId2 = Guid.Parse(UserId);
+        bool isUnfollowOk = await _userService.UnfollowAsync(_userId1, _userId2);
+
+        if (!isUnfollowOk)
+            return BadRequest(new BaseResponse<string>("Failed to unfollow User"));
+
+        return new OkObjectResult(new BaseResponse<String>(new String("Successful to unfollow User")));
+    }
 }

@@ -32,20 +32,29 @@ public class AuthController : BaseApiController
     public ActionResult<BaseResponse<AuthResource>> Login([FromBody] Login login)
     {
         var result = _authService.AuthAsync(login);
+
         if (result == null)
             return BadRequest(new BaseResponse<string>("Unauthorization"));
 
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@123"));
+
+        // Choose Algorithm
         var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-        var tokeOptions = new JwtSecurityToken(
+
+        // Set UserId to Claim
+        var claims = new[] {
+            new Claim("UserId", result.UserId.ToString())
+        };
+
+        var tokenOptions = new JwtSecurityToken(
             issuer: "http://localhost:5000",
             audience: "http://localhost:5000",
-            claims: new List<Claim>(),
+            claims,
             expires: DateTime.Now.AddMinutes(120),
             signingCredentials: signinCredentials
         );
 
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         var resource = new AuthResource
         {
             Token = tokenString,

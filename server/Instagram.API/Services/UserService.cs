@@ -55,4 +55,20 @@ public class UserService : IUserService
             return null;
         }
     }
+
+    public async Task<bool> FollowAsync(Guid _userId1, Guid _userId2)
+    {
+        var isUpdateDbOk = await _userRepository.FollowAsync(_userId1, _userId2);
+        await _unitOfWork.CompleteAsync();
+
+        return isUpdateDbOk;
+    }
+
+    public async Task<bool> UnfollowAsync(Guid _userId1, Guid _userId2)
+    {
+        var isUpdateDbOk = await _userRepository.FollowAsync(_userId1, _userId2);
+        await _unitOfWork.CompleteAsync();
+
+        return isUpdateDbOk;
+    }
 }

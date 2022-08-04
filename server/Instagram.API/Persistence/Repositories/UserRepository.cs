@@ -44,4 +44,73 @@ public class UserRepository : BaseRepository, IUserRepository
     {
         _context.Users.Update(user);
     }
+
+
+    // Logic: If A follow B
+    // Following(A) + B and Follower(B) + A
+    public async Task<bool> FollowAsync(Guid _userId1, Guid _userId2)
+    {
+        try
+        {
+            User UserA = await _context.Users.FirstOrDefaultAsync(u => u.UserId == _userId1);
+            User UserB = await _context.Users.FirstOrDefaultAsync(u => u.UserId == _userId2);
+
+            Following B = new Following
+            {
+                UserID = UserB.UserId,
+                DateFollowed = DateTime.Now,
+                User = UserB,
+            };
+
+            Follower A = new Follower
+            {
+                UserID = UserA.UserId,
+                DateFollowed = DateTime.Now,
+                User = UserA,
+            };
+
+            UserA.Followings.Add(B);
+            UserB.Followers.Add(A);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    // Logic: If A unfollow B
+    // Following(A) - B and Follower(B) - A
+    public async Task<bool> UnfollowAsync(Guid _userId1, Guid _userId2)
+    {
+        try
+        {
+            User UserA = await _context.Users.FirstOrDefaultAsync(u => u.UserId == _userId1);
+            User UserB = await _context.Users.FirstOrDefaultAsync(u => u.UserId == _userId2);
+
+            Following B = new Following
+            {
+                UserID = UserB.UserId,
+                DateFollowed = DateTime.Now,
+                User = UserB,
+            };
+
+            Follower A = new Follower
+            {
+                UserID = UserA.UserId,
+                DateFollowed = DateTime.Now,
+                User = UserA,
+            };
+
+            UserA.Followings.Remove(B);
+            UserB.Followers.Remove(A);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
 }
