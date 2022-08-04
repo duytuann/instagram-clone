@@ -10,9 +10,9 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
     {
         builder.ToTable("Posts");
         builder.HasKey(p => p.PostId);
+        builder.Property(p => p.PostId).IsRequired().ValueGeneratedOnAdd();
         builder.Property(p => p.Created).HasDefaultValueSql("NOW()");
         builder.Property(p => p.LastModified).HasDefaultValueSql("NOW()");
-        builder.Property(p => p.PostId).IsRequired().ValueGeneratedOnAdd();
         builder.Property(p => p.MediaPath).IsRequired();
         builder.Property(p => p.Caption).HasMaxLength(2200);
     }

@@ -22,6 +22,64 @@ namespace Instagram.API.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Instagram.API.Domain.Models.Follower", b =>
+                {
+                    b.Property<Guid>("FollowerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime>("DateFollowed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("FollowerId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Followers", (string)null);
+                });
+
+            modelBuilder.Entity("Instagram.API.Domain.Models.Following", b =>
+                {
+                    b.Property<Guid>("FollowingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime>("DateFollowed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("FollowingId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Followings", (string)null);
+                });
+
             modelBuilder.Entity("Instagram.API.Domain.Models.Post", b =>
                 {
                     b.Property<Guid>("PostId")
@@ -29,15 +87,15 @@ namespace Instagram.API.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Caption")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(2200)
+                        .HasColumnType("character varying(2200)");
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("NOW()");
 
-                    b.Property<DateTime?>("LastModified")
+                    b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("NOW()");
@@ -78,7 +136,7 @@ namespace Instagram.API.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("LastModified")
+                    b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("NOW()");
@@ -110,6 +168,28 @@ namespace Instagram.API.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("Instagram.API.Domain.Models.Follower", b =>
+                {
+                    b.HasOne("Instagram.API.Domain.Models.User", "User")
+                        .WithMany("Followers")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Instagram.API.Domain.Models.Following", b =>
+                {
+                    b.HasOne("Instagram.API.Domain.Models.User", "User")
+                        .WithMany("Followings")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Instagram.API.Domain.Models.Post", b =>
                 {
                     b.HasOne("Instagram.API.Domain.Models.User", "User")
@@ -123,6 +203,10 @@ namespace Instagram.API.Migrations
 
             modelBuilder.Entity("Instagram.API.Domain.Models.User", b =>
                 {
+                    b.Navigation("Followers");
+
+                    b.Navigation("Followings");
+
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

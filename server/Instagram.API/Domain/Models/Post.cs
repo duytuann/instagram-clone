@@ -9,5 +9,5 @@ public class Post : BaseAuditableEntity
 
     // public IList<Like> Likes { get; private set; } = new List<Like>();
     // public IList<Comment> Comments { get; private set; } = new List<Comment>();
-    public User User { get; set; }
+    public User? User { get; set; }
 }

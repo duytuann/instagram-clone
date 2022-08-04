@@ -22,5 +22,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Bio).HasMaxLength(300);
         builder.Property(u => u.PhoneNumber).HasMaxLength(10);
         builder.HasMany(u => u.Posts).WithOne(p => p.User).HasForeignKey(p => p.UserId);
+        builder.HasMany(u => u.Followers).WithOne(f => f.User).HasForeignKey(u => u.UserID);
+        builder.HasMany(u => u.Followings).WithOne(f => f.User).HasForeignKey(u => u.UserID);
     }
 }
