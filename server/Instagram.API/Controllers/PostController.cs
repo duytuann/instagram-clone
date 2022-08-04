@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using Instagram.API.Domain.Models;
 using Instagram.API.Domain.Services;
@@ -23,6 +23,7 @@ public class PostController : BaseApiController
     /// </summary>
     /// <returns>Response for the request: getAllPost</returns>
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<BaseResponse<PostResource>>> GetAllAsync()
     {
         var postList = await _postService.GetAllAsync();
@@ -36,7 +37,8 @@ public class PostController : BaseApiController
     /// </summary>
     /// <returns>Response for the request: new Post.</returns>
     [HttpPost]
-    public async Task<ActionResult<BaseResponse<PostResource>>> CreateAsync()
+    [Authorize]
+    public async Task<ActionResult<BaseResponse<PostResource>>> CreateAsync([FromForm] CreatePostResource dto)
     {
         var formCollection = await Request.ReadFormAsync();
         var file = formCollection.Files.First();

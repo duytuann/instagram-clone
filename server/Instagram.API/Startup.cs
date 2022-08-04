@@ -9,6 +9,7 @@ using Instagram.API.Domain.Services;
 using Instagram.API.Persistence.Contexts;
 using Instagram.API.Persistence.Repositories;
 using Instagram.API.Services;
+using Instagram.API.Extensions;
 
 namespace Instagram.API;
 
@@ -60,7 +61,7 @@ public class Startup
 
         services.AddControllers();
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddCustomSwagger();
 
 
         // dependency injection
