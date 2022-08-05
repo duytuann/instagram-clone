@@ -3,7 +3,7 @@ using Instagram.API.Domain.Models;
 // using Instagram.API.Domain.Models.Queries;
 using Instagram.API.Resources;
 
-namespace Supermarket.API.Mapping
+namespace Instagram.API.Mapping
 {
     public class ResourceToModelProfile : Profile
     {

@@ -69,4 +69,12 @@ public class PostController : BaseApiController
             return BadRequest(new BaseResponse<string>($"Internal server error: {ex}"));
         }
     }
+
+    /// <summary>
+    /// User like Post.
+    /// </summary>
+    /// <returns>Response for the request: new Post.</returns>
+    // [HttpPost]
+    // [Authorize]
+
 }

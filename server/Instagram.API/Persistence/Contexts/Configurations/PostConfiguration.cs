@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Instagram.API.Domain.Models;
 
-namespace Supermarket.API.Persistence.Contexts.Configurations;
+namespace Instagram.API.Persistence.Contexts.Configurations;
 
 public class PostConfiguration : IEntityTypeConfiguration<Post>
 {
@@ -15,5 +15,7 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
         builder.Property(p => p.LastModified).HasDefaultValueSql("NOW()");
         builder.Property(p => p.MediaPath).IsRequired();
         builder.Property(p => p.Caption).HasMaxLength(2200);
+        builder.HasMany(p => p.Likes).WithOne(l => l.Post).HasForeignKey(p => p.PostId);
+        builder.HasMany(p => p.Comments).WithOne(c => c.Post).HasForeignKey(p => p.PostId);
     }
 }

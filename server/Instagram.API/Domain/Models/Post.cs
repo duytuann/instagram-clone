@@ -7,7 +7,7 @@ public class Post : BaseAuditableEntity
     public string? Caption { get; set; }
     public string? MediaPath { get; set; }
 
-    // public IList<Like> Likes { get; private set; } = new List<Like>();
-    // public IList<Comment> Comments { get; private set; } = new List<Comment>();
+    public IList<Like> Likes { get; private set; } = new List<Like>();
+    public IList<Comment> Comments { get; private set; } = new List<Comment>();
     public User? User { get; set; }
 }

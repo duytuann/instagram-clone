@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Instagram.API.Domain.Models;
 
-namespace Supermarket.API.Persistence.Contexts.Configurations;
+namespace Instagram.API.Persistence.Contexts.Configurations;
 
 public class FollowerConfiguration : IEntityTypeConfiguration<Follower>
 {
