@@ -19,7 +19,7 @@ const Post = (props: any) => {
     };
 
     return (
-        <div className={clsx('border-1 border-line', 'bg-white')}>
+        <div className={clsx('rounded-lg border-1 border-line', 'bg-white')}>
             <PostHeader {...props} />
             <PostPhoto {...props} />
             <PostBody {...props} />
