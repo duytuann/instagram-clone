@@ -1,24 +1,23 @@
-namespace Instagram.API.Domain.Models.Queries
+namespace Instagram.API.Domain.Models.Queries;
+
+public class Query
 {
-    public class Query
+    public int Page { get; protected set; }
+    public int ItemsPerPage { get; protected set; }
+
+    public Query(int page, int itemsPerPage)
     {
-        public int Page { get; protected set; }
-        public int ItemsPerPage { get; protected set; }
+        Page = page;
+        ItemsPerPage = itemsPerPage;
 
-        public Query(int page, int itemsPerPage)
+        if (Page <= 0)
         {
-            Page = page;
-            ItemsPerPage = itemsPerPage;
+            Page = 1;
+        }
 
-            if (Page <= 0)
-            {
-                Page = 1;
-            }
-
-            if (ItemsPerPage <= 0)
-            {
-                ItemsPerPage = 10;
-            }
+        if (ItemsPerPage <= 0)
+        {
+            ItemsPerPage = 10;
         }
     }
 }

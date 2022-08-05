@@ -37,6 +37,8 @@ public class UserService : IUserService
         if (existingUser == null)
             return null; // Don't have User in Db
 
+        
+
         existingUser.Username = user.Username;
         existingUser.Bio = user.Bio;
         existingUser.PhoneNumber = user.PhoneNumber;

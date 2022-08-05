@@ -15,7 +15,7 @@ public static class MiddlewareExtensions
                 Description = "Instagram API with ASP.NET Core 6",
                 Contact = new OpenApiContact
                 {
-                    Name = "Evandro Gayer Gomes",
+                    Name = "DuyTuan's Facebook",
                     Url = new Uri("https://www.facebook.com/deeteeseeting/")
                 },
                 License = new OpenApiLicense

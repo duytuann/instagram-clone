@@ -19,11 +19,15 @@ public class UserRepository : BaseRepository, IUserRepository
         // Create a pattern for a word that: 
         // Usernames can only use letters, numbers, underscores and periods
         string strRegexUsername = "^[A-Za-z0-9_.]+$";
+
         Regex validUsername = new Regex(strRegexUsername);
+
         if (!Regex.IsMatch(user.Username, strRegexUsername))
         {
             return null;
+
         }
+
         var isValid = _context.Users.FirstOrDefault(u => u.Email == user.Email || u.Username == user.Username);
         if (isValid != null)
         {
@@ -89,19 +93,8 @@ public class UserRepository : BaseRepository, IUserRepository
             User UserA = await _context.Users.FirstOrDefaultAsync(u => u.UserId == _userId1);
             User UserB = await _context.Users.FirstOrDefaultAsync(u => u.UserId == _userId2);
 
-            Following B = new Following
-            {
-                UserID = UserB.UserId,
-                DateFollowed = DateTime.Now,
-                User = UserB,
-            };
-
-            Follower A = new Follower
-            {
-                UserID = UserA.UserId,
-                DateFollowed = DateTime.Now,
-                User = UserA,
-            };
+            Following B = UserA.Followings.FirstOrDefault(f => f.UserID == UserB.UserId);
+            Follower A = UserB.Followers.FirstOrDefault(f => f.UserID == UserA.UserId);
 
             UserA.Followings.Remove(B);
             UserB.Followers.Remove(A);
