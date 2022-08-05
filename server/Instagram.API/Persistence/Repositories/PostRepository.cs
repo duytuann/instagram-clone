@@ -14,11 +14,11 @@ public class PostRepository : BaseRepository, IPostRepository
     public async Task<IEnumerable<Post>> GetAllAsync()
         => await _context.Posts.AsNoTracking().ToListAsync();
 
-    public async Task<Post> SaveAsync(String _MediaPath, string _Caption, string _UserId)
+    public async Task<Post> SaveAsync(String _MediaPath, string _Caption, Guid _UserId)
     {
         Post post = new Post
         {
-            UserId = Guid.Parse(_UserId),
+            UserId = _UserId,
             Caption = _Caption,
             MediaPath = _MediaPath
         };

@@ -6,5 +6,5 @@ namespace Instagram.API.Domain.Services;
 public interface IPostService
 {
     Task<IEnumerable<Post>> GetAllAsync();
-    Task<Post> SaveAsync(Stream fileStream, string fileName, string contentType, string Content, string UserId);
+    Task<Post> SaveAsync(Stream fileStream, string fileName, string contentType, string Content, Guid UserId);
 }

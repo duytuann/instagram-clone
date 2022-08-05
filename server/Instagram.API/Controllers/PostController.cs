@@ -45,7 +45,7 @@ public class PostController : BaseApiController
         var formCollection = await Request.ReadFormAsync();
         var file = formCollection.Files.First();
         string Content = formCollection["Caption"];
-        string UserId = formCollection["UserId"];
+        Guid UserId = this.GetUserId();
 
         try
         {

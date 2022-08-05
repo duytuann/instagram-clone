@@ -23,7 +23,7 @@ public class PostService : IPostService
         return await _postRepository.GetAllAsync();
     }
 
-    public async Task<Post> SaveAsync(Stream fileStream, string fileName, string contentType, string Caption, string UserId)
+    public async Task<Post> SaveAsync(Stream fileStream, string fileName, string contentType, string Caption, Guid UserId)
     {
         var newPost = new Post();
         try
