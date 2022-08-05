@@ -1,6 +1,6 @@
+import { ACCESS_TOKEN_KEY, REFRESH_ACCESS_TOKEN_KEY } from './consts';
 import { logoutSuccess } from '@/redux/slices/authSlice';
 import { store } from '@/redux/store';
-import { ACCESS_TOKEN_KEY, REFRESH_ACCESS_TOKEN_KEY } from './consts';
 
 const Storage = {
     get(key: string, defaultValue: string = '') {

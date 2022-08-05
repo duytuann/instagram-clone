@@ -38,8 +38,7 @@ const authSlice = createSlice({
             state.data.isAuthenticated = false;
             state.error = action.payload;
         },
-
-        logoutStart: (state, action: PayloadAction) => {
+        logoutStart: (state, action: PayloadAction<any>) => {
             state.status = ReduxStateType.LOADING;
             state.error = undefined;
         },
@@ -79,18 +78,6 @@ const authSlice = createSlice({
             state.status = ReduxStateType.ERROR;
             state.error = action.payload;
         },
-
-        // updateAvatarUserStart: (state, action: PayloadAction<UpdateAvatarUserParams>) => {
-        //     state.status = ReduxStateType.LOADING;
-        //     state.error = undefined;
-        // },
-        // updateAvatarUserSuccess: (state, action: PayloadAction) => {
-        //     state.status = ReduxStateType.SUCCESS;
-        // },
-        // updateAvatarUserFailed: (state, action: PayloadAction<Error>) => {
-        //     state.status = ReduxStateType.ERROR;
-        //     state.error = action.payload;
-        // },
     },
 });
 
@@ -101,14 +88,5 @@ export const {
     logoutStart,
     logoutSuccess,
     logoutFailed,
-    changePasswordStart,
-    changePasswordSuccess,
-    changePasswordFailed,
-    getInfoUserByIDStart,
-    getInfoUserByIDSuccess,
-    getInfoUserByIDFailed,
-    // updateAvatarUserStart,
-    // updateAvatarUserSuccess,
-    // updateAvatarUserFailed,
 } = authSlice.actions;
 export default authSlice.reducer;

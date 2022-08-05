@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
 import { createUserApi } from '@/core/http/apis/user';
 import { ResultResponse } from '@/core/models/ResultResponse';

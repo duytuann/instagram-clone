@@ -93,7 +93,6 @@ public class Startup
             app.UseHsts();
         }
 
-        // app.UseCustomSwagger();
         app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()

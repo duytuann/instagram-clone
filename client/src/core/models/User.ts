@@ -1,5 +1,3 @@
-import { ExecOptionsWithStringEncoding } from 'child_process';
-
 export interface User {
     Created?: string;
     CreatedBy?: string;

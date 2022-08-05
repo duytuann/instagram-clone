@@ -1,14 +1,17 @@
 import { forwardRef } from 'react';
-
+import clsx from 'clsx';
 import { faBookmark, faUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRepeat, faSliders } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { logoutStart } from '@/redux/slices/authSlice';
-import clsx from 'clsx';
 
 const HeaderRightMenu = forwardRef<any, any>((_props, forwardRef) => {
     const dispatch = useAppDispatch();
+
+    const {
+        data: { userToken },
+    } = useAppSelector((state) => state.auth);
 
     return (
         <ul
@@ -36,7 +39,7 @@ const HeaderRightMenu = forwardRef<any, any>((_props, forwardRef) => {
                 <span>Switch Accounts</span>
             </li>
             <li
-                onClick={() => dispatch(logoutStart())}
+                onClick={() => dispatch(logoutStart(userToken))}
                 className={clsx('flex items-center py-3 pl-4 border-t border-line', 'select-none', 'hover:bg-gray-50')}
             >
                 Log Out

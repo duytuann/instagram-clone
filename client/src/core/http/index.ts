@@ -1,8 +1,8 @@
-import { API_REQUEST_TIMEOUT, RESPONSE_CODE } from '@/helpers/consts';
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
-import storage from '@/helpers/storage';
 import { loadProgressBar } from 'x-axios-progress-bar';
 import { HttpError } from './types';
+import { API_REQUEST_TIMEOUT, RESPONSE_CODE } from '@/helpers/consts';
+import storage from '@/helpers/storage';
 
 const RESTFUL_BASE_URL = (window as any)?.env?.API || import.meta.env.VITE_APP_RESTFUL_BASE_URL;
 
@@ -62,7 +62,7 @@ abstract class HttpClient {
             async (req: AxiosRequestConfig) => {
                 const token = await storage.getAccessToken();
                 if (token) {
-                    req.headers['Authorization'] = `${token}`;
+                    req.headers['Authorization'] = `Bearer ${token}`;
                 }
                 requestLog(req.method, req.url, req, LogType.REQUEST, req.baseURL || '');
 

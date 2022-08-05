@@ -24,6 +24,8 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: getAllPost</returns>
     [HttpGet]
     [Authorize]
+    [ProducesResponseType(typeof(BaseResponse<PostResource>), 201)]
+    [ProducesResponseType(typeof(BaseResponse<string>), 400)]
     public async Task<ActionResult<BaseResponse<PostResource>>> GetAllAsync()
     {
         var postList = await _postService.GetAllAsync();

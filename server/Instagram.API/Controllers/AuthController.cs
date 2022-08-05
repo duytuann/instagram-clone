@@ -50,11 +50,13 @@ public class AuthController : BaseApiController
             issuer: "http://localhost:5000",
             audience: "http://localhost:5000",
             claims,
-            expires: DateTime.Now.AddMinutes(120),
+            // expires: DateTime.UtcNow.AddDays(1),
+            expires: DateTime.Now.AddDays(1),
             signingCredentials: signinCredentials
         );
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
         var resource = new AuthResource
         {
             Token = tokenString,

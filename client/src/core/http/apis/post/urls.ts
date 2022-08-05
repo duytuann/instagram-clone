@@ -1,4 +1,4 @@
-export const GetAllUrl = '/getall';
-export const CreateUrl = '/save';
-export const UpdateUrl = '/update';
-export const DeleteUrl = '/delete';
+export const GetAllUrl = '/GetAll';
+export const CreateUrl = '/Create';
+export const UpdateUrl = '/Update';
+export const DeleteUrl = '/Delete';
