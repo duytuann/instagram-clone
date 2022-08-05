@@ -61,7 +61,7 @@ public class PostController : BaseApiController
             }
             else
             {
-                return BadRequest(new BaseResponse<string>("you need to upload your photo"));
+                return BadRequest(new BaseResponse<string>("You need to upload your photo"));
             }
         }
         catch (Exception ex)
@@ -73,8 +73,36 @@ public class PostController : BaseApiController
     /// <summary>
     /// User like Post.
     /// </summary>
-    /// <returns>Response for the request: new Post.</returns>
-    // [HttpPost]
-    // [Authorize]
+    /// <returns>Response for the request: like Post.</returns>
+    [HttpPost]
+    [Authorize]
+    public async Task<ActionResult<BaseResponse<String>>> Like(string postId)
+    {
+        Guid UserId = this.GetUserId();
+        Guid PostId = Guid.Parse(postId);
+        bool isLikeOk = await _postService.Like(UserId, PostId);
 
+        if (isLikeOk == false)
+            return BadRequest(new BaseResponse<string>("Failed to Like this Post"));
+
+        return new OkObjectResult(new BaseResponse<String>(new String("Liked Successfully")));
+    }
+
+    /// <summary>
+    /// User unlike Post.
+    /// </summary>
+    /// <returns>Response for the request: unlike Post.</returns>
+    [HttpPost]
+    [Authorize]
+    public async Task<ActionResult<BaseResponse<String>>> Unlike(string postId)
+    {
+        Guid UserId = this.GetUserId();
+        Guid PostId = Guid.Parse(postId);
+        bool isUnlikeOk = await _postService.Unlike(UserId, PostId);
+
+        if (isUnlikeOk == false)
+            return BadRequest(new BaseResponse<string>("Filed to Unlike this Post"));
+
+        return new OkObjectResult(new BaseResponse<String>(new String("Unliked Successfully")));
+    }
 }

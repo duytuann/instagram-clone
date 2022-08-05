@@ -27,4 +27,23 @@ public class PostRepository : BaseRepository, IPostRepository
 
         return post;
     }
+
+    public async Task Like(Guid UserId, Guid PostId)
+    {
+        Like like = new Like
+        {
+            UserId = UserId,
+            PostId = PostId,
+            LastModified = DateTime.Now,
+        };
+
+        await _context.Likes.AddAsync(like);
+    }
+
+    public async Task Unlike(Guid UserId, Guid PostId)
+    {
+        Like like = await _context.Likes.FirstOrDefaultAsync(l => l.PostId == PostId && l.UserId == UserId);
+
+        _context.Likes.Remove(like);
+    }
 }

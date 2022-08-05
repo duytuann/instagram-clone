@@ -49,4 +49,34 @@ public class PostService : IPostService
 
         return newPost;
     }
+
+    public async Task<bool> Like(Guid UserId, Guid PostId)
+    {
+        try
+        {
+            await _postRepository.Like(UserId, PostId);
+            await _unitOfWork.CompleteAsync();
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> Unlike(Guid UserId, Guid PostId)
+    {
+        try
+        {
+            await _postRepository.Unlike(UserId, PostId);
+            await _unitOfWork.CompleteAsync();
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
