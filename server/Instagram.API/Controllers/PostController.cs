@@ -37,6 +37,7 @@ public class PostController : BaseApiController
     /// <summary>
     /// Upload file from form-data.
     /// </summary>
+    /// <param name="resource">FormData: File and Caption.</param>
     /// <returns>Response for the request: new Post.</returns>
     [HttpPost]
     [Authorize]
@@ -73,10 +74,11 @@ public class PostController : BaseApiController
     /// <summary>
     /// User like Post.
     /// </summary>
+    /// <param name="resource">PostId want to like.</param>
     /// <returns>Response for the request: like Post.</returns>
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<String>>> Like(string postId)
+    public async Task<ActionResult<BaseResponse<String>>> LikeAsync(string postId)
     {
         Guid UserId = this.GetUserId();
         Guid PostId = Guid.Parse(postId);
@@ -91,13 +93,15 @@ public class PostController : BaseApiController
     /// <summary>
     /// User unlike Post.
     /// </summary>
+    /// <param name="resource">PostId want to unlike.</param>
     /// <returns>Response for the request: unlike Post.</returns>
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<String>>> Unlike(string postId)
+    public async Task<ActionResult<BaseResponse<String>>> UnlikeAsync(string postId)
     {
         Guid UserId = this.GetUserId();
         Guid PostId = Guid.Parse(postId);
+        
         bool isUnlikeOk = await _postService.Unlike(UserId, PostId);
 
         if (isUnlikeOk == false)
@@ -105,4 +109,17 @@ public class PostController : BaseApiController
 
         return new OkObjectResult(new BaseResponse<String>(new String("Unliked Successfully")));
     }
+
+    /// <summary>
+    /// Get Detail by PostId.
+    /// </summary>
+    /// <param name="resource">PostId want to get Detail.</param>
+    /// <returns>Response for the request: get Detail by Postid.</returns>
+    // [HttpPost]
+    // [Authorize]
+    // public async Task<ActionResult<String>> GetDetailByPostIdAsync(string postId)
+    // {
+    //     Guid PostId = Guid.Parse(postId);
+        
+    // }
 }
