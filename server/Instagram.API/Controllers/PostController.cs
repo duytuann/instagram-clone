@@ -83,7 +83,7 @@ public class PostController : BaseApiController
         Guid PostId = Guid.Parse(postId);
         bool isLikeOk = await _postService.Like(UserId, PostId);
 
-        if (isLikeOk == false)
+        if (!isLikeOk)
             return BadRequest(new BaseResponse<string>("Failed to Like this Post"));
 
         return new OkObjectResult(new BaseResponse<Response>(new Response
@@ -106,8 +106,8 @@ public class PostController : BaseApiController
 
         bool isUnlikeOk = await _postService.Unlike(UserId, PostId);
 
-        if (isUnlikeOk == false)
-            return BadRequest(new BaseResponse<string>("Filed to Unlike this Post"));
+        if (!isUnlikeOk)
+            return BadRequest(new BaseResponse<string>("Failed to Unlike this Post"));
 
         return new OkObjectResult(new BaseResponse<Response>(new Response
         {
@@ -120,12 +120,24 @@ public class PostController : BaseApiController
     /// </summary>
     /// <param name="resource">Comment and PostId.</param>
     /// <returns>Response for the request: Comment on Post.</returns>
-    // [HttpPost]
-    // [Authorize]
-    // public async Task<ActionResult<Object>> CommentAsync([FromBody] CommentRequest request)
-    // {
+    [HttpPost]
+    [Authorize]
+    public async Task<ActionResult<BaseResponse<Response>>> CommentAsync([FromBody] CommentRequest request)
+    {
+        string? comment = request.CommentText;
+        Guid postId = Guid.Parse(request.PostId);
+        Guid userId = this.GetUserId();
 
-    // }
+        bool isCommentOk = await _postService.Comment(comment, userId, postId);
+
+        if (!isCommentOk)
+            return BadRequest(new BaseResponse<string>("Failed to Comment on this Post"));
+
+        return new OkObjectResult(new BaseResponse<Response>(new Response
+        {
+            message = "Comment success"
+        }));
+    }
 
     /// <summary>
     /// Get Detail by PostId.

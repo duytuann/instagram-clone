@@ -46,4 +46,17 @@ public class PostRepository : BaseRepository, IPostRepository
 
         _context.Likes.Remove(like);
     }
+
+    public async Task Comment(string _comment, Guid _userId, Guid _postId)
+    {
+        Comment comment = new Comment
+        {
+            PostId = _postId,
+            UserId = _userId,
+            CommentText = _comment,
+            Created = DateTime.Now
+        };
+
+        await _context.Comments.AddAsync(comment);
+    }
 }

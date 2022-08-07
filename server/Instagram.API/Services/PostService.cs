@@ -79,4 +79,19 @@ public class PostService : IPostService
             return false;
         }
     }
+
+    public async Task<bool> Comment(string Comment, Guid UserId, Guid PostId)
+    {
+        try
+        {
+            await _postRepository.Comment(Comment, UserId, PostId);
+            await _unitOfWork.CompleteAsync();
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

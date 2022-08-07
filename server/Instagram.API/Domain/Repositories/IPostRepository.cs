@@ -8,4 +8,5 @@ public interface IPostRepository
     Task<Post> SaveAsync(String MediaPath, string Caption, Guid UserId);
     Task Like(Guid UserId, Guid PostId);
     Task Unlike(Guid UserId, Guid PostId);
+    Task Comment(string Comment, Guid _userId, Guid PostId);
 }

@@ -13,5 +13,5 @@ public interface IPostService
 
     Task<bool> Unlike(Guid UserId, Guid PostId);
 
-    // Task<Object> Comment(Guid PostId, String CommentText);
+    Task<bool> Comment(String CommentText, Guid _userId, Guid PostId);
 }
