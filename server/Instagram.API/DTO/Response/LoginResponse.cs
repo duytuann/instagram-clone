@@ -1,6 +1,6 @@
-namespace Instagram.API.Resources;
+namespace Instagram.API.DTO.Response;
 
-public class AuthResource
+public class LoginResponse
 {
     public string? Token { get; set; }
     public Guid UserId { get; set; }

@@ -1,6 +1,6 @@
-namespace Instagram.API.Resources;
+namespace Instagram.API.DTO.Response;
 
-public class PostResource
+public class PostResponse
 {
     public Guid PostId { get; set; }
     public Guid UserId { get; set; }

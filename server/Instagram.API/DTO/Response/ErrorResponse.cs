@@ -1,16 +1,16 @@
-namespace Instagram.API.Resources;
+namespace Instagram.API.DTO.Response;
 
-public class ErrorResource
+public class ErrorResponse
 {
     public bool Success => false;
     public List<string> Messages { get; private set; }
 
-    public ErrorResource(List<string> messages)
+    public ErrorResponse(List<string> messages)
     {
         this.Messages = messages ?? new List<string>();
     }
 
-    public ErrorResource(string message)
+    public ErrorResponse(string message)
     {
         this.Messages = new List<string>();
 

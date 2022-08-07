@@ -27,6 +27,7 @@ public class UserService : IUserService
 
         if (res == null)
             return null; // wrong logic, should be return success : false;
+            
         return res;
     }
 
@@ -36,8 +37,6 @@ public class UserService : IUserService
 
         if (existingUser == null)
             return null; // Don't have User in Db
-
-        
 
         existingUser.Username = user.Username;
         existingUser.Bio = user.Bio;

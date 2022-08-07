@@ -1,6 +1,6 @@
-namespace Instagram.API.Resources;
+namespace Instagram.API.DTO.Request;
 
-public class UpdateUserResource
+public class UpdateUserRequest
 {
     public string? UserId { get; set; }
     public string? Username { get; set; }

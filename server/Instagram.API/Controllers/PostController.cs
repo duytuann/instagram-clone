@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using Instagram.API.Domain.Models;
 using Instagram.API.Domain.Services;
-using Instagram.API.Resources;
+using Instagram.API.DTO.Request;
+using Instagram.API.DTO.Response;
 using Instagram.API.Domain.Services.Communication;
 namespace Instagram.API.Controllers;
 
@@ -24,14 +25,12 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: getAllPost</returns>
     [HttpGet]
     [Authorize]
-    [ProducesResponseType(typeof(BaseResponse<PostResource>), 201)]
-    [ProducesResponseType(typeof(BaseResponse<string>), 400)]
-    public async Task<ActionResult<BaseResponse<PostResource>>> GetAllAsync()
+    public async Task<ActionResult<BaseResponse<PostResponse>>> GetAllAsync()
     {
         var postList = await _postService.GetAllAsync();
-        var resources = _mapper.Map<IEnumerable<Post>, IEnumerable<PostResource>>(postList);
+        var resource = _mapper.Map<IEnumerable<Post>, IEnumerable<PostResponse>>(postList);
 
-        return new OkObjectResult(new BaseResponse<IEnumerable<PostResource>>(resources)); ;
+        return new OkObjectResult(new BaseResponse<IEnumerable<PostResponse>>(resource)); ;
     }
 
     /// <summary>
@@ -41,7 +40,7 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: new Post.</returns>
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<PostResource>>> CreateAsync([FromForm] CreatePostResource dto)
+    public async Task<ActionResult<BaseResponse<PostResponse>>> CreateAsync([FromForm] CreatePostRequest dto)
     {
         var formCollection = await Request.ReadFormAsync();
         var file = formCollection.Files.First();
@@ -56,9 +55,9 @@ public class PostController : BaseApiController
 
                 Post newPost = await _postService.SaveAsync(file.OpenReadStream(), fileName, file.ContentType, Content, UserId);
 
-                var resources = _mapper.Map<Post, PostResource>(newPost);
+                var resource = _mapper.Map<Post, PostResponse>(newPost);
 
-                return new OkObjectResult(new BaseResponse<PostResource>(resources));
+                return new OkObjectResult(new BaseResponse<PostResponse>(resource));
             }
             else
             {
@@ -78,7 +77,7 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: like Post.</returns>
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<String>>> LikeAsync(string postId)
+    public async Task<ActionResult<BaseResponse<Response>>> LikeAsync(string postId)
     {
         Guid UserId = this.GetUserId();
         Guid PostId = Guid.Parse(postId);
@@ -87,7 +86,10 @@ public class PostController : BaseApiController
         if (isLikeOk == false)
             return BadRequest(new BaseResponse<string>("Failed to Like this Post"));
 
-        return new OkObjectResult(new BaseResponse<String>(new String("Liked Successfully")));
+        return new OkObjectResult(new BaseResponse<Response>(new Response
+        {
+            message = "Like Success"
+        }));
     }
 
     /// <summary>
@@ -97,18 +99,33 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: unlike Post.</returns>
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<String>>> UnlikeAsync(string postId)
+    public async Task<ActionResult<BaseResponse<Response>>> UnlikeAsync(string postId)
     {
         Guid UserId = this.GetUserId();
         Guid PostId = Guid.Parse(postId);
-        
+
         bool isUnlikeOk = await _postService.Unlike(UserId, PostId);
 
         if (isUnlikeOk == false)
             return BadRequest(new BaseResponse<string>("Filed to Unlike this Post"));
 
-        return new OkObjectResult(new BaseResponse<String>(new String("Unliked Successfully")));
+        return new OkObjectResult(new BaseResponse<Response>(new Response
+        {
+            message = "Unlike success"
+        }));
     }
+
+    /// <summary>
+    /// Comment on Post.
+    /// </summary>
+    /// <param name="resource">Comment and PostId.</param>
+    /// <returns>Response for the request: Comment on Post.</returns>
+    // [HttpPost]
+    // [Authorize]
+    // public async Task<ActionResult<Object>> CommentAsync([FromBody] CommentRequest request)
+    // {
+
+    // }
 
     /// <summary>
     /// Get Detail by PostId.
@@ -120,6 +137,6 @@ public class PostController : BaseApiController
     // public async Task<ActionResult<String>> GetDetailByPostIdAsync(string postId)
     // {
     //     Guid PostId = Guid.Parse(postId);
-        
+
     // }
 }

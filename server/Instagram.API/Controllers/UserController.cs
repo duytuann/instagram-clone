@@ -5,7 +5,8 @@ using AutoMapper;
 using Instagram.API.Domain.Services.Communication;
 using Instagram.API.Domain.Services;
 using Instagram.API.Domain.Models;
-using Instagram.API.Resources;
+using Instagram.API.DTO.Request;
+using Instagram.API.DTO.Response;
 
 namespace Instagram.API.Controllers;
 
@@ -26,13 +27,12 @@ public class UserController : BaseApiController
     /// <returns>List of Users.</returns>
     [HttpGet]
     [Authorize]
-    [ProducesResponseType(typeof(IEnumerable<UserResource>), 200)]
-    public async Task<ActionResult<BaseResponse<IEnumerable<UserResource>>>> GetAllAsync()
+    public async Task<ActionResult<BaseResponse<IEnumerable<UserResponse>>>> GetAllAsync()
     {
         var userList = await _userService.ListAsync();
-        var resources = _mapper.Map<IEnumerable<User>, IEnumerable<UserResource>>(userList);
+        var resource = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(userList);
 
-        return new OkObjectResult(new BaseResponse<IEnumerable<UserResource>>(resources));
+        return new OkObjectResult(new BaseResponse<IEnumerable<UserResponse>>(resource));
     }
 
     /// <summary>
@@ -43,13 +43,14 @@ public class UserController : BaseApiController
     [HttpPost]
     [ProducesResponseType(typeof(BaseResponse<User>), 201)]
     [ProducesResponseType(typeof(BaseResponse<string>), 400)]
-    public async Task<ActionResult<BaseResponse<User>>> SignUpAsync([FromBody] SaveUserResource resource)
+    public async Task<ActionResult<BaseResponse<User>>> SignUpAsync([FromBody] SaveUserRequest resource)
     {
-        var user = _mapper.Map<SaveUserResource, User>(resource);
+        var user = _mapper.Map<SaveUserRequest, User>(resource);
         // Hash Password
         user.PassWord = BCrypt.Net.BCrypt.HashPassword(user.PassWord);
 
         var newUser = await _userService.SaveAsync(user);
+
         if (newUser == null)
             return BadRequest(new BaseResponse<string>("Failed to create new user"));
 
@@ -63,11 +64,9 @@ public class UserController : BaseApiController
     /// <returns> Reponse for the request.</returns>
     [HttpPut]
     [Authorize]
-    [ProducesResponseType(typeof(BaseResponse<User>), 201)]
-    [ProducesResponseType(typeof(BaseResponse<string>), 400)]
-    public async Task<ActionResult<BaseResponse<User>>> UpdateAsync([FromBody] UpdateUserResource resource)
+    public async Task<ActionResult<BaseResponse<User>>> UpdateAsync([FromBody] UpdateUserRequest resource)
     {
-        var user = _mapper.Map<UpdateUserResource, User>(resource);
+        var user = _mapper.Map<UpdateUserRequest, User>(resource);
         var result = await _userService.UpdateAsync(Guid.Parse(resource.UserId), user);
 
         if (result == null)
@@ -83,9 +82,7 @@ public class UserController : BaseApiController
     /// <returns>Reponse for the request.</returns>
     [HttpPost]
     [Authorize]
-    [ProducesResponseType(typeof(BaseResponse<String>), 201)]
-    [ProducesResponseType(typeof(BaseResponse<string>), 400)]
-    public async Task<ActionResult<BaseResponse<String>>> FollowAsync(string UserId)
+    public async Task<ActionResult<BaseResponse<Response>>> FollowAsync(string UserId)
     {
         Guid _userId1 = this.GetUserId();
         Guid _userId2 = Guid.Parse(UserId);
@@ -94,7 +91,10 @@ public class UserController : BaseApiController
         if (!isFollowOk)
             return BadRequest(new BaseResponse<string>("Failed to follow User"));
 
-        return new OkObjectResult(new BaseResponse<String>(new String("Successful to follow User")));
+        return new OkObjectResult(new BaseResponse<Response>(new Response
+        {
+            message = "Follow Success"
+        }));
     }
 
     /// <sumary>
@@ -104,9 +104,7 @@ public class UserController : BaseApiController
     /// <returns>Reponse for the request.</returns>
     [HttpPost]
     [Authorize]
-    [ProducesResponseType(typeof(BaseResponse<String>), 201)]
-    [ProducesResponseType(typeof(BaseResponse<string>), 400)]
-    public async Task<ActionResult<BaseResponse<String>>> UnfollowAsync(string UserId)
+    public async Task<ActionResult<BaseResponse<Response>>> UnfollowAsync(string UserId)
     {
         Guid _userId1 = this.GetUserId();
         Guid _userId2 = Guid.Parse(UserId);
@@ -115,6 +113,9 @@ public class UserController : BaseApiController
         if (!isUnfollowOk)
             return BadRequest(new BaseResponse<string>("Failed to unfollow User"));
 
-        return new OkObjectResult(new BaseResponse<String>(new String("Successful to unfollow User")));
+        return new OkObjectResult(new BaseResponse<Response>(new Response
+        {
+            message = "Unfollow Success"
+        }));
     }
 }

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Instagram.API.Domain.Models;
-using Instagram.API.Resources;
+using Instagram.API.DTO.Request;
+using Instagram.API.DTO.Response;
 
 namespace Instagram.API.Mapping
 {
@@ -8,8 +9,8 @@ namespace Instagram.API.Mapping
     {
         public ModelToResourceProfile()
         {
-            CreateMap<User, UserResource>();
-            CreateMap<Post, PostResource>();
+            CreateMap<User, UserResponse>();
+            CreateMap<Post, PostResponse>();
         }
     }
 }

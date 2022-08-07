@@ -1,8 +1,9 @@
-using Instagram.API.Domain.Models;
+using Instagram.API.DTO.Request;
+using Instagram.API.DTO.Response;
 
 namespace Instagram.API.Domain.Services;
 
 public interface IAuthService
 {
-    User AuthAsync(Login login);
+    LoginResponse AuthAsync(LoginRequest login);
 }
