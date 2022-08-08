@@ -28,18 +28,16 @@ const PostBody = (post: Post) => {
                 </span>
 
                 <div className="flex">
-                    <span className={clsx('font-medium mr-2', 'cursor-pointer select-none')}>
-                        {'usernameplacehoder'}
-                    </span>
-                    <p>{post.Caption}</p>
+                    <span className={clsx('font-bold mr-2', 'cursor-pointer select-none')}>{post.username}</span>
+                    <p>{post.caption}</p>
                 </div>
 
-                {5 > 0 && (
+                {post.comments.length > 0 && (
                     <span
                         onClick={() => {}} // show post detail
                         className={clsx('text-base-gray', 'cursor-pointer select-none')}
                     >
-                        View all {5} comments
+                        View all {post.comments.length} comments
                     </span>
                 )}
 
@@ -51,7 +49,7 @@ const PostBody = (post: Post) => {
                 </div>
 
                 <span className={clsx('uppercase text-xs-1', 'text-base-gray', 'cursor-pointer select-none')}>
-                    {calculateElapsedTime(post.LastModified)}
+                    {calculateElapsedTime(post.lastModified)}
                 </span>
             </div>
         </div>

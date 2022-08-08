@@ -20,7 +20,7 @@ public class PostService : IPostService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<Post>> GetAllAsync()
+    public async Task<IEnumerable<PostDetailResponse>> GetAllAsync()
     {
         return await _postRepository.GetAllAsync();
     }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link , useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
@@ -10,7 +10,7 @@ import { loginSchema } from '@/helpers/formSchemas';
 import { LoginInput } from '@/utils/types';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { LoginParams } from '@/core/http/apis/auth/types';
-import { loginStart } from "@/redux/slices/authSlice"
+import { loginStart } from '@/redux/slices/authSlice';
 import { SpinnerRing } from '@/components/Spinner';
 import AuthLayout from '@/layouts/AuthLayout';
 import FormField from '@/components/FormField';
@@ -23,11 +23,11 @@ import { logo } from '@/assets/images';
 const Login = () => {
     let navigate = useNavigate();
     const dispatch = useAppDispatch();
-    
+
     const {
         data: { isAuthenticated },
         status,
-    } = useAppSelector(state => state.auth);
+    } = useAppSelector((state) => state.auth);
 
     const {
         register,
@@ -41,23 +41,22 @@ const Login = () => {
     });
 
     const handleLoginSubmit = async ({ password, username }: LoginParams) => {
-        if (isAuthenticated) 
-            return;
-    
-        dispatch(loginStart({  username,password }));
+        if (isAuthenticated) return;
+
+        dispatch(loginStart({ username, password }));
     };
 
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/');
         }
-      }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate]);
 
     return (
         <AuthLayout>
-            <div className={clsx('flex justify-center lg:w-container-w mx-auto')}>
+            <div className={clsx('flex justify-center lg:w-container-w mx-auto h-screen align-middle')}>
                 <LoginScreenshot />
-                <div className={clsx('w-form-w py-9')}>
+                <div className={clsx('w-form-w py-9 h-fit')}>
                     <div className="wrapper-border px-10 py-12">
                         <img className="mx-auto" src={logo} alt="Logo" />
 
@@ -85,8 +84,14 @@ const Login = () => {
 
                         <FormDivider className="my-3" />
 
-                        <ButtonFacebook disabled={status === ReduxStateType.LOADING || isAuthenticated} className="mt-6" />
-                        <ButtonGoogle disabled={status === ReduxStateType.LOADING || isAuthenticated} className="mt-3" />
+                        <ButtonFacebook
+                            disabled={status === ReduxStateType.LOADING || isAuthenticated}
+                            className="mt-6"
+                        />
+                        <ButtonGoogle
+                            disabled={status === ReduxStateType.LOADING || isAuthenticated}
+                            className="mt-3"
+                        />
 
                         <Link to={routes.forgotPassword}>
                             <a className={clsx('block text-sm-1 w-full text-center mt-7', 'text-primary')}>
@@ -99,7 +104,7 @@ const Login = () => {
                         Don&apos;t have an account?
                         <Link to={routes.signUp}>
                             <a className={clsx('ml-1', 'text-primary')}>Sign up</a>
-                        </Link> 
+                        </Link>
                     </div>
                 </div>
             </div>

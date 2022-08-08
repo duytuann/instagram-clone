@@ -25,12 +25,11 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: getAllPost</returns>
     [HttpGet]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<PostResponse>>> GetAllAsync()
+    public async Task<ActionResult<BaseResponse<PostDetailResponse>>> GetAllAsync()
     {
         var postList = await _postService.GetAllAsync();
-        var resource = _mapper.Map<IEnumerable<Post>, IEnumerable<PostResponse>>(postList);
 
-        return new OkObjectResult(new BaseResponse<IEnumerable<PostResponse>>(resource)); ;
+        return new OkObjectResult(new BaseResponse<IEnumerable<PostDetailResponse>>(postList)); ;
     }
 
     /// <summary>

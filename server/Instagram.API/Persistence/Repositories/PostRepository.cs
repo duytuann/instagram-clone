@@ -11,8 +11,25 @@ public class PostRepository : BaseRepository, IPostRepository
 {
     public PostRepository(AppDbContext context) : base(context) { }
 
-    public async Task<IEnumerable<Post>> GetAllAsync()
-        => await _context.Posts.AsNoTracking().ToListAsync();
+    public async Task<IEnumerable<PostDetailResponse>> GetAllAsync()
+        => await _context.Posts
+                        .Include(post => post.User)
+                        .Include(post => post.Likes)
+                        .Include(post => post.Comments)
+                        .Select(
+                            data => new PostDetailResponse
+                            {
+                                PostId = data.PostId,
+                                UserId = data.UserId,
+                                Username = data.User.Username,
+                                MediaPath = data.MediaPath,
+                                Likes = data.Likes.Count(),
+                                Caption = data.Caption,
+                                IsLiked = false,
+                                Comments = data.Comments,
+                            }
+                        ).ToListAsync();
+
 
     public async Task<Post> SaveAsync(String _MediaPath, string _Caption, Guid _UserId)
     {

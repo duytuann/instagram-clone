@@ -27,7 +27,7 @@ const PostHeader = (post: Post) => {
             <div className="flex items-center">
                 <Skeleton
                     onClick={() => {
-                        navigate(`/${post.Username}`);
+                        navigate(`/${post.username}`);
                     }}
                     rounded
                     objectFit="cover"
@@ -37,19 +37,19 @@ const PostHeader = (post: Post) => {
                 />
                 <span
                     onClick={() => {
-                        navigate(`/${post.Username}`);
+                        navigate(`/${post.username}`);
                     }}
                     className={clsx('text-sm font-medium mr-3', 'cursor-pointer')}
                 >
-                    {post.Username}
+                    {post.username}
                 </span>
-                {!post.IsFollowed &&
+                {!post.isFollowed &&
                     (status === ReduxStateType.LOADING ? (
                         <SpinnerRing className="w-10 h-10" />
                     ) : (
                         <button
                             onClick={() => {
-                                dispatch(followUserStart(post.UserId));
+                                dispatch(followUserStart(post.userId));
                             }}
                             className={clsx('btn text-sm-1', 'text-primary')}
                         >
