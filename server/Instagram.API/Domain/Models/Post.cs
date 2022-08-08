@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Instagram.API.Domain.Models;
 
 public class Post : BaseAuditableEntity
@@ -9,5 +11,6 @@ public class Post : BaseAuditableEntity
 
     public IList<Like> Likes { get; private set; } = new List<Like>();
     public IList<Comment> Comments { get; private set; } = new List<Comment>();
+    [JsonIgnore]
     public User? User { get; set; }
 }

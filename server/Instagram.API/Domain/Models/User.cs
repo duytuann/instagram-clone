@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace Instagram.API.Domain.Models;
 
 public class User : BaseAuditableEntity

@@ -9,7 +9,6 @@ namespace Instagram.API.Persistence.Repositories;
 
 public class PostRepository : BaseRepository, IPostRepository
 {
-    // The repository inherits the BaseRepository and implements ICategoryRepository.
     public PostRepository(AppDbContext context) : base(context) { }
 
     public async Task<IEnumerable<Post>> GetAllAsync()
@@ -50,12 +49,15 @@ public class PostRepository : BaseRepository, IPostRepository
 
     public async Task Comment(string _comment, Guid _userId, Guid _postId)
     {
+        User userComment = await _context.Users.FirstOrDefaultAsync(u => u.UserId == _userId);
+
         Comment comment = new Comment
         {
             PostId = _postId,
             UserId = _userId,
             CommentText = _comment,
-            Created = DateTime.Now
+            Created = DateTime.Now,
+            CommentBy = userComment.Username
         };
 
         await _context.Comments.AddAsync(comment);
@@ -63,21 +65,6 @@ public class PostRepository : BaseRepository, IPostRepository
 
     public async Task<PostDetailResponse> GetPostDetailByIdAsync(Guid PostId)
     {
-        // var post = await _context.Posts.FirstOrDefaultAsync(p => p.PostId == PostId);
-
-        // var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == post.UserId);
-
-        // var comments = await _context.Comments.Where(c => c.PostId == PostId).ToListAsync();
-
-        // var likes = await _context.Likes.Where(l => l.PostId == PostId).ToListAsync();
-
-        // var data = await _context.Users
-        //     .Include(user => user.Posts.Where(post => post.PostId == PostId))
-        //         .ThenInclude(post => post.Comments)
-        //     .Include(user => user.Posts)
-        //         .ThenInclude(post => post.Likes)
-        //     .FirstOrDefaultAsync();
-
         var data = await _context.Posts
                 .Where(post => post.PostId == PostId)
                 .Include(post => post.User)
