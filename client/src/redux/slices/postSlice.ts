@@ -39,6 +39,24 @@ const postSlice = createSlice({
         createPostFailed: (state, action: PayloadAction<Error>) => {
             state.status = ReduxStateType.ERROR;
         },
+        likePostStart: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.LOADING;
+        },
+        likePostSuccess: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.SUCCESS;
+        },
+        likePostFailed: (state, action: PayloadAction<Error>) => {
+            state.status = ReduxStateType.ERROR;
+        },
+        unlikePostStart: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.LOADING;
+        },
+        unlikePostSuccess: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.SUCCESS;
+        },
+        unlikePostFailed: (state, action: PayloadAction<Error>) => {
+            state.status = ReduxStateType.ERROR;
+        },
     },
 });
 
@@ -49,5 +67,11 @@ export const {
     createPostStart,
     createPostSuccess,
     createPostFailed,
+    likePostStart,
+    likePostSuccess,
+    likePostFailed,
+    unlikePostStart,
+    unlikePostSuccess,
+    unlikePostFailed,
 } = postSlice.actions;
 export default postSlice.reducer;

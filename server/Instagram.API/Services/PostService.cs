@@ -3,6 +3,7 @@ using Azure.Storage.Blobs.Models;
 using Instagram.API.Domain.Services;
 using Instagram.API.Domain.Repositories;
 using Instagram.API.Domain.Models;
+using Instagram.API.DTO.Response;
 
 namespace Instagram.API.Services;
 
@@ -11,6 +12,7 @@ public class PostService : IPostService
     private readonly string _storageConnectionString;
     private readonly IPostRepository _postRepository;
     private readonly IUnitOfWork _unitOfWork;
+
     public PostService(IConfiguration configuration, IPostRepository postRepository, IUnitOfWork unitOfWork)
     {
         _storageConnectionString = configuration.GetConnectionString("AzureStorage");
@@ -93,5 +95,10 @@ public class PostService : IPostService
         {
             return false;
         }
+    }
+
+    public async Task<PostDetailResponse> GetPostDetailAsync(Guid PostId)
+    {
+        return await _postRepository.GetPostDetailByIdAsync(PostId);
     }
 }

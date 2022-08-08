@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
+
+using Instagram.API.DTO.Response;
 using Instagram.API.Domain.Models;
 using Instagram.API.Domain.Repositories;
 using Instagram.API.Persistence.Contexts;
@@ -58,5 +59,47 @@ public class PostRepository : BaseRepository, IPostRepository
         };
 
         await _context.Comments.AddAsync(comment);
+    }
+
+    public async Task<PostDetailResponse> GetPostDetailByIdAsync(Guid PostId)
+    {
+        // var post = await _context.Posts.FirstOrDefaultAsync(p => p.PostId == PostId);
+
+        // var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == post.UserId);
+
+        // var comments = await _context.Comments.Where(c => c.PostId == PostId).ToListAsync();
+
+        // var likes = await _context.Likes.Where(l => l.PostId == PostId).ToListAsync();
+
+        // var data = await _context.Users
+        //     .Include(user => user.Posts.Where(post => post.PostId == PostId))
+        //         .ThenInclude(post => post.Comments)
+        //     .Include(user => user.Posts)
+        //         .ThenInclude(post => post.Likes)
+        //     .FirstOrDefaultAsync();
+
+        var data = await _context.Posts
+                .Where(post => post.PostId == PostId)
+                .Include(post => post.User)
+                .Include(post => post.Likes)
+                .Include(post => post.Comments)
+                .FirstOrDefaultAsync();
+
+        if (data == null)
+            return null;
+
+        PostDetailResponse postDetailResponse = new PostDetailResponse
+        {
+            PostId = data.PostId,
+            UserId = data.UserId,
+            Username = data.User.Username,
+            MediaPath = data.MediaPath,
+            Likes = data.Likes.Count(),
+            Caption = data.Caption,
+            IsLiked = false,
+            Comments = data.Comments,
+        };
+
+        return postDetailResponse;
     }
 }

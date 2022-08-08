@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
-import { getAllPostApi, createPostApi } from '@/core/http/apis/post';
+import { getAllPostApi, createPostApi, likePostApi, unlikePostApi } from '@/core/http/apis/post';
 import { ResultResponse } from '@/core/models/ResultResponse';
 import { setShowModalPostCreator } from '@/redux/slices/globalSlice';
 import {
@@ -9,6 +9,12 @@ import {
     createPostStart,
     createPostSuccess,
     createPostFailed,
+    likePostStart,
+    likePostSuccess,
+    likePostFailed,
+    unlikePostStart,
+    unlikePostSuccess,
+    unlikePostFailed,
 } from '@/redux/slices/postSlice';
 
 function* getAllPostSaga(action: ReturnType<typeof getAllPostStart>) {
@@ -49,13 +55,49 @@ function* createPostSaga(action: ReturnType<typeof createPostStart>) {
     }
 }
 
+function* likePostSaga(action: ReturnType<typeof likePostStart>) {
+    try {
+        const response: ResultResponse<any> = yield call(likePostApi, action.payload);
+        if (response.success) {
+            yield put({
+                type: likePostSuccess,
+            });
+        } else {
+            yield put({ type: likePostFailed, payload: response.message });
+        }
+    } catch (error) {
+        yield put({ type: likePostFailed, payload: error });
+    }
+}
+
+function* unlikePostSaga(action: ReturnType<typeof unlikePostStart>) {
+    try {
+        const response: ResultResponse<any> = yield call(unlikePostApi, action.payload);
+        if (response.success) {
+            yield put({
+                type: unlikePostSuccess,
+            });
+        } else {
+            yield put({ type: unlikePostFailed, payload: response.message });
+        }
+    } catch (error) {
+        yield put({ type: unlikePostFailed, payload: error });
+    }
+}
+
 function* watchGetAllPost() {
     yield takeLatest(getAllPostStart.type, getAllPostSaga);
 }
 function* watchCreate() {
     yield takeLatest(createPostStart.type, createPostSaga);
 }
+function* watchLikePost() {
+    yield takeLatest(likePostStart.type, likePostSaga);
+}
+function* watchUnlikePost() {
+    yield takeLatest(unlikePostStart.type, unlikePostSaga);
+}
 
 export default function* postSaga() {
-    yield all([watchCreate(), watchGetAllPost()]);
+    yield all([watchCreate(), watchGetAllPost(), watchLikePost(), watchUnlikePost()]);
 }

@@ -8,8 +8,6 @@ import Actions from '@/components/Actions';
 import { Post } from '@/core/models/Post';
 
 const PostBody = (post: Post) => {
-    const { caption } = post;
-
     // const { showModal } = useModalContext();
     // const { comments } = useCommentSelector();
 
@@ -33,7 +31,7 @@ const PostBody = (post: Post) => {
                     <span className={clsx('font-medium mr-2', 'cursor-pointer select-none')}>
                         {'usernameplacehoder'}
                     </span>
-                    <p>{caption}</p>
+                    <p>{post.Caption}</p>
                 </div>
 
                 {5 > 0 && (
@@ -53,7 +51,7 @@ const PostBody = (post: Post) => {
                 </div>
 
                 <span className={clsx('uppercase text-xs-1', 'text-base-gray', 'cursor-pointer select-none')}>
-                    {calculateElapsedTime(post.lastModified)}
+                    {calculateElapsedTime(post.LastModified)}
                 </span>
             </div>
         </div>

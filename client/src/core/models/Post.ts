@@ -1,8 +1,13 @@
 export interface Post {
-    postId?: string;
-    userId?: string;
-    created?: string;
-    lastModified?: string;
-    caption?: string;
-    mediaPath?: string;
+    PostId?: string;
+    UserId?: string;
+    Username?: string;
+    Created?: string;
+    LastModified?: string;
+    Caption?: string;
+    MediaPath?: string;
+    LikeCount?: number;
+    CommentCount?: number;
+    IsLiked?: boolean;
+    IsFollowed?: boolean;
 }

@@ -29,8 +29,36 @@ const userSlice = createSlice({
             state.status = ReduxStateType.ERROR;
             state.data.isCreateDone = false;
         },
+        followUserStart: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.LOADING;
+        },
+        followUserSuccess: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.SUCCESS;
+        },
+        followUserFailed: (state, action: PayloadAction<Error>) => {
+            state.status = ReduxStateType.ERROR;
+        },
+        unfollowUserStart: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.LOADING;
+        },
+        unfollowUserSuccess: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.SUCCESS;
+        },
+        unfollowUserFailed: (state, action: PayloadAction<Error>) => {
+            state.status = ReduxStateType.ERROR;
+        },
     },
 });
 
-export const { createUserStart, createUserSuccess, createUserFailed } = userSlice.actions;
+export const {
+    createUserStart,
+    createUserSuccess,
+    createUserFailed,
+    followUserStart,
+    followUserSuccess,
+    followUserFailed,
+    unfollowUserStart,
+    unfollowUserSuccess,
+    unfollowUserFailed,
+} = userSlice.actions;
 export default userSlice.reducer;

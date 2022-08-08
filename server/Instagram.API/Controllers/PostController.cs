@@ -144,11 +144,16 @@ public class PostController : BaseApiController
     /// </summary>
     /// <param name="resource">PostId want to get Detail.</param>
     /// <returns>Response for the request: get Detail by Postid.</returns>
-    // [HttpPost]
-    // [Authorize]
-    // public async Task<ActionResult<String>> GetDetailByPostIdAsync(string postId)
-    // {
-    //     Guid PostId = Guid.Parse(postId);
+    [HttpPost]
+    [Authorize]
+    public async Task<ActionResult<PostDetailResponse>> GetDetailByPostIdAsync(string postId)
+    {
+        Guid PostId = Guid.Parse(postId);
+        PostDetailResponse postDetailResponse = await _postService.GetPostDetailAsync(PostId);
 
-    // }
+        if (postDetailResponse == null)
+            return BadRequest(new BaseResponse<string>("Bad Request"));
+
+        return new OkObjectResult(new BaseResponse<PostDetailResponse>(postDetailResponse));
+    }
 }

@@ -26,7 +26,7 @@ const Home: React.FC<IHomeProps> = () => {
         <Container className="grid grid-cols-3 pt-7">
             <section className="col-span-3 lg:col-span-2 pb-10 space-y-5">
                 {posts.map((post) => (
-                    <Post key={post.userId} {...post} />
+                    <Post key={post.PostId} {...post} />
                 ))}
                 <div ref={observerRef} />
             </section>

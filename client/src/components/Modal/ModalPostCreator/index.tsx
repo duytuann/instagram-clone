@@ -34,12 +34,8 @@ const ModalPostCreator = () => {
     };
 
     const handleCreatePostSubmit = () => {
-        const userId = user.userId || null;
-        if (userId == null) return;
-
         const formData = new FormData();
         formData.append('Caption', caption);
-        formData.append('UserId', userId);
         formData.append('file', file, file?.name);
 
         dispatch(createPostStart(formData));

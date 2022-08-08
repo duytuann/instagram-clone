@@ -1,5 +1,5 @@
 using Instagram.API.Domain.Models;
-using Instagram.API.Domain.Services.Communication;
+using Instagram.API.DTO.Response;
 
 namespace Instagram.API.Domain.Services;
 
@@ -14,4 +14,6 @@ public interface IPostService
     Task<bool> Unlike(Guid UserId, Guid PostId);
 
     Task<bool> Comment(String CommentText, Guid _userId, Guid PostId);
+
+    Task<PostDetailResponse> GetPostDetailAsync(Guid PostId);
 }
