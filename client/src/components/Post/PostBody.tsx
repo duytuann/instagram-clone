@@ -41,12 +41,13 @@ const PostBody = (post: Post) => {
                     </span>
                 )}
 
-                <div className="space-y-2">
-                    {/* {(comments[post._id]?.displayedComments ?? []).map((comment) => (
-                        <PostComment key={comment._id} postId={post._id} comment={comment} />
-                    ))} */}
-                    <PostComment key={1} postId={'1'} comment={'Comment placeholder'} />
-                </div>
+                {/* <div className="space-y-2">
+                    {post.comments.length < 5
+                        ? post.comments.map((comment) => (
+                              <PostComment key={comment.commentId} postId={post.postId} comment={comment.commentText} commentBy = {comment.commentBy}/>
+                          ))
+                        : null}
+                </div> */}
 
                 <span className={clsx('uppercase text-xs-1', 'text-base-gray', 'cursor-pointer select-none')}>
                     {calculateElapsedTime(post.lastModified)}

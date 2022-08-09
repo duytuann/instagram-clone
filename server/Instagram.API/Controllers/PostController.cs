@@ -27,7 +27,8 @@ public class PostController : BaseApiController
     [Authorize]
     public async Task<ActionResult<BaseResponse<PostDetailResponse>>> GetAllAsync()
     {
-        var postList = await _postService.GetAllAsync();
+        Guid UserId = this.GetUserId();
+        var postList = await _postService.GetAllAsync(UserId);
 
         return new OkObjectResult(new BaseResponse<IEnumerable<PostDetailResponse>>(postList)); ;
     }

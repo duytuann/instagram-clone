@@ -2,8 +2,10 @@ import { memo, useState } from 'react';
 import clsx from 'clsx';
 
 import { useAppDispatch, useAppSelector } from '@/hooks';
+import { ReduxStateType } from '@/redux/types';
 // import { commentActions } from '~/redux/slices/commentSlice';
 // import { postActions } from '~/redux/slices/postSlice';
+import { createCommentStart } from '@/redux/slices/postSlice';
 import { Post as _Post } from '@/core/models/Post';
 import PostBody from '@/components/Post/PostBody';
 import PostHeader from '@/components/Post/PostHeader';
@@ -15,8 +17,15 @@ const Post = (post: _Post) => {
 
     const dispatch = useAppDispatch();
 
+    const { status } = useAppSelector((state) => state.post);
+
     const handleCreateComment = () => {
-        // dispatch acction create Comment
+        dispatch(
+            createCommentStart({
+                postId: post.postId,
+                commentText: caption,
+            }),
+        );
     };
 
     return (
@@ -24,12 +33,12 @@ const Post = (post: _Post) => {
             <PostHeader {...post} />
             <PostPhoto {...post} />
             <PostBody {...post} />
-            {/* <CommentField
-                // loading={createCommentLoading}
+            <CommentField
+                loading={status === ReduxStateType.LOADING}
                 onSubmit={handleCreateComment}
                 caption={caption}
                 onSetCaption={setCaption}
-            /> */}
+            />
         </div>
     );
 };

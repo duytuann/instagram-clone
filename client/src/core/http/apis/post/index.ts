@@ -1,4 +1,5 @@
-import { GetAllUrl, CreateUrl, UpdateUrl, DeleteUrl, Like, Unlike } from './urls';
+import { GetAllUrl, CreateUrl, UpdateUrl, DeleteUrl, Like, Unlike, CommentUrl } from './urls';
+import { CreateComment } from './types';
 import httpPost from '@/core/http/singleton/post';
 
 export const getAllPostApi = async () => {
@@ -21,6 +22,12 @@ export const likePostApi = async (postId: string) => {
 
 export const unlikePostApi = async (postId: string) => {
     const res = await httpPost.post<any>(Unlike(postId));
+    if (!res || !res.data) throw new Error('Opps');
+    return res.data;
+};
+
+export const commentPostApi = async (data: CreateComment) => {
+    const res = await httpPost.post<any>(CommentUrl, data);
     if (!res || !res.data) throw new Error('Opps');
     return res.data;
 };

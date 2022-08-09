@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 
-import PostPhotoError from '@/components/Post/PostPhotoError';
+import { Post } from '@/core/models/Post';
 import { useDoubleTab } from '@/hooks';
 import Skeleton from '@/components/Skeleton';
+import { useAppDispatch } from '@/hooks';
+import { likePostStart } from '@/redux/slices/postSlice';
 import IconHeart from '@/components/Icon/IconHeart';
 
-const PostPhoto = (post: any) => {
+const PostPhoto = (post: Post) => {
+    const dispatch = useAppDispatch();
     const [isHearted, setIsHearted] = useState<boolean>(false);
 
     const { mediaPath, caption } = post;
@@ -18,7 +21,9 @@ const PostPhoto = (post: any) => {
         const callback = () => {
             setIsHearted(true);
 
-            // if (!isLiked) reactPost();
+            if (!post.isLiked) {
+                dispatch(likePostStart(post.postId));
+            }
         };
 
         doubleTab(callback);
@@ -37,7 +42,6 @@ const PostPhoto = (post: any) => {
                     />
                 )}
             </div>
-            {/* placeholderError={PostPhotoError} for Skeleton */}
             <Skeleton src={mediaPath} alt="Thumbnail" draggable={false} />
         </div>
     );

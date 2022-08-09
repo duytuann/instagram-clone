@@ -20,9 +20,9 @@ public class PostService : IPostService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<PostDetailResponse>> GetAllAsync()
+    public async Task<IEnumerable<PostDetailResponse>> GetAllAsync(Guid UserId)
     {
-        return await _postRepository.GetAllAsync();
+        return await _postRepository.GetAllAsync(UserId);
     }
 
     public async Task<Post> SaveAsync(Stream fileStream, string fileName, string contentType, string Caption, Guid UserId)

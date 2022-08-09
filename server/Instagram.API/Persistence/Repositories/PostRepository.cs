@@ -11,7 +11,7 @@ public class PostRepository : BaseRepository, IPostRepository
 {
     public PostRepository(AppDbContext context) : base(context) { }
 
-    public async Task<IEnumerable<PostDetailResponse>> GetAllAsync()
+    public async Task<IEnumerable<PostDetailResponse>> GetAllAsync(Guid UserId)
         => await _context.Posts
                         .Include(post => post.User)
                         .Include(post => post.Likes)
@@ -25,10 +25,11 @@ public class PostRepository : BaseRepository, IPostRepository
                                 MediaPath = data.MediaPath,
                                 Likes = data.Likes.Count(),
                                 Caption = data.Caption,
-                                IsLiked = false,
+                                IsLiked = data.Likes.Contains(_context.Likes.FirstOrDefault(l => l.PostId == data.PostId && l.UserId == UserId)),
                                 Comments = data.Comments,
                             }
                         ).ToListAsync();
+
 
 
     public async Task<Post> SaveAsync(String _MediaPath, string _Caption, Guid _UserId)

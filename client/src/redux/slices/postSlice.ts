@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Post } from '@/core/models/Post';
+import { CreateComment } from '@/core/http/apis/post/types';
 import { ReduxData, ReduxStateType } from '@/redux/types';
 
 export type CurrentAction = 'create' | 'update' | 'delete' | null;
@@ -20,6 +21,26 @@ const postSlice = createSlice({
     name: 'postSlice',
     initialState,
     reducers: {
+        putLike: (state, action: PayloadAction<string>) => {
+            const post = state.data.posts.find((p) => p.postId === action.payload);
+            if (post) {
+                post.isLiked = true;
+                post.likes++;
+            }
+        },
+        putUnlike: (state, action: PayloadAction<string>) => {
+            const post = state.data.posts.find((p) => p.postId === action.payload);
+            if (post) {
+                post.isLiked = false;
+                post.likes--;
+            }
+        },
+        addComment: (state, action: PayloadAction<CreateComment>) => {
+            const post = state.data.posts.find((p) => p.postId === action.payload.postId);
+            if (post) {
+                post.comments.push(action.payload);
+            }
+        },
         getAllPostStart: (state, action: PayloadAction) => {
             state.status = ReduxStateType.LOADING;
         },
@@ -37,6 +58,15 @@ const postSlice = createSlice({
             state.status = ReduxStateType.SUCCESS;
         },
         createPostFailed: (state, action: PayloadAction<Error>) => {
+            state.status = ReduxStateType.ERROR;
+        },
+        createCommentStart: (state, action: PayloadAction<CreateComment>) => {
+            state.status = ReduxStateType.LOADING;
+        },
+        createCommentSuccess: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.SUCCESS;
+        },
+        createCommentFailed: (state, action: PayloadAction<Error>) => {
             state.status = ReduxStateType.ERROR;
         },
         likePostStart: (state, action: PayloadAction<any>) => {
@@ -67,6 +97,9 @@ export const {
     createPostStart,
     createPostSuccess,
     createPostFailed,
+    createCommentStart,
+    createCommentSuccess,
+    createCommentFailed,
     likePostStart,
     likePostSuccess,
     likePostFailed,
