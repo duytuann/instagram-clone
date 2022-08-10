@@ -7,13 +7,12 @@ export type CurrentAction = 'create' | 'update' | 'delete' | null;
 
 export interface postState {
     posts: Post[];
+    currentPostDetail: any;
 }
 const initialState: ReduxData<postState> = {
     data: {
         posts: [],
-        // cursor: null,
-        // selectedPost: null,
-        // currentAction: null,
+        currentPostDetail: {},
     },
     status: ReduxStateType.INIT,
 };
@@ -41,6 +40,9 @@ const postSlice = createSlice({
                 post.comments.push(action.payload);
             }
         },
+        clearPostDetail: (state, action: PayloadAction) => {
+            state.data.currentPostDetail = {};
+        },
         getAllPostStart: (state, action: PayloadAction) => {
             state.status = ReduxStateType.LOADING;
         },
@@ -49,6 +51,17 @@ const postSlice = createSlice({
             state.data.posts = action.payload;
         },
         getAllPostFailed: (state, action: PayloadAction<Error>) => {
+            state.status = ReduxStateType.ERROR;
+        },
+        getDetailByPostIdStart: (state, action: PayloadAction<string>) => {
+            state.data.currentPostDetail = {};
+            state.status = ReduxStateType.LOADING;
+        },
+        getDetailByPostIdSuccess: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.SUCCESS;
+            state.data.currentPostDetail = action.payload;
+        },
+        getDetailByPostIdFailed: (state, action: PayloadAction<Error>) => {
             state.status = ReduxStateType.ERROR;
         },
         createPostStart: (state, action: PayloadAction<FormData>) => {
@@ -91,9 +104,16 @@ const postSlice = createSlice({
 });
 
 export const {
+    clearPostDetail,
+    putLike,
+    putUnlike,
+    addComment,
     getAllPostStart,
     getAllPostSuccess,
     getAllPostFailed,
+    getDetailByPostIdStart,
+    getDetailByPostIdSuccess,
+    getDetailByPostIdFailed,
     createPostStart,
     createPostSuccess,
     createPostFailed,

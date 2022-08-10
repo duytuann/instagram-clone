@@ -4,6 +4,8 @@ import { displayLikeCounts } from '@/helpers/format';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { calculateElapsedTime } from '@/helpers/time';
 import PostComment from '@/components/Post/PostComment';
+import { setShowModalPostDetail } from '@/redux/slices/globalSlice';
+import { getDetailByPostIdStart } from '@/redux/slices/postSlice';
 import Actions from '@/components/Actions';
 import { Post } from '@/core/models/Post';
 
@@ -34,13 +36,16 @@ const PostBody = (post: Post) => {
 
                 {post.comments.length > 0 && (
                     <span
-                        onClick={() => {}} // show post detail
+                        onClick={() => {
+                            dispatch(getDetailByPostIdStart(post.postId));
+                            dispatch(setShowModalPostDetail(true));
+                        }}
                         className={clsx('text-base-gray', 'cursor-pointer select-none')}
                     >
                         View all {post.comments.length} comments
                     </span>
                 )}
-
+                {/* show Preview Comment */}
                 {/* <div className="space-y-2">
                     {post.comments.length < 5
                         ? post.comments.map((comment) => (
@@ -48,7 +53,6 @@ const PostBody = (post: Post) => {
                           ))
                         : null}
                 </div> */}
-
                 <span className={clsx('uppercase text-xs-1', 'text-base-gray', 'cursor-pointer select-none')}>
                     {calculateElapsedTime(post.lastModified)}
                 </span>

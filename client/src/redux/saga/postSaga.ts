@@ -1,11 +1,21 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
-import { getAllPostApi, createPostApi, likePostApi, unlikePostApi, commentPostApi } from '@/core/http/apis/post';
+import {
+    getAllPostApi,
+    createPostApi,
+    likePostApi,
+    unlikePostApi,
+    commentPostApi,
+    getDetailByPostIdApi,
+} from '@/core/http/apis/post';
 import { ResultResponse } from '@/core/models/ResultResponse';
 import { setShowModalPostCreator } from '@/redux/slices/globalSlice';
 import {
     getAllPostStart,
     getAllPostSuccess,
     getAllPostFailed,
+    getDetailByPostIdStart,
+    getDetailByPostIdSuccess,
+    getDetailByPostIdFailed,
     createPostStart,
     createPostSuccess,
     createPostFailed,
@@ -34,6 +44,23 @@ function* getAllPostSaga(action: ReturnType<typeof getAllPostStart>) {
         }
     } catch (error) {
         yield put({ type: getAllPostFailed, payload: error });
+    }
+}
+
+function* getDetailByPostIdSaga(action: ReturnType<typeof getDetailByPostIdStart>) {
+    try {
+        const response: ResultResponse<any> = yield call(getDetailByPostIdApi, action.payload);
+        if (response.success) {
+            const { resource } = response;
+            yield put({
+                type: getDetailByPostIdSuccess,
+                payload: resource,
+            });
+        } else {
+            yield put({ type: getDetailByPostIdFailed, payload: response.message });
+        }
+    } catch (error) {
+        yield put({ type: getDetailByPostIdFailed, payload: error });
     }
 }
 
@@ -108,6 +135,9 @@ function* unlikePostSaga(action: ReturnType<typeof unlikePostStart>) {
 function* watchGetAllPost() {
     yield takeLatest(getAllPostStart.type, getAllPostSaga);
 }
+function* watchDetailByPostId() {
+    yield takeLatest(getDetailByPostIdStart.type, getDetailByPostIdSaga);
+}
 function* watchCreate() {
     yield takeLatest(createPostStart.type, createPostSaga);
 }
@@ -122,5 +152,12 @@ function* watchUnlikePost() {
 }
 
 export default function* postSaga() {
-    yield all([watchCreate(), watchGetAllPost(), watchLikePost(), watchUnlikePost(), watchCreateComment()]);
+    yield all([
+        watchCreate(),
+        watchGetAllPost(),
+        watchLikePost(),
+        watchUnlikePost(),
+        watchCreateComment(),
+        watchDetailByPostId(),
+    ]);
 }

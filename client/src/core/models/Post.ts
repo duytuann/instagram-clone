@@ -21,3 +21,15 @@ export interface Post {
     isLiked?: boolean;
     isFollowed?: boolean;
 }
+
+export interface PostDetail {
+    postId: string;
+    userId: string;
+    username: string;
+    mediaPath: string;
+    likes: number;
+    caption: string;
+    isLiked: boolean;
+    comments: Comment[];
+    lastModified?: string;
+}
