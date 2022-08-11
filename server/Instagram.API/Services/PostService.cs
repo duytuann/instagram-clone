@@ -97,8 +97,8 @@ public class PostService : IPostService
         }
     }
 
-    public async Task<PostDetailResponse> GetPostDetailAsync(Guid PostId)
+    public async Task<PostDetailResponse> GetPostDetailAsync(Guid PostId, Guid UserId)
     {
-        return await _postRepository.GetPostDetailByIdAsync(PostId);
+        return await _postRepository.GetPostDetailByIdAsync(PostId, UserId);
     }
 }

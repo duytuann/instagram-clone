@@ -81,7 +81,7 @@ public class PostRepository : BaseRepository, IPostRepository
         await _context.Comments.AddAsync(comment);
     }
 
-    public async Task<PostDetailResponse> GetPostDetailByIdAsync(Guid PostId)
+    public async Task<PostDetailResponse> GetPostDetailByIdAsync(Guid PostId, Guid UserId)
     {
         var data = await _context.Posts
                 .Where(post => post.PostId == PostId)
@@ -101,7 +101,7 @@ public class PostRepository : BaseRepository, IPostRepository
             MediaPath = data.MediaPath,
             Likes = data.Likes.Count(),
             Caption = data.Caption,
-            IsLiked = false,
+            IsLiked = data.Likes.Contains(_context.Likes.FirstOrDefault(l => l.PostId == data.PostId && l.UserId == UserId)),
             Comments = data.Comments,
         };
 

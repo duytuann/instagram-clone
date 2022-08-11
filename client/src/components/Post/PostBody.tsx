@@ -1,33 +1,28 @@
 import clsx from 'clsx';
 
 import { displayLikeCounts } from '@/helpers/format';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch } from '@/hooks';
 import { calculateElapsedTime } from '@/helpers/time';
-import PostComment from '@/components/Post/PostComment';
 import { setShowModalPostDetail } from '@/redux/slices/globalSlice';
 import { getDetailByPostIdStart } from '@/redux/slices/postSlice';
 import Actions from '@/components/Actions';
 import { Post } from '@/core/models/Post';
 
 const PostBody = (post: Post) => {
-    // const { showModal } = useModalContext();
-    // const { comments } = useCommentSelector();
-
     const dispatch = useAppDispatch();
-
-    // const showModalPostDetail = () => {
-    //     dispatch(postActions.setSelectedPost(post));
-    //     showModal(MODAL_TYPES.POST_DETAIL);
-    // };
 
     return (
         <div className="px-4 pt-4 pb-3">
-            <Actions onComment={() => {}} post={post} />
+            <Actions
+                onComment={() => {
+                    dispatch(getDetailByPostIdStart(post.postId));
+                    dispatch(setShowModalPostDetail(true));
+                }}
+                post={post}
+            />
 
             <div className="flex flex-col gap-y-2 text-sm-1 mt-5">
-                <span className={clsx('font-medium', 'cursor-pointer select-none')}>
-                    {displayLikeCounts([100], 'like')}
-                </span>
+                <span className={clsx('font-medium', 'cursor-pointer select-none')}>{`${post.likes} like`}</span>
 
                 <div className="flex">
                     <span className={clsx('font-bold mr-2', 'cursor-pointer select-none')}>{post.username}</span>

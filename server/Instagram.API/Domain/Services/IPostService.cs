@@ -15,5 +15,5 @@ public interface IPostService
 
     Task<bool> Comment(String CommentText, Guid _userId, Guid PostId);
 
-    Task<PostDetailResponse> GetPostDetailAsync(Guid PostId);
+    Task<PostDetailResponse> GetPostDetailAsync(Guid PostId, Guid UserId);
 }

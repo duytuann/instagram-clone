@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
-import { usePost } from '@/hooks';
+import { likePostStart, unlikePostStart, putLike, putUnlike } from '@/redux/slices/postSlice';
+import { useAppDispatch } from '@/hooks';
 import IconComment from '@/components/Icon/IconComment';
 import IconHeart from '@/components/Icon/IconHeart';
 import IconSave from '@/components/Icon/IconSave';
@@ -14,15 +15,24 @@ interface ActionsProps {
 }
 
 const Actions = ({ className, post, onComment }: ActionsProps) => {
-    // const { isLiked, reactPost } = usePost(post);
-    const isLiked = true;
-    const reactPost = () => {};
+    const dispatch = useAppDispatch();
+    const isLiked = post.isLiked;
 
     return (
         <div className={clsx('flex-between', className)}>
             <div className={clsx('flex items-center gap-x-3')}>
                 <IconHeart
-                    onClick={reactPost}
+                    onClick={
+                        !isLiked
+                            ? () => {
+                                  dispatch(likePostStart(post.postId));
+                                  dispatch(putLike(post.postId));
+                              }
+                            : () => {
+                                  dispatch(unlikePostStart(post.postId));
+                                  dispatch(putUnlike(post.postId));
+                              }
+                    }
                     className={clsx('cursor-pointer', !isLiked && 'hover:opacity-60')}
                     active={isLiked}
                 />

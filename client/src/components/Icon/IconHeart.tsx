@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 // types
 import { IconProps } from '@/utils/types';
 
@@ -10,6 +12,7 @@ const IconHeart = ({ active, white, ...rest }: IconHeartProps) => {
         return (
             <svg
                 {...rest}
+                className={clsx(rest.className)}
                 aria-label="Like"
                 color="#fff"
                 fill="#fff"
@@ -25,6 +28,7 @@ const IconHeart = ({ active, white, ...rest }: IconHeartProps) => {
     return active ? (
         <svg
             {...rest}
+            className={clsx('animate-like-button', rest.className)}
             aria-label="Unlike"
             color="#ed4956"
             fill="#ed4956"

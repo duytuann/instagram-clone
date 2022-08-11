@@ -5,7 +5,7 @@ import { Post } from '@/core/models/Post';
 import { useDoubleTab } from '@/hooks';
 import Skeleton from '@/components/Skeleton';
 import { useAppDispatch } from '@/hooks';
-import { likePostStart } from '@/redux/slices/postSlice';
+import { likePostStart, putLike } from '@/redux/slices/postSlice';
 import IconHeart from '@/components/Icon/IconHeart';
 
 const PostPhoto = (post: Post) => {
@@ -23,6 +23,7 @@ const PostPhoto = (post: Post) => {
 
             if (!post.isLiked) {
                 dispatch(likePostStart(post.postId));
+                dispatch(putLike(post.postId));
             }
         };
 
@@ -37,7 +38,7 @@ const PostPhoto = (post: Post) => {
                 {isHearted && (
                     <IconHeart
                         white
-                        // onAnimationEnd={() => setIsHearted(false)}
+                        onAnimationEnd={() => setIsHearted(false)}
                         className={clsx('w-20 h-20 drop-shadow-xl', 'animate-like-feed')}
                     />
                 )}

@@ -69,12 +69,12 @@ const ModalPostDetail = () => {
     return (
         <ModalWrapper
             closeHandler={() => dispatch(setShowModalPostDetail(false))}
-            className={clsx('flex w-modal-w h-screen', currentPostDetail.mediaPath == null ? 'w-max' : 'lg:w-[1150px]')}
+            className={clsx('flex w-modal-w h-screen', currentPostDetail.mediaPath == null ? 'w-max' : 'lg:w-[1500px]')}
         >
             {currentPostDetail.mediaPath != null && (
                 <Skeleton
                     objectFit="cover"
-                    className={clsx('hidden lg:block w-3/5 min-h-full border-r border-line', 'bg-white')}
+                    className={clsx('hidden lg:block w-[1000px] min-h-full border-r border-line', 'bg-white')}
                     src={currentPostDetail.mediaPath}
                 />
             )}
@@ -83,7 +83,7 @@ const ModalPostDetail = () => {
                 className={clsx(
                     'flex flex-col text-sm-1 h-full',
                     'bg-white',
-                    currentPostDetail.mediaPath == null ? 'lg:w-max rounded-lg mx-auto' : 'lg:w-2/5',
+                    currentPostDetail.mediaPath == null ? 'lg:w-max rounded-lg mx-auto' : 'lg:w-[500px]',
                 )}
             >
                 <div className="flex items-center px-4 py-3 border-b border-line flex-shrink-0">

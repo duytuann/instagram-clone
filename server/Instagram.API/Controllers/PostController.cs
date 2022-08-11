@@ -149,7 +149,8 @@ public class PostController : BaseApiController
     public async Task<ActionResult<PostDetailResponse>> GetDetailByPostIdAsync(string postId)
     {
         Guid PostId = Guid.Parse(postId);
-        PostDetailResponse postDetailResponse = await _postService.GetPostDetailAsync(PostId);
+        Guid UserId = this.GetUserId();
+        PostDetailResponse postDetailResponse = await _postService.GetPostDetailAsync(PostId, UserId);
 
         if (postDetailResponse == null)
             return BadRequest(new BaseResponse<string>("Bad Request"));

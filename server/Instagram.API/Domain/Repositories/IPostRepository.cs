@@ -10,5 +10,5 @@ public interface IPostRepository
     Task Like(Guid UserId, Guid PostId);
     Task Unlike(Guid UserId, Guid PostId);
     Task Comment(string Comment, Guid _userId, Guid PostId);
-    Task<PostDetailResponse> GetPostDetailByIdAsync(Guid PostId);
+    Task<PostDetailResponse> GetPostDetailByIdAsync(Guid PostId, Guid UserId);
 }

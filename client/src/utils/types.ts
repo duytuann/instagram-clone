@@ -1,3 +1,5 @@
+import { DOMAttributes } from 'react';
+
 export type Scalars = {
     ID: string;
     String: string;
@@ -13,7 +15,7 @@ export type LoginInput = {
     username: string;
 };
 
-export interface IconProps {
+export interface IconProps extends DOMAttributes<SVGSVGElement> {
     active?: boolean;
     className?: string;
     onClick?: () => void;

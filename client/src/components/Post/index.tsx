@@ -3,8 +3,6 @@ import clsx from 'clsx';
 
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { ReduxStateType } from '@/redux/types';
-// import { commentActions } from '~/redux/slices/commentSlice';
-// import { postActions } from '~/redux/slices/postSlice';
 import { createCommentStart } from '@/redux/slices/postSlice';
 import { Post as _Post } from '@/core/models/Post';
 import PostBody from '@/components/Post/PostBody';
