@@ -25,6 +25,11 @@ public class PostService : IPostService
         return await _postRepository.GetAllAsync(UserId);
     }
 
+    public async Task<IEnumerable<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
+    {
+        return await _postRepository.GetCommentOfPostAsync(PostId, PageNumber, PageSize);
+    }
+
     public async Task<Post> SaveAsync(Stream fileStream, string fileName, string contentType, string Caption, Guid UserId)
     {
         var newPost = new Post();

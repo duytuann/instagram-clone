@@ -30,6 +30,23 @@ public class PostRepository : BaseRepository, IPostRepository
                             }
                         ).ToListAsync();
 
+    public async Task<IEnumerable<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
+        => await _context.Comments
+                        .Include(comment => comment.User)
+                        .Select(
+                            data => new CommentResponse
+                            {
+                                CommentId = data.CommentId,
+                                UserId = data.UserId,
+                                Avatar = data.User.Avatar,
+                                CommentText = data.CommentText,
+                                Username = data.User.Username,
+                                Created = data.Created
+                            }
+                        ).Skip(PageNumber - 1 * PageSize)
+                        .Take(PageSize)
+                        .ToListAsync();
+    //.OrderBy() like_count
 
 
     public async Task<Post> SaveAsync(String _MediaPath, string _Caption, Guid _UserId)

@@ -7,6 +7,8 @@ public interface IPostService
 {
     Task<IEnumerable<PostDetailResponse>> GetAllAsync(Guid UserId);
 
+    Task<IEnumerable<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize);
+
     Task<Post> SaveAsync(Stream fileStream, string fileName, string contentType, string Content, Guid UserId);
 
     Task<bool> Like(Guid UserId, Guid PostId);

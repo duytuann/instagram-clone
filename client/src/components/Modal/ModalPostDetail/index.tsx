@@ -50,15 +50,19 @@ const ModalPostDetail = () => {
             }),
         );
 
-        dispatch(clearPostDetail());
+        setCaption('');
+        // (clearPostDetail());
 
         // add comment to list
     };
 
     const handleVisitProfile = (username: string) => {
         navigate(`/${username}`);
+
         dispatch(setShowModalPostDetail(false));
         dispatch(clearPostDetail());
+
+        setCaption('');
     };
 
     // Fetch comments
@@ -69,12 +73,12 @@ const ModalPostDetail = () => {
     return (
         <ModalWrapper
             closeHandler={() => dispatch(setShowModalPostDetail(false))}
-            className={clsx('flex w-modal-w h-screen', currentPostDetail.mediaPath == null ? 'w-max' : 'lg:w-[1500px]')}
+            className={clsx('flex w-modal-w h-screen', currentPostDetail.mediaPath == null ? 'w-max' : 'lg:w-[1150px]')}
         >
             {currentPostDetail.mediaPath != null && (
                 <Skeleton
                     objectFit="cover"
-                    className={clsx('hidden lg:block w-[1000px] min-h-full border-r border-line', 'bg-white')}
+                    className={clsx('hidden lg:block w-3/5 min-h-full border-r border-line', 'bg-white')}
                     src={currentPostDetail.mediaPath}
                 />
             )}
@@ -83,7 +87,7 @@ const ModalPostDetail = () => {
                 className={clsx(
                     'flex flex-col text-sm-1 h-full',
                     'bg-white',
-                    currentPostDetail.mediaPath == null ? 'lg:w-max rounded-lg mx-auto' : 'lg:w-[500px]',
+                    currentPostDetail.mediaPath == null ? 'lg:w-max rounded-lg mx-auto' : 'lg:w-2/5',
                 )}
             >
                 <div className="flex items-center px-4 py-3 border-b border-line flex-shrink-0">

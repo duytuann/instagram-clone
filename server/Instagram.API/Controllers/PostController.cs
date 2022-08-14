@@ -25,12 +25,26 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: getAllPost</returns>
     [HttpGet]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<PostDetailResponse>>> GetAllAsync()
+    public async Task<ActionResult<BaseResponse<IEnumerable<PostDetailResponse>>>> GetAllAsync()
     {
         Guid UserId = this.GetUserId();
         var postList = await _postService.GetAllAsync(UserId);
 
         return new OkObjectResult(new BaseResponse<IEnumerable<PostDetailResponse>>(postList)); ;
+    }
+
+    /// <summary>
+    /// List comment in Post (paging).
+    /// </summary>
+    /// <returns>Response for the request: getComment</returns>
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<BaseResponse<IEnumerable<CommentResponse>>>> GetCommentOfPostAsync([FromQuery] GetCommentRequest param)
+    {
+        Guid PostId = Guid.Parse(param.PostId);
+        var commentList = await _postService.GetCommentOfPostAsync(PostId, param.PageNumber, param.PageSize);
+
+        return new OkObjectResult(new BaseResponse<IEnumerable<CommentResponse>>(commentList));
     }
 
     /// <summary>
