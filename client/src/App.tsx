@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 // import { config } from '@fortawesome/fontawesome-svg-core';
 
+import NotFoundPage from '@/pages/NotFoundPage';
 import { publicRoutes, privateRoutes } from '@/routes';
 import { useAppSelector } from '@/hooks';
 import MainLayout from '@/layouts/MainLayout';
@@ -18,6 +19,7 @@ function App() {
     return (
         <div className="App">
             <Routes>
+                <Route path="*" element={<NotFoundPage />} />
                 {isAuthenticated
                     ? publicRoutes.map((route, index) => {
                           const Page = route.page;
