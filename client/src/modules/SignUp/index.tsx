@@ -13,8 +13,8 @@ import FormDivider from '@/components/FormDivider';
 import FormField from '@/components/FormField';
 import { createUserStart } from '@/redux/slices/userSlice';
 import { registerSchema } from '@/helpers/formSchemas';
-import ButtonFacebook from '@/pages/Login/components/ButtonFacebook';
-import ButtonGoogle from '@/pages/Login/components/ButtonGoogle';
+import ButtonFacebook from '@/modules/Login/components/ButtonFacebook';
+import ButtonGoogle from '@/modules/Login/components/ButtonGoogle';
 import { logo } from '@/assets/images';
 
 const SignUp = () => {

@@ -4,16 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 
-import { LIMITS } from '@/helpers/consts';
+import { getCommentOfPostStart } from '@/redux/slices/postSlice';
+import IconShowMore from '@/components/Icon/IconShowMore';
 import { ReduxStateType } from '@/redux/types';
 import { useAppDispatch, useAppSelector, useIntersectionObserver } from '@/hooks';
 import { createCommentStart, clearPostDetail } from '@/redux/slices/postSlice';
 import { setShowModalPostDetail } from '@/redux/slices/globalSlice';
-import { displayLikeCounts } from '@/helpers/format';
 import { calculateElapsedTime } from '@/helpers/time';
 import { SpinnerRing } from '@/components/Spinner';
 import Skeleton from '@/components/Skeleton';
-import Actions from '@/components/Actions';
 import CommentField from '@/components/CommentField';
 import DetailComment from '@/components/Modal/ModalPostDetail/DetailComment';
 import ModalWrapper from '@/components/Modal/ModalWrapper';
@@ -22,14 +21,11 @@ import { avatar } from '@/assets/images';
 const ModalPostDetail = () => {
     const [caption, setCaption] = useState<string>('');
     const {
-        data: { currentPostDetail, currentComment },
+        data: { currentPostDetail, currentComment, commentPaging },
         status,
     } = useAppSelector((state) => state.post);
 
-    // Fix duplicate requests
-    const calledCursorsRef = useRef<Array<string | null>>([]);
-
-    const { observerRef, containerObserverRef, isIntersecting } = useIntersectionObserver({
+    const { observerRef, containerObserverRef } = useIntersectionObserver({
         rootMargin: '300px',
     });
 
@@ -39,8 +35,6 @@ const ModalPostDetail = () => {
     const hasFollowBtn = !currentPostDetail.isFollowed;
 
     const handleCreateComment = () => {
-        // if (createCommentLoading) return;
-
         dispatch(
             createCommentStart({
                 postId: currentPostDetail.postId,
@@ -49,9 +43,6 @@ const ModalPostDetail = () => {
         );
 
         setCaption('');
-        // (clearPostDetail());
-
-        // add comment to list
     };
 
     const handleVisitProfile = (username: string) => {
@@ -62,11 +53,6 @@ const ModalPostDetail = () => {
 
         setCaption('');
     };
-
-    // Fetch comments
-    useEffect(() => {
-        // fetch new data
-    }, []);
 
     return (
         <ModalWrapper
@@ -147,6 +133,21 @@ const ModalPostDetail = () => {
                             comment={comment}
                         />
                     ))}
+
+                    <div className="p-5">
+                        <IconShowMore
+                            onClick={() => {
+                                dispatch(
+                                    getCommentOfPostStart({
+                                        PageNumber: commentPaging.pageNumber,
+                                        PageSize: commentPaging.pageSize,
+                                        PostId: currentPostDetail.postId,
+                                    }),
+                                );
+                            }}
+                            className="block m-auto"
+                        />
+                    </div>
 
                     <div ref={observerRef} />
 

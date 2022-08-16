@@ -14,10 +14,10 @@ import { loginStart } from '@/redux/slices/authSlice';
 import { SpinnerRing } from '@/components/Spinner';
 import AuthLayout from '@/layouts/AuthLayout';
 import FormField from '@/components/FormField';
-import ButtonFacebook from '@/pages/Login/components/ButtonFacebook';
-import ButtonGoogle from '@/pages/Login/components/ButtonGoogle';
+import ButtonFacebook from '@/modules/Login/components/ButtonFacebook';
+import ButtonGoogle from '@/modules/Login/components/ButtonGoogle';
 import FormDivider from '@/components/FormDivider';
-import LoginScreenshot from '@/pages/Login/components/LoginScreenshot';
+import LoginScreenshot from '@/modules/Login/components/LoginScreenshot';
 import { logo } from '@/assets/images';
 
 const Login = () => {

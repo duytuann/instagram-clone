@@ -82,7 +82,7 @@ const postSlice = createSlice({
             let afterAddComment = [...state.data.currentComment, ...action.payload];
             state.data.currentComment = afterAddComment;
 
-            let nextPage = state.data.commentPaging.pageNumber++;
+            let nextPage = state.data.commentPaging.pageNumber + 1;
             state.data.commentPaging.pageNumber = nextPage;
         },
         getCommentOfPostFailed: (state, action: PayloadAction<Error>) => {

@@ -32,6 +32,7 @@ public class PostController : BaseApiController
 
         return new OkObjectResult(new BaseResponse<IEnumerable<PostDetailResponse>>(postList)); ;
     }
+    
 
     /// <summary>
     /// List comment in Post (paging).
@@ -48,7 +49,7 @@ public class PostController : BaseApiController
     }
 
     /// <summary>
-    /// Upload file from form-data.
+    /// Upload file from form-data (Create post).
     /// </summary>
     /// <param name="resource">FormData: File and Caption.</param>
     /// <returns>Response for the request: new Post.</returns>

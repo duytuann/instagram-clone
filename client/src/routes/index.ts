@@ -6,10 +6,10 @@ import MainLayout from '@/layouts/MainLayout';
 import AuthLayout from '@/layouts/AuthLayout';
 
 // Pages
-import Home from '@/pages/Home';
-import Login from '@/pages/Login';
-import SignUp from '@/pages/SignUp';
-import Profile from '@/pages/Profile';
+import Home from '@/modules/Home';
+import Login from '@/modules/Login';
+import SignUp from '@/modules/SignUp';
+import Profile from '@/modules/Profile';
 
 // <path : string, Component>
 // Public Router
