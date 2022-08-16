@@ -37,7 +37,7 @@ public class PostController : BaseApiController
     /// List comment in Post (paging).
     /// </summary>
     /// <returns>Response for the request: getComment</returns>
-    [HttpGet]
+    [HttpPost]
     [Authorize]
     public async Task<ActionResult<BaseResponse<IEnumerable<CommentResponse>>>> GetCommentOfPostAsync([FromQuery] GetCommentRequest param)
     {

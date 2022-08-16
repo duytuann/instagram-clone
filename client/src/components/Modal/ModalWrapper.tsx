@@ -20,11 +20,8 @@ const ModalWrapper = ({
     children,
     closeHandler,
 }: ModalProps) => {
-    
     const closeModal = () => {
         if (closeHandler) closeHandler();
-
-        // if (canClose) hideModal(modalType);
     };
 
     return (

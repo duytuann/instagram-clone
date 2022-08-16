@@ -22,7 +22,7 @@ import { avatar } from '@/assets/images';
 const ModalPostDetail = () => {
     const [caption, setCaption] = useState<string>('');
     const {
-        data: { currentPostDetail },
+        data: { currentPostDetail, currentComment },
         status,
     } = useAppSelector((state) => state.post);
 
@@ -37,8 +37,6 @@ const ModalPostDetail = () => {
     const dispatch = useAppDispatch();
 
     const hasFollowBtn = !currentPostDetail.isFollowed;
-
-    // has more comment
 
     const handleCreateComment = () => {
         // if (createCommentLoading) return;
@@ -72,7 +70,10 @@ const ModalPostDetail = () => {
 
     return (
         <ModalWrapper
-            closeHandler={() => dispatch(setShowModalPostDetail(false))}
+            closeHandler={() => {
+                dispatch(setShowModalPostDetail(false));
+                dispatch(clearPostDetail());
+            }}
             className={clsx('flex w-modal-w h-screen', currentPostDetail.mediaPath == null ? 'w-max' : 'lg:w-[1150px]')}
         >
             {currentPostDetail.mediaPath != null && (
@@ -138,23 +139,22 @@ const ModalPostDetail = () => {
                         </div>
                     </div>
 
-                    {/* {commentsData.map((comment) => (
+                    {currentComment.map((comment: any) => (
                         <DetailComment
                             onVisitProfile={handleVisitProfile}
-                            key={comment._id}
-                            postId={postId}
+                            key={comment.commentId}
+                            postId={currentPostDetail.postId}
                             comment={comment}
-                            onShowActionsModal={() => showModal(MODAL_TYPES.COMMENT_ACTIONS)}
                         />
                     ))}
 
                     <div ref={observerRef} />
 
-                    {getCommentsLoading && (
+                    {/* {getCommentsLoading && (
                         <div className="mt-3 mb-6 overflow-hidden">
                             <SpinnerRing className="mx-auto" />
                         </div>
-                    )} */}
+                    )}  */}
                 </div>
 
                 <div className="flex-shrink-0 mt-auto px-4 border-t border-line py-3">

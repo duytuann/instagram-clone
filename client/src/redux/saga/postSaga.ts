@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from '@redux-saga/core/effects';
+import { all, call, put, takeLatest, select } from '@redux-saga/core/effects';
 import {
     getAllPostApi,
     createPostApi,
@@ -6,9 +6,11 @@ import {
     unlikePostApi,
     commentPostApi,
     getDetailByPostIdApi,
+    getCommentOfPostApi,
 } from '@/core/http/apis/post';
 import { ResultResponse } from '@/core/models/ResultResponse';
 import { setShowModalPostCreator } from '@/redux/slices/globalSlice';
+import { RootState } from '@/redux/store';
 import {
     getAllPostStart,
     getAllPostSuccess,
@@ -28,6 +30,9 @@ import {
     unlikePostStart,
     unlikePostSuccess,
     unlikePostFailed,
+    getCommentOfPostStart,
+    getCommentOfPostSuccess,
+    getCommentOfPostFailed,
 } from '@/redux/slices/postSlice';
 
 function* getAllPostSaga(action: ReturnType<typeof getAllPostStart>) {
@@ -61,6 +66,23 @@ function* getDetailByPostIdSaga(action: ReturnType<typeof getDetailByPostIdStart
         }
     } catch (error) {
         yield put({ type: getDetailByPostIdFailed, payload: error });
+    }
+}
+
+function* getCommentOfPostSaga(action: ReturnType<typeof getCommentOfPostStart>) {
+    try {
+        const response: ResultResponse<any> = yield call(getCommentOfPostApi, action.payload);
+        if (response.success) {
+            const { resource } = response;
+            yield put({
+                type: getCommentOfPostSuccess,
+                payload: resource,
+            });
+        } else {
+            yield put({ type: getCommentOfPostFailed, payload: response.message });
+        }
+    } catch (error) {
+        yield put({ type: getCommentOfPostFailed, payload: error });
     }
 }
 
@@ -135,6 +157,9 @@ function* unlikePostSaga(action: ReturnType<typeof unlikePostStart>) {
 function* watchGetAllPost() {
     yield takeLatest(getAllPostStart.type, getAllPostSaga);
 }
+function* watchGetCommentOfPost() {
+    yield takeLatest(getCommentOfPostStart.type, getCommentOfPostSaga);
+}
 function* watchDetailByPostId() {
     yield takeLatest(getDetailByPostIdStart.type, getDetailByPostIdSaga);
 }
@@ -159,5 +184,6 @@ export default function* postSaga() {
         watchUnlikePost(),
         watchCreateComment(),
         watchDetailByPostId(),
+        watchGetCommentOfPost(),
     ]);
 }

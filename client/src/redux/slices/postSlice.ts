@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Post } from '@/core/models/Post';
-import { CreateComment } from '@/core/http/apis/post/types';
+import { CreateComment, GetCommentOfPostParams } from '@/core/http/apis/post/types';
 import { ReduxData, ReduxStateType } from '@/redux/types';
 
 export type CurrentAction = 'create' | 'update' | 'delete' | null;
@@ -8,11 +8,18 @@ export type CurrentAction = 'create' | 'update' | 'delete' | null;
 export interface postState {
     posts: Post[];
     currentPostDetail: any;
+    currentComment: any;
+    commentPaging: any;
 }
 const initialState: ReduxData<postState> = {
     data: {
         posts: [],
         currentPostDetail: {},
+        currentComment: [],
+        commentPaging: {
+            pageNumber: 1,
+            pageSize: 10,
+        },
     },
     status: ReduxStateType.INIT,
 };
@@ -42,6 +49,8 @@ const postSlice = createSlice({
         },
         clearPostDetail: (state, action: PayloadAction) => {
             state.data.currentPostDetail = {};
+            state.data.commentPaging.pageNumber = 1;
+            state.data.currentComment = [];
         },
         getAllPostStart: (state, action: PayloadAction) => {
             state.status = ReduxStateType.LOADING;
@@ -62,6 +71,21 @@ const postSlice = createSlice({
             state.data.currentPostDetail = action.payload;
         },
         getDetailByPostIdFailed: (state, action: PayloadAction<Error>) => {
+            state.status = ReduxStateType.ERROR;
+        },
+        getCommentOfPostStart: (state, action: PayloadAction<GetCommentOfPostParams>) => {
+            state.status = ReduxStateType.LOADING;
+        },
+        getCommentOfPostSuccess: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.SUCCESS;
+
+            let afterAddComment = [...state.data.currentComment, ...action.payload];
+            state.data.currentComment = afterAddComment;
+
+            let nextPage = state.data.commentPaging.pageNumber++;
+            state.data.commentPaging.pageNumber = nextPage;
+        },
+        getCommentOfPostFailed: (state, action: PayloadAction<Error>) => {
             state.status = ReduxStateType.ERROR;
         },
         createPostStart: (state, action: PayloadAction<FormData>) => {
@@ -114,6 +138,9 @@ export const {
     getDetailByPostIdStart,
     getDetailByPostIdSuccess,
     getDetailByPostIdFailed,
+    getCommentOfPostStart,
+    getCommentOfPostSuccess,
+    getCommentOfPostFailed,
     createPostStart,
     createPostSuccess,
     createPostFailed,

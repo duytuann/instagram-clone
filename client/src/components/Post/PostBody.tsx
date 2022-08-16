@@ -1,15 +1,17 @@
 import clsx from 'clsx';
 
-import { displayLikeCounts } from '@/helpers/format';
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { calculateElapsedTime } from '@/helpers/time';
 import { setShowModalPostDetail } from '@/redux/slices/globalSlice';
-import { getDetailByPostIdStart } from '@/redux/slices/postSlice';
+import { getDetailByPostIdStart, getCommentOfPostStart } from '@/redux/slices/postSlice';
 import Actions from '@/components/Actions';
 import { Post } from '@/core/models/Post';
 
 const PostBody = (post: Post) => {
     const dispatch = useAppDispatch();
+    const {
+        data: { commentPaging },
+    } = useAppSelector((state) => state.post);
 
     return (
         <div className="px-4 pt-4 pb-3">
@@ -33,6 +35,13 @@ const PostBody = (post: Post) => {
                     <span
                         onClick={() => {
                             dispatch(getDetailByPostIdStart(post.postId));
+                            dispatch(
+                                getCommentOfPostStart({
+                                    PageNumber: commentPaging.pageNumber,
+                                    PageSize: commentPaging.pageSize,
+                                    PostId: post.postId,
+                                }),
+                            );
                             dispatch(setShowModalPostDetail(true));
                         }}
                         className={clsx('text-base-gray', 'cursor-pointer select-none')}
