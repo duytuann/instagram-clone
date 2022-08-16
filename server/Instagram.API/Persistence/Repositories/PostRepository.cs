@@ -33,6 +33,7 @@ public class PostRepository : BaseRepository, IPostRepository
     public async Task<IEnumerable<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
         => await _context.Comments
                         .Include(comment => comment.User)
+                        .OrderBy(comment => comment.CommentId)
                         .Select(
                             data => new CommentResponse
                             {
@@ -43,9 +44,11 @@ public class PostRepository : BaseRepository, IPostRepository
                                 Username = data.User.Username,
                                 Created = data.Created
                             }
-                        ).Skip(PageNumber - 1 * PageSize)
+                        )
+                        .Skip((PageNumber - 1) * PageSize)
                         .Take(PageSize)
                         .ToListAsync();
+
     //.OrderBy() like_count
 
 
@@ -65,21 +68,30 @@ public class PostRepository : BaseRepository, IPostRepository
 
     public async Task Like(Guid UserId, Guid PostId)
     {
-        Like like = new Like
-        {
-            UserId = UserId,
-            PostId = PostId,
-            LastModified = DateTime.Now,
-        };
+        Like temp = await _context.Likes.FirstOrDefaultAsync(l => l.PostId == PostId && l.UserId == UserId);
 
-        await _context.Likes.AddAsync(like);
+        if (temp == null)
+        {
+            Like like = new Like
+            {
+                UserId = UserId,
+                PostId = PostId,
+                LastModified = DateTime.Now,
+            };
+
+            await _context.Likes.AddAsync(like);
+
+        }
     }
 
     public async Task Unlike(Guid UserId, Guid PostId)
     {
         Like like = await _context.Likes.FirstOrDefaultAsync(l => l.PostId == PostId && l.UserId == UserId);
 
-        _context.Likes.Remove(like);
+        if (like != null)
+        {
+            _context.Likes.Remove(like);
+        }
     }
 
     public async Task Comment(string _comment, Guid _userId, Guid _postId)

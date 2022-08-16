@@ -171,4 +171,16 @@ public class PostController : BaseApiController
 
         return new OkObjectResult(new BaseResponse<PostDetailResponse>(postDetailResponse));
     }
+
+    /// <summary>
+    /// Delete Post by PostId.
+    /// </summary>
+    /// <param name="resource">PostId want to delete.</param>
+    /// <returns>Response for the request: delete Post.</returns>
+    // [HttpDelete]
+    // [Authorize]
+    // public async Task<ActionResult<BaseResponse<User>>> Delete([FromBody] SaveUserRequest resource)
+    // {
+
+    // }
 }

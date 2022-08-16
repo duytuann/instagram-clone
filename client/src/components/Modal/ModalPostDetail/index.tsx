@@ -147,6 +147,7 @@ const ModalPostDetail = () => {
                             onShowActionsModal={() => showModal(MODAL_TYPES.COMMENT_ACTIONS)}
                         />
                     ))}
+
                     <div ref={observerRef} />
 
                     {getCommentsLoading && (

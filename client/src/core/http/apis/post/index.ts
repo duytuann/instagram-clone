@@ -1,5 +1,15 @@
-import { GetAllUrl, CreateUrl, UpdateUrl, DeleteUrl, Like, Unlike, CommentUrl, GetDetailByPostId } from './urls';
-import { CreateComment } from './types';
+import {
+    GetAllUrl,
+    CreateUrl,
+    UpdateUrl,
+    DeleteUrl,
+    Like,
+    Unlike,
+    CommentUrl,
+    GetDetailByPostId,
+    GetCommentOfPost,
+} from './urls';
+import { CreateComment, GetCommentOfPostParams } from './types';
 import httpPost from '@/core/http/singleton/post';
 
 export const getAllPostApi = async () => {
@@ -37,3 +47,11 @@ export const commentPostApi = async (data: CreateComment) => {
     if (!res || !res.data) throw new Error('Opps');
     return res.data;
 };
+
+export const getCommentOfPostApi = async (params: GetCommentOfPostParams) => {
+    const res = await httpPost.post<any>(GetCommentOfPost(params));
+    if (!res || !res.data) throw new Error('Opps');
+    return res.data;
+};
+
+export const deletePostApi
