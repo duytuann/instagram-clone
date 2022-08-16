@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { routes } from '@/routes/routes';
 import Container from '@/components/Container';
 
-const NotFount404 = () => {
+const NotFoundPage = () => {
     return (
         <>
             <Container className="text-center pt-12">
@@ -20,4 +20,4 @@ const NotFount404 = () => {
     );
 };
 
-export default NotFount404;
+export default NotFoundPage;
