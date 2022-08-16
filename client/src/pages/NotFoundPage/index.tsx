@@ -15,7 +15,6 @@ const NotFoundPage = () => {
                     <Link to={routes.home}>
                         <a className="text-primary">Go back to Instagram</a>
                     </Link>
-                    .
                 </p>
             </Container>
         </>
