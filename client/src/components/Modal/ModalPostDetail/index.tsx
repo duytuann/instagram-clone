@@ -65,7 +65,7 @@ const ModalPostDetail = () => {
             {currentPostDetail.mediaPath != null && (
                 <Skeleton
                     objectFit="cover"
-                    className={clsx('hidden lg:block w-3/5 min-h-full border-r border-line', 'bg-white')}
+                    className={clsx('hidden lg:block w-3/5 min-h-full border-r border-line', 'bg-black')}
                     src={currentPostDetail.mediaPath}
                 />
             )}
@@ -125,29 +125,33 @@ const ModalPostDetail = () => {
                         </div>
                     </div>
 
-                    {currentComment.map((comment: any) => (
-                        <DetailComment
-                            onVisitProfile={handleVisitProfile}
-                            key={comment.commentId}
-                            postId={currentPostDetail.postId}
-                            comment={comment}
-                        />
-                    ))}
+                    {currentComment?.data
+                        ? currentComment?.data.map((comment: any) => (
+                              <DetailComment
+                                  onVisitProfile={handleVisitProfile}
+                                  key={comment.commentId}
+                                  postId={currentPostDetail.postId}
+                                  comment={comment}
+                              />
+                          ))
+                        : null}
 
-                    <div className="p-5">
-                        <IconShowMore
-                            onClick={() => {
-                                dispatch(
-                                    getCommentOfPostStart({
-                                        PageNumber: commentPaging.pageNumber,
-                                        PageSize: commentPaging.pageSize,
-                                        PostId: currentPostDetail.postId,
-                                    }),
-                                );
-                            }}
-                            className="block m-auto"
-                        />
-                    </div>
+                    {currentComment.hasNext ? (
+                        <div className="p-5">
+                            <IconShowMore
+                                onClick={() => {
+                                    dispatch(
+                                        getCommentOfPostStart({
+                                            PageNumber: commentPaging.pageNumber,
+                                            PageSize: commentPaging.pageSize,
+                                            PostId: currentPostDetail.postId,
+                                        }),
+                                    );
+                                }}
+                                className="block m-auto"
+                            />
+                        </div>
+                    ) : null}
 
                     <div ref={observerRef} />
 

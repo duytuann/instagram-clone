@@ -5,17 +5,27 @@ import { ReduxData, ReduxStateType } from '@/redux/types';
 
 export type CurrentAction = 'create' | 'update' | 'delete' | null;
 
+interface ICurrentComment {
+    totalCount: number;
+    pageSize: number;
+    currentPage: number;
+    totalPages: number;
+    hasNext: boolean;
+    hasPrevious: boolean;
+    data: Array<any>;
+}
+
 export interface postState {
     posts: Post[];
     currentPostDetail: any;
-    currentComment: any;
+    currentComment: ICurrentComment;
     commentPaging: any;
 }
 const initialState: ReduxData<postState> = {
     data: {
         posts: [],
         currentPostDetail: {},
-        currentComment: [],
+        currentComment: {} as ICurrentComment,
         commentPaging: {
             pageNumber: 1,
             pageSize: 10,
@@ -50,7 +60,7 @@ const postSlice = createSlice({
         clearPostDetail: (state, action: PayloadAction) => {
             state.data.currentPostDetail = {};
             state.data.commentPaging.pageNumber = 1;
-            state.data.currentComment = [];
+            state.data.currentComment = {} as ICurrentComment;
         },
         getAllPostStart: (state, action: PayloadAction) => {
             state.status = ReduxStateType.LOADING;
@@ -79,8 +89,16 @@ const postSlice = createSlice({
         getCommentOfPostSuccess: (state, action: PayloadAction<any>) => {
             state.status = ReduxStateType.SUCCESS;
 
-            let afterAddComment = [...state.data.currentComment, ...action.payload];
-            state.data.currentComment = afterAddComment;
+            let temp = state.data.currentComment.data;
+            let afterFetch = {
+                ...action.payload,
+            };
+
+            if (temp) {
+                afterFetch.data = temp.concat(action.payload.data);
+            }
+
+            state.data.currentComment = afterFetch;
 
             let nextPage = state.data.commentPaging.pageNumber + 1;
             state.data.commentPaging.pageNumber = nextPage;
