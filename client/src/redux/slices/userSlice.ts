@@ -65,6 +65,16 @@ const userSlice = createSlice({
         unfollowUserFailed: (state, action: PayloadAction<Error>) => {
             state.status = ReduxStateType.ERROR;
         },
+        updateAvatarStart: (state, action: PayloadAction<FormData>) => {
+            state.status = ReduxStateType.LOADING;
+        },
+        updateAvatarSuccess: (state, action: PayloadAction<any>) => {
+            state.status = ReduxStateType.SUCCESS;
+            state.data.currentProfile.avatar = action.payload.avatar;
+        },
+        updateAvatarFailed: (state, action: PayloadAction<Error>) => {
+            state.status = ReduxStateType.ERROR;
+        },
     },
 });
 
@@ -83,5 +93,8 @@ export const {
     unfollowUserStart,
     unfollowUserSuccess,
     unfollowUserFailed,
+    updateAvatarStart,
+    updateAvatarSuccess,
+    updateAvatarFailed,
 } = userSlice.actions;
 export default userSlice.reducer;

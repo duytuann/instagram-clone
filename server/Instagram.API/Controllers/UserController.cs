@@ -71,6 +71,45 @@ public class UserController : BaseApiController
         return new OkObjectResult(new BaseResponse<ProfileResponse>(profile));
     }
 
+    /// <summary>
+    /// Set Avatar.
+    /// </summary>
+    /// <param name="resource">File Image</param>
+    /// <returns>Response for the request: Set Avatar</returns>
+    [HttpPut]
+    [Authorize]
+    public async Task<ActionResult<BaseResponse<Object>>> UpdateAvatarAsync([FromForm] UpdateAvatarRequest dto)
+    {
+        var formCollection = await Request.ReadFormAsync();
+        var file = formCollection.Files.First();
+        Guid UserId = this.GetUserId();
+
+        try
+        {
+            if (file.Length > 0)
+            {
+                string fileName = Path.GetRandomFileName();
+
+                var avatar = await _userService.UpdateAvatarAsync(file.OpenReadStream(), fileName, file.ContentType, UserId);
+
+                var response = new
+                {
+                    avatar
+                };
+
+                return new OkObjectResult(new BaseResponse<Object>(response));
+            }
+            else
+            {
+                return BadRequest(new BaseResponse<string>("You need to upload your photo"));
+            }
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new BaseResponse<string>($"Internal server error: {ex}"));
+        }
+    }
+
     /// <sumary>
     /// Update a new User/Account
     /// </sumary>

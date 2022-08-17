@@ -19,7 +19,7 @@ export interface Post {
     likes: number;
     comments: Comment[];
     isLiked?: boolean;
-    isFollowed?: boolean;
+    isFollow?: boolean;
 }
 
 export interface PostDetail {

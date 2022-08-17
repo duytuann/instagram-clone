@@ -7,6 +7,7 @@ public interface IUserService
 {
     Task<IEnumerable<User>> ListAsync();
     Task<ProfileResponse> GetProfileAsync(string UserName);
+    Task<string> UpdateAvatarAsync(Stream fileStream, string fileName, string contentType, Guid UserId);
     Task<User> SaveAsync(User user);
     Task<User> UpdateAsync(Guid id, User user);
     Task<bool> FollowAsync(Guid _userId1, Guid _userId2);

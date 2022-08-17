@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import {} from '@/redux/slices/authSlice';
-import {} from '@/redux/slices/postSlice';
+import { updateAvatarStart } from '@/redux/slices/userSlice';
 import { SpinnerLogo } from '@/components/Spinner';
 import Skeleton from '@/components/Skeleton';
 import DetailActions from '@/modules/Profile/components/DetailActions';
@@ -23,46 +23,14 @@ const ProfileDetail = () => {
     const isMe = currentProfile.userId === user.userId;
     const isLoading = false;
 
-    const handleAvatar = (file?: File) => {};
-    // if (file == null || !isMe) return;
+    const handleAvatar = (file?: File) => {
+        if (file == null || !isMe) return;
 
-    // const reader = new FileReader();
+        const formData = new FormData();
+        formData.append('file', file, file?.name);
 
-    // reader.readAsDataURL(file);
-    // reader.onloadend = async () => {
-    //     let avatar: string | null = null;
-
-    //     // Add avatar
-    //     if (currentUser.avatar == null) {
-    //         const response = await addAvatar({
-    //             variables: {
-    //                 base64Photo: reader.result as string,
-    //             },
-    //         });
-
-    //         const data = response.data?.addAvatar;
-
-    //         if (data?.success) avatar = data.avatar as string;
-    //     } else {
-    //         const response = await updateAvatar({
-    //             variables: {
-    //                 oldPhotoUrl: currentUser.avatar as string,
-    //                 base64Photo: reader.result as string,
-    //             },
-    //         });
-
-    //         const data = response.data?.updateAvatar;
-
-    //         if (data?.success) avatar = data.avatar as string;
-    //     }
-
-    //     if (avatar == null) return;
-
-    // dispatch(authActions.setAvatar({ avatar }));
-    // dispatch(postActions.updateAvatar({ currentUserId: currentUser._id, avatar }));
-    // dispatch(commentActions.updateAvatar({ currentUserId: currentUser._id, avatar }));
-    //     };
-    // };
+        dispatch(updateAvatarStart(formData));
+    };
 
     return (
         <>
@@ -75,13 +43,14 @@ const ProfileDetail = () => {
                     )}
                 >
                     <Skeleton
+                        isAvatar={true}
                         rounded
                         profile
                         onClick={() => {
                             if (isMe) fileInputRef.current?.click();
                         }}
                         objectFit="cover"
-                        src={user.avatar ?? avatar}
+                        src={currentProfile.avatar ?? avatar}
                         alt="Avatar"
                     />
                     {isLoading && (

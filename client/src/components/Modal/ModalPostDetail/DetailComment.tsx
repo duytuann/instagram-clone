@@ -18,7 +18,7 @@ interface DetailCommentProps {
 
 const DetailComment = ({ comment, postId, onVisitProfile }: DetailCommentProps) => {
     const handleVisitProfile = () => onVisitProfile(comment.username);
-    const isLiked = true;
+    const isLiked = false;
 
     return (
         <div className="group flex py-2">

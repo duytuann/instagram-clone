@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
-import { createUserApi, followUserApi, unfollowUserApi, getProfileApi } from '@/core/http/apis/user';
+import { createUserApi, followUserApi, unfollowUserApi, getProfileApi, updateAvatarApi } from '@/core/http/apis/user';
 import { ResultResponse } from '@/core/models/ResultResponse';
 import {
     createUserStart,
@@ -14,6 +14,9 @@ import {
     getCurrentProfileStart,
     getCurrentProfileSuccess,
     getCurrentProfileFailed,
+    updateAvatarStart,
+    updateAvatarSuccess,
+    updateAvatarFailed,
 } from '@/redux/slices/userSlice';
 
 function* getCurrentProfileSaga(action: ReturnType<typeof getCurrentProfileStart>) {
@@ -30,6 +33,23 @@ function* getCurrentProfileSaga(action: ReturnType<typeof getCurrentProfileStart
         }
     } catch (error) {
         yield put({ type: getCurrentProfileFailed, payload: error });
+    }
+}
+
+function* updateAvatarSaga(action: ReturnType<typeof updateAvatarStart>) {
+    try {
+        const response: ResultResponse<any> = yield call(updateAvatarApi, action.payload);
+        if (response.success) {
+            const { resource } = response;
+            yield put({
+                type: updateAvatarSuccess,
+                payload: resource,
+            });
+        } else {
+            yield put({ type: updateAvatarFailed, payload: response.message });
+        }
+    } catch (error) {
+        yield put({ type: updateAvatarFailed, payload: error });
     }
 }
 
@@ -79,6 +99,9 @@ function* unfollowUserSaga(action: ReturnType<typeof unfollowUserStart>) {
     }
 }
 
+function* watchCreate() {
+    yield takeLatest(updateAvatarStart.type, updateAvatarSaga);
+}
 function* watchCreateUser() {
     yield takeLatest(createUserStart.type, createUserSaga);
 }
@@ -93,5 +116,5 @@ function* watchGetCurrentProfile() {
 }
 
 export default function* userSaga() {
-    yield all([watchCreateUser(), watchFollowUser(), watchUnfollowUser(), watchGetCurrentProfile()]);
+    yield all([watchCreateUser(), watchFollowUser(), watchUnfollowUser(), watchGetCurrentProfile(), watchCreate()]);
 }

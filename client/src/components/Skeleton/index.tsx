@@ -7,6 +7,7 @@ interface SkeletonProps extends ImgHTMLAttributes<HTMLImageElement> {
     objectFit?: 'contain' | 'cover';
     profile?: boolean;
     placeholderError?: ReactNode | string;
+    isAvatar?: boolean;
 }
 
 const isImageLoaded = (src: string) => {
@@ -20,7 +21,7 @@ const isImageLoaded = (src: string) => {
 };
 
 const Skeleton = forwardRef<any, SkeletonProps>(
-    ({ alt, src, rounded, className, objectFit, online, placeholderError, profile, ...rest }, forwardRef) => {
+    ({ alt, src, rounded, className, objectFit, online, placeholderError, profile, isAvatar, ...rest }, forwardRef) => {
         const [isLoaded, setIsLoaded] = useState<boolean>(false);
         const [isError, setIsError] = useState<boolean>(false);
 
@@ -52,12 +53,26 @@ const Skeleton = forwardRef<any, SkeletonProps>(
                         ref={imageRef}
                         src={src}
                         alt={alt}
-                        className={clsx(
-                            'block m-auto overflow-hidden',
-                            isLoaded ? 'opacity-100 visible' : 'opacity-0 invisible',
-                            rounded && 'rounded-full',
-                            objectFit && ['h-full', objectFit === 'cover' ? 'object-cover' : 'object-contain'],
-                        )}
+                        className={
+                            isAvatar
+                                ? clsx(
+                                      rounded && 'rounded-full',
+                                      'h-36	w-36',
+                                      objectFit && [
+                                          'h-full',
+                                          objectFit === 'cover' ? 'object-cover' : 'object-contain',
+                                      ],
+                                  )
+                                : clsx(
+                                      'block m-auto overflow-hidden',
+                                      isLoaded ? 'opacity-100 visible' : 'opacity-0 invisible',
+                                      rounded && 'rounded-full',
+                                      objectFit && [
+                                          'h-full',
+                                          objectFit === 'cover' ? 'object-cover' : 'object-contain',
+                                      ],
+                                  )
+                        }
                         onLoad={() => setIsLoaded(true)}
                         draggable={false}
                     />

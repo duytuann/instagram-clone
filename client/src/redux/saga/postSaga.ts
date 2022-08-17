@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest, select } from '@redux-saga/core/effects';
+import { all, call, put, takeLatest } from '@redux-saga/core/effects';
 import {
     getAllPostApi,
     createPostApi,
@@ -10,7 +10,6 @@ import {
 } from '@/core/http/apis/post';
 import { ResultResponse } from '@/core/models/ResultResponse';
 import { setShowModalPostCreator } from '@/redux/slices/globalSlice';
-import { RootState } from '@/redux/store';
 import {
     getAllPostStart,
     getAllPostSuccess,

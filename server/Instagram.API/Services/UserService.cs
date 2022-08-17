@@ -1,3 +1,5 @@
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Instagram.API.Domain.Services;
 using Instagram.API.Domain.Repositories;
 using Instagram.API.Domain.Models;
@@ -7,17 +9,46 @@ namespace Instagram.API.Services;
 
 public class UserService : IUserService
 {
+    private readonly string _storageConnectionString;
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
+    public UserService(IConfiguration configuration, IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
+        _storageConnectionString = configuration.GetConnectionString("AzureStorage");
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
     }
     public async Task<IEnumerable<User>> ListAsync()
     {
         return await _userRepository.ListAsync();
+    }
+
+    public async Task<string> UpdateAvatarAsync(Stream fileStream, string fileName, string contentType, Guid UserId)
+    {
+        string avatarMediaPath = "";
+        try
+        {
+            var container = new BlobContainerClient(_storageConnectionString, "instagram-clone");
+            var createResponse = await container.CreateIfNotExistsAsync();
+
+            if (createResponse != null && createResponse.GetRawResponse().Status == 201)
+                await container.SetAccessPolicyAsync(PublicAccessType.Blob);
+
+            var blob = container.GetBlobClient(fileName);
+            await blob.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
+            await blob.UploadAsync(fileStream, new BlobHttpHeaders { ContentType = contentType });
+
+            _userRepository.UpdateAvatar(blob.Uri.ToString(), UserId);
+            avatarMediaPath = blob.Uri.ToString();
+            await _unitOfWork.CompleteAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return avatarMediaPath;
     }
 
     public async Task<ProfileResponse> GetProfileAsync(string UserName)

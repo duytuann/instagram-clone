@@ -6,6 +6,7 @@ namespace Instagram.API.Domain.Repositories;
 public interface IUserRepository
 {
     Task<IEnumerable<User>> ListAsync();
+    void UpdateAvatar(string MediaPath, Guid UserId);
     Task<ProfileResponse> GetProfileAsync(string UserName);
     Task<User> AddAsync(User user);
     Task<User> FindByIdAsync(Guid id);

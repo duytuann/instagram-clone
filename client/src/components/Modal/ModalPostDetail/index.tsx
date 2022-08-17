@@ -79,7 +79,6 @@ const ModalPostDetail = () => {
             >
                 <div className="flex items-center px-4 py-3 border-b border-line flex-shrink-0">
                     <Skeleton
-                        // online={checkOnline(user._id)}
                         src={currentPostDetail.avatar ?? avatar}
                         rounded
                         className={clsx('w-8 h-8 mr-3', 'cursor-pointer')}

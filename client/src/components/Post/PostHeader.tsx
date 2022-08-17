@@ -32,7 +32,7 @@ const PostHeader = (post: Post) => {
                     rounded
                     objectFit="cover"
                     className={clsx('w-8 h-8 mr-3', 'cursor-pointer')}
-                    src={avatar}
+                    src={post.avatar ?? avatar}
                     alt="Avatar"
                 />
                 <span
@@ -43,19 +43,18 @@ const PostHeader = (post: Post) => {
                 >
                     {post.username}
                 </span>
-                {!post.isFollowed &&
-                    (status === ReduxStateType.LOADING ? (
-                        <SpinnerRing className="w-10 h-10" />
-                    ) : (
-                        <button
-                            onClick={() => {
-                                dispatch(followUserStart(post.userId));
-                            }}
-                            className={clsx('btn text-sm-1', 'text-primary')}
-                        >
-                            Follow
-                        </button>
-                    ))}
+                {post.isFollow ? (
+                    <div className="text-xs font-bold">Following</div>
+                ) : (
+                    <button
+                        onClick={() => {
+                            dispatch(followUserStart(post.userId));
+                        }}
+                        className={clsx('btn text-sm-1', 'text-primary')}
+                    >
+                        Follow
+                    </button>
+                )}
             </div>
             <FontAwesomeIcon
                 // ba cham ne

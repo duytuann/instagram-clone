@@ -9,7 +9,7 @@ interface PostCommentProps {
 }
 
 const PostComment = ({ comment, commentBy, postId }: PostCommentProps) => {
-    const isLiked = true;
+    const isLiked = false;
 
     return (
         <div className={clsx('flex')}>

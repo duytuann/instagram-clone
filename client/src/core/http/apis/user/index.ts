@@ -1,4 +1,4 @@
-import { signUpUrl, Follow, Unfollow, GetProfileUrl } from './urls';
+import { signUpUrl, Follow, Unfollow, GetProfileUrl, UpdateAvatarUrl } from './urls';
 import httpUser from '@/core/http/singleton/user';
 
 export const createUserApi = async (data: any) => {
@@ -21,6 +21,12 @@ export const unfollowUserApi = async (userId: string) => {
 
 export const getProfileApi = async (username: string) => {
     const res = await httpUser.get<any>(GetProfileUrl(username));
+    if (!res || !res.data) throw new Error('Opps');
+    return res.data;
+};
+
+export const updateAvatarApi = async (data: any) => {
+    const res = await httpUser.put<any>(UpdateAvatarUrl, data);
     if (!res || !res.data) throw new Error('Opps');
     return res.data;
 };

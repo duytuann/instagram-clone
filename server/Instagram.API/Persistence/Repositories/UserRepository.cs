@@ -85,6 +85,13 @@ public class UserRepository : BaseRepository, IUserRepository
                             .FirstOrDefaultAsync(u => u.UserId == id);
     }
 
+    public void UpdateAvatar(string MediaPath, Guid UserId)
+    {
+        User User = _context.Users.FirstOrDefault(u => u.UserId == UserId);
+        User.Avatar = MediaPath;
+        _context.Users.Update(User);
+    }
+
     public void Update(User user)
     {
         _context.Users.Update(user);

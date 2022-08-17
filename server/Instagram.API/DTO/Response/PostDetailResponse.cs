@@ -11,5 +11,7 @@ public class PostDetailResponse
     public int Likes { get; set; }
     public string Caption { get; set; }
     public bool IsLiked { get; set; }
+    public bool IsFollow { get; set; }
+    public string Avatar { get; set; }
     public IEnumerable<Comment> Comments { get; set; }
 }

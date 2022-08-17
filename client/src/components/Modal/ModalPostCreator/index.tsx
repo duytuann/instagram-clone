@@ -60,12 +60,7 @@ const ModalPostCreator = () => {
                     }}
                 />
                 <div className={clsx('flex flex-col lg:flex-row h-full')}>
-                    <CreatorPhoto
-                        preview={preview}
-                        // oldPhoto={'oldPhoto'}
-                        onSetPreview={setPreview}
-                        onSetFile={setFile}
-                    />
+                    <CreatorPhoto preview={preview} onSetPreview={setPreview} onSetFile={setFile} />
                     <CreatorForm caption={caption} onChangeCaption={setCaption} />
                 </div>
             </div>
