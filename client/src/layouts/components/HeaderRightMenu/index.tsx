@@ -47,7 +47,10 @@ const HeaderRightMenu = forwardRef<any, any>((_props, forwardRef) => {
                 <span>Switch Accounts</span>
             </li>
             <li
-                onClick={() => dispatch(logoutStart(userToken))}
+                onClick={() => {
+                    dispatch(logoutStart(userToken));
+                    navigate('/');
+                }}
                 className={clsx('flex items-center py-3 pl-4 border-t border-line', 'select-none', 'hover:bg-gray-50')}
             >
                 Log Out

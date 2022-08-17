@@ -18,6 +18,7 @@ public class ProfileResponse
     public string Bio { get; set; }
     public string PhoneNumber { get; set; }
     public string Avatar { get; set; }
-
+    public int Follower { get; set; }
+    public int Following { get; set; }
     public IList<Preview> Previews { get; set; }
 }

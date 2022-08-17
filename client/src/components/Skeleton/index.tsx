@@ -53,7 +53,7 @@ const Skeleton = forwardRef<any, SkeletonProps>(
                         src={src}
                         alt={alt}
                         className={clsx(
-                            'w-full overflow-hidden',
+                            'block m-auto overflow-hidden',
                             isLoaded ? 'opacity-100 visible' : 'opacity-0 invisible',
                             rounded && 'rounded-full',
                             objectFit && ['h-full', objectFit === 'cover' ? 'object-cover' : 'object-contain'],

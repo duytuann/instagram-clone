@@ -9,51 +9,27 @@ import { getDetailByPostIdStart, getCommentOfPostStart } from '@/redux/slices/po
 import IconHeart from '@/components/Icon/IconHeart';
 import IconPhotoVideo from '@/components/Icon/IconPhotoVideo';
 import Skeleton from '@/components/Skeleton';
-import photo from '@/assets/photo.png';
+// import photo from '@/assets/photo.png';
 
 interface ProfilePostsProps {
     userId?: string;
 }
 
 const ProfilePosts = ({ userId }: ProfilePostsProps) => {
-    const { showModal } = useModalContext();
-    const { posts, cursor } = usePostSelector();
+    const {
+        data: { currentProfile },
+    } = useAppSelector((state) => state.user);
+    const {
+        data: { commentPaging },
+    } = useAppSelector((state) => state.post);
 
     const { isIntersecting, observerRef } = useIntersectionObserver({
         rootMargin: '300px',
     });
-    const [getPosts] = useGetPostsLazyQuery();
+
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        const fetchNewPosts = async () => {
-            const response = await getPosts({
-                variables: {
-                    limit: LIMITS.POSTS,
-                    cursor,
-                    query: {
-                        field: 'user',
-                        value: userId,
-                    },
-                },
-            });
-
-            const data = response.data?.getPosts;
-
-            if (!data?.success) return;
-
-            dispatch(
-                postActions.addFetchedPosts({
-                    cursor: data.cursor ?? null,
-                    posts: data.posts!,
-                }),
-            );
-        };
-
-        if (isIntersecting && cursor != null) fetchNewPosts();
-    }, [userId, cursor, isIntersecting, dispatch, getPosts]);
-
-    if (posts.length === 0)
+    if (currentProfile?.previews?.length === 0)
         return (
             <div className={clsx('text-center mt-24')}>
                 <IconPhotoVideo className={clsx('mx-auto', 'text-base-gray')} />
@@ -63,16 +39,23 @@ const ProfilePosts = ({ userId }: ProfilePostsProps) => {
 
     return (
         <div className="grid grid-cols-3 gap-2 md:gap-3 lg:gap-7 mt-10">
-            {posts.map((post) => (
+            {currentProfile?.previews?.map((post: any) => (
                 <div
-                    key={post._id}
+                    key={post.postId}
                     onClick={() => {
                         dispatch(getDetailByPostIdStart(post.postId));
+                        dispatch(
+                            getCommentOfPostStart({
+                                PageNumber: commentPaging.pageNumber,
+                                PageSize: commentPaging.pageSize,
+                                PostId: post.postId,
+                            }),
+                        );
                         dispatch(setShowModalPostDetail(true));
                     }}
                     className={clsx('relative', 'btn group h-36 md:h-64 lg:h-[293px]')}
                 >
-                    <Skeleton objectFit="cover" src={post.photo ?? photo.src} alt="Post" />
+                    <Skeleton objectFit="cover" src={post.mediaPath} alt="Post" />
                     <button
                         className={clsx(
                             'absolute inset-0',
@@ -83,11 +66,11 @@ const ProfilePosts = ({ userId }: ProfilePostsProps) => {
                     >
                         <div className="flex items-center">
                             <IconHeart white className="w-5 mr-2" />
-                            <span className={clsx('font-medium text-sm')}>{post.reactions.length}</span>
+                            <span className={clsx('font-medium text-sm')}>{post.likeCount}</span>
                         </div>
                         <div className="flex items-center">
                             <FontAwesomeIcon icon={faComment} className="w-5 mr-2" />
-                            <span className={clsx('font-medium text-sm')}>{post.commentCounts}</span>
+                            <span className={clsx('font-medium text-sm')}>{post.commentCount}</span>
                         </div>
                     </button>
                 </div>

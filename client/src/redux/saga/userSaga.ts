@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
-import { createUserApi, followUserApi, unfollowUserApi } from '@/core/http/apis/user';
+import { createUserApi, followUserApi, unfollowUserApi, getProfileApi } from '@/core/http/apis/user';
 import { ResultResponse } from '@/core/models/ResultResponse';
 import {
     createUserStart,
@@ -11,7 +11,27 @@ import {
     unfollowUserStart,
     unfollowUserSuccess,
     unfollowUserFailed,
+    getCurrentProfileStart,
+    getCurrentProfileSuccess,
+    getCurrentProfileFailed,
 } from '@/redux/slices/userSlice';
+
+function* getCurrentProfileSaga(action: ReturnType<typeof getCurrentProfileStart>) {
+    try {
+        const resLogin: ResultResponse<any> = yield call(getProfileApi, action.payload);
+        if (resLogin.success) {
+            const { resource } = resLogin;
+            yield put({
+                type: getCurrentProfileSuccess,
+                payload: resource,
+            });
+        } else {
+            yield put({ type: getCurrentProfileFailed, payload: resLogin.message });
+        }
+    } catch (error) {
+        yield put({ type: getCurrentProfileFailed, payload: error });
+    }
+}
 
 function* createUserSaga(action: ReturnType<typeof createUserStart>) {
     try {
@@ -68,7 +88,10 @@ function* watchFollowUser() {
 function* watchUnfollowUser() {
     yield takeLatest(unfollowUserStart.type, unfollowUserSaga);
 }
+function* watchGetCurrentProfile() {
+    yield takeLatest(getCurrentProfileStart.type, getCurrentProfileSaga);
+}
 
 export default function* userSaga() {
-    yield all([watchCreateUser(), watchFollowUser(), watchUnfollowUser()]);
+    yield all([watchCreateUser(), watchFollowUser(), watchUnfollowUser(), watchGetCurrentProfile()]);
 }

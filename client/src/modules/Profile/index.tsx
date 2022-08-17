@@ -1,21 +1,37 @@
+import { useEffect } from 'react';
 import { faBorderAll } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 
-import { useAppSelector } from '@/hooks';
+import ModalPostDetail from '@/components/Modal/ModalPostDetail';
+import { changeCurrentUserNameProfile, getCurrentProfileStart } from '@/redux/slices/userSlice';
+import { useAppSelector, useAppDispatch } from '@/hooks';
 import ProfilePosts from '@/modules/Profile/components/ProfilePosts';
 import ProfileDetail from '@/modules/Profile/components/ProfileDetail';
 import Container from '@/components/Container';
 
 const Profile = () => {
+    const dispatch = useAppDispatch();
     const {
         data: { user },
     } = useAppSelector((state) => state.auth);
+    const { showModalPostDetails } = useAppSelector((state) => state.global.data);
+    useEffect(() => {
+        const url = window.location.href;
+        const params = url.split('/');
+        const username = params[params.length - 1];
+        if (params.length < 2) {
+            dispatch(changeCurrentUserNameProfile(''));
+        } else {
+            dispatch(changeCurrentUserNameProfile(username));
+            dispatch(getCurrentProfileStart(username));
+        }
+    }, [window.location.href]);
 
     return (
         <Container className={clsx('pt-9 pb-20')}>
             <section className="grid grid-cols-3">
-                <ProfileDetail user={user} />
+                <ProfileDetail />
             </section>
 
             <section className="mt-14 border-t border-line">
@@ -32,6 +48,7 @@ const Profile = () => {
                 </div>
                 <ProfilePosts userId={user.userId} />
             </section>
+            {showModalPostDetails ? <ModalPostDetail /> : null}
         </Container>
     );
 };

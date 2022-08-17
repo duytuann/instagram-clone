@@ -35,6 +35,8 @@ public class UserRepository : BaseRepository, IUserRepository
 
         return await _context.Users.Where(user => user.Username == UserName)
                                 .Include(user => user.Posts)
+                                .Include(user => user.Followers)
+                                .Include(user => user.Followings)
                                 .Select(
                                     data => new ProfileResponse
                                     {
@@ -46,6 +48,8 @@ public class UserRepository : BaseRepository, IUserRepository
                                         Bio = data.Bio,
                                         PhoneNumber = data.PhoneNumber,
                                         Avatar = data.Avatar,
+                                        Follower = data.Followers.Count(),
+                                        Following = data.Followings.Count(),
                                         Previews = posts
                                     }
                                 ).FirstAsync();
