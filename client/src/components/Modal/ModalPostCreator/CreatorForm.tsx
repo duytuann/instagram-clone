@@ -30,10 +30,10 @@ const CreatorForm = ({ caption, onChangeCaption }: CreatorFormProps) => {
                         objectFit="cover"
                         rounded
                         className="w-7 h-7 mr-2"
-                        src={user!.Avatar ?? avatar}
+                        src={user!.avatar ?? avatar}
                         alt="Avatar"
                     />
-                    <span className="font-bold text-base">{user.Username}</span>
+                    <span className="font-medium text-base">{user.username}</span>
                 </div>
                 <textarea
                     ref={focusRef}

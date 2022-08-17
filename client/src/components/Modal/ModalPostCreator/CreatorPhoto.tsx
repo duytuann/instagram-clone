@@ -8,12 +8,12 @@ import Skeleton from '@/components/Skeleton';
 
 interface CreatorPhotoProps {
     preview: string;
-    oldPhoto: string;
+    oldPhoto?: string;
     onSetPreview: (preview: string) => void;
     onSetFile: (file: File) => void;
 }
 
-const CreatorPhoto = ({ preview, oldPhoto, onSetPreview, onSetFile }: CreatorPhotoProps) => {
+const CreatorPhoto = ({ preview, onSetPreview, onSetFile }: CreatorPhotoProps) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleSetFile = (file?: File) => {
@@ -37,12 +37,12 @@ const CreatorPhoto = ({ preview, oldPhoto, onSetPreview, onSetFile }: CreatorPho
     return (
         <div className="lg:w-3/5 h-[580px]">
             <DropZone onDrop={handleSetFile}>
-                {preview || oldPhoto ? (
+                {preview ? (
                     <div className="w-full h-full">
                         <Skeleton
                             onClick={setPhoto}
                             objectFit="cover"
-                            src={preview || oldPhoto}
+                            src={preview}
                             alt="Upload"
                             className="cursor-pointer"
                         />

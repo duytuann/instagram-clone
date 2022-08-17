@@ -23,8 +23,6 @@ const ModalPostCreator = () => {
     const [file, setFile] = useState<any>();
     const dispatch = useAppDispatch();
 
-    // const oldPhoto = selectedPost?.photo ?? '';
-
     const reset = () => {
         setCaption('');
         setPreview('');
@@ -42,7 +40,7 @@ const ModalPostCreator = () => {
 
         reset();
 
-        // dispatch(setShowModalPostCreator(false));
+        dispatch(setShowModalPostCreator(false));
     };
 
     const handleUpdatePostSubmit = () => {
@@ -55,26 +53,22 @@ const ModalPostCreator = () => {
                 dispatch(setShowModalPostCreator(false));
             }}
         >
-            {status === ReduxStateType.LOADING ? (
-                <Loading title={'Uploading'} />
-            ) : (
-                <div className={clsx('w-[913px] max-w-full mx-auto rounded-xl overflow-hidden', 'bg-white')}>
-                    <CreatorHeader
-                        onCreateOrUpdateSubmit={() => {
-                            handleCreatePostSubmit();
-                        }}
+            <div className={clsx('w-[913px] max-w-full mx-auto rounded-xl overflow-hidden', 'bg-white')}>
+                <CreatorHeader
+                    onCreateOrUpdateSubmit={() => {
+                        handleCreatePostSubmit();
+                    }}
+                />
+                <div className={clsx('flex flex-col lg:flex-row h-full')}>
+                    <CreatorPhoto
+                        preview={preview}
+                        // oldPhoto={'oldPhoto'}
+                        onSetPreview={setPreview}
+                        onSetFile={setFile}
                     />
-                    <div className={clsx('flex flex-col lg:flex-row h-full')}>
-                        <CreatorPhoto
-                            preview={preview || 'oldPhoto'}
-                            oldPhoto={'oldPhoto'}
-                            onSetPreview={setPreview}
-                            onSetFile={setFile}
-                        />
-                        <CreatorForm caption={caption} onChangeCaption={setCaption} />
-                    </div>
+                    <CreatorForm caption={caption} onChangeCaption={setCaption} />
                 </div>
-            )}
+            </div>
         </ModalWrapper>
     );
 };

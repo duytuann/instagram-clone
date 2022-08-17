@@ -74,6 +74,7 @@ const postSlice = createSlice({
         },
         getDetailByPostIdStart: (state, action: PayloadAction<string>) => {
             state.data.currentPostDetail = {};
+            state.data.currentComment = {} as ICurrentComment;
             state.status = ReduxStateType.LOADING;
         },
         getDetailByPostIdSuccess: (state, action: PayloadAction<any>) => {

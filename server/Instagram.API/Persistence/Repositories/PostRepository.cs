@@ -36,6 +36,7 @@ public class PostRepository : BaseRepository, IPostRepository
         => PagedList<CommentResponse>.ToPagedList(
             _context.Comments
                         .Include(comment => comment.User)
+                        .Where(comment => comment.PostId == PostId)
                         .OrderBy(comment => comment.Created)
                         .Select(
                             data => new CommentResponse
