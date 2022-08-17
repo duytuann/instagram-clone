@@ -9,6 +9,7 @@ export interface Comment {
 }
 
 export interface Post {
+    avatar?: string;
     postId: string;
     userId?: string;
     username?: string;
