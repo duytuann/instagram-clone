@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
+
+using Instagram.API.Domain.Helper;
 using Instagram.API.Domain.Models;
 using Instagram.API.Domain.Services;
 using Instagram.API.DTO.Request;
@@ -32,20 +34,46 @@ public class PostController : BaseApiController
 
         return new OkObjectResult(new BaseResponse<IEnumerable<PostDetailResponse>>(postList)); ;
     }
-    
+
+    /// <summary>
+    /// Get Profile (with Paging Post).
+    /// </summary>
+    /// <param name="resource">UserId want to get profile.</param>
+    /// <returns>Response for the request: getAllPost</returns>
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<BaseResponse<IEnumerable<PostDetailResponse>>>> GetProfileAsync()
+    {
+        Guid UserId = this.GetUserId();
+        var postList = await _postService.GetAllAsync(UserId);
+
+        return new OkObjectResult(new BaseResponse<IEnumerable<PostDetailResponse>>(postList));
+    }
 
     /// <summary>
     /// List comment in Post (paging).
     /// </summary>
+    /// <param name="resource">PostId | PageNumber | PageSize.</param>
     /// <returns>Response for the request: getComment</returns>
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<IEnumerable<CommentResponse>>>> GetCommentOfPostAsync([FromQuery] GetCommentRequest param)
+    public async Task<ActionResult<BaseResponse<Object>>> GetCommentOfPostAsync([FromQuery] GetCommentRequest param)
     {
         Guid PostId = Guid.Parse(param.PostId);
-        var commentList = await _postService.GetCommentOfPostAsync(PostId, param.PageNumber, param.PageSize);
+        var data = await _postService.GetCommentOfPostAsync(PostId, param.PageNumber, param.PageSize);
 
-        return new OkObjectResult(new BaseResponse<IEnumerable<CommentResponse>>(commentList));
+        var metadata = new
+        {
+            data.TotalCount,
+            data.PageSize,
+            data.CurrentPage,
+            data.TotalPages,
+            data.HasNext,
+            data.HasPrevious,
+            data
+        };
+
+        return new OkObjectResult(new BaseResponse<Object>(metadata));
     }
 
     /// <summary>

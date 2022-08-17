@@ -4,6 +4,7 @@ using Instagram.API.DTO.Response;
 using Instagram.API.Domain.Models;
 using Instagram.API.Domain.Repositories;
 using Instagram.API.Persistence.Contexts;
+using Instagram.API.Domain.Helper;
 
 namespace Instagram.API.Persistence.Repositories;
 
@@ -30,10 +31,11 @@ public class PostRepository : BaseRepository, IPostRepository
                             }
                         ).ToListAsync();
 
-    public async Task<IEnumerable<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
-        => await _context.Comments
+    public async Task<PagedList<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
+        => PagedList<CommentResponse>.ToPagedList(
+            _context.Comments
                         .Include(comment => comment.User)
-                        .OrderBy(comment => comment.CommentId)
+                        .OrderBy(comment => comment.Created)
                         .Select(
                             data => new CommentResponse
                             {
@@ -44,10 +46,10 @@ public class PostRepository : BaseRepository, IPostRepository
                                 Username = data.User.Username,
                                 Created = data.Created
                             }
-                        )
-                        .Skip((PageNumber - 1) * PageSize)
-                        .Take(PageSize)
-                        .ToListAsync();
+                        ),
+            PageNumber,
+            PageSize
+        );
 
     //.OrderBy() like_count
 

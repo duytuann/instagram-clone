@@ -4,6 +4,7 @@ using Instagram.API.Domain.Services;
 using Instagram.API.Domain.Repositories;
 using Instagram.API.Domain.Models;
 using Instagram.API.DTO.Response;
+using Instagram.API.Domain.Helper;
 
 namespace Instagram.API.Services;
 
@@ -25,7 +26,7 @@ public class PostService : IPostService
         return await _postRepository.GetAllAsync(UserId);
     }
 
-    public async Task<IEnumerable<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
+    public async Task<PagedList<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
     {
         return await _postRepository.GetCommentOfPostAsync(PostId, PageNumber, PageSize);
     }
