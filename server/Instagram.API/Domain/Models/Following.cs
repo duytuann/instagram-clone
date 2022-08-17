@@ -8,5 +8,5 @@ public class Following : BaseAuditableEntity
     public Guid UserID { get; set; }
     public DateTime DateFollowed { get; set; }
     [JsonIgnore]
-    public User? User { get; set; }
+    public User User { get; set; }
 }

@@ -12,8 +12,8 @@ namespace Instagram.API.Controllers;
 
 public class PostController : BaseApiController
 {
-    private readonly IPostService? _postService;
-    private readonly IMapper? _mapper;
+    private readonly IPostService _postService;
+    private readonly IMapper _mapper;
 
     public PostController(IPostService postService, IMapper mapper)
     {
@@ -166,7 +166,7 @@ public class PostController : BaseApiController
     [Authorize]
     public async Task<ActionResult<BaseResponse<Response>>> CommentAsync([FromBody] CommentRequest request)
     {
-        string? comment = request.CommentText;
+        string comment = request.CommentText;
         Guid postId = Guid.Parse(request.PostId);
         Guid userId = this.GetUserId();
 

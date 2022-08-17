@@ -10,7 +10,7 @@ namespace Instagram.API.Controllers;
 
 public class AuthController : BaseApiController
 {
-    private readonly IAuthService? _authService;
+    private readonly IAuthService _authService;
 
     public AuthController(IAuthService authService)
     {

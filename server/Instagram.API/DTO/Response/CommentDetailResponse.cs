@@ -10,7 +10,7 @@ public class CommentDetailResponse
 
     public Guid PostId { get; set; }
 
-    public String? Username { get; set; }
+    public String Username { get; set; }
 
-    public String? CommentText { get; set; }
+    public String CommentText { get; set; }
 }

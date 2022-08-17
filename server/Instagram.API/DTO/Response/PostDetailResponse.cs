@@ -6,10 +6,10 @@ public class PostDetailResponse
 {
     public Guid PostId { get; set; }
     public Guid UserId { get; set; }
-    public String? Username { get; set; }
-    public String? MediaPath { get; set; }
+    public string Username { get; set; }
+    public string MediaPath { get; set; }
     public int Likes { get; set; }
-    public String? Caption { get; set; }
+    public string Caption { get; set; }
     public bool IsLiked { get; set; }
-    public IEnumerable<Comment>? Comments { get; set; }
+    public IEnumerable<Comment> Comments { get; set; }
 }
