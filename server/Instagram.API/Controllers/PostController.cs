@@ -42,12 +42,11 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: getAllPost</returns>
     [HttpGet]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<IEnumerable<PostDetailResponse>>>> GetProfileAsync()
+    public async Task<ActionResult<BaseResponse<ProfileResponse>>> GetProfileAsync([FromQuery] string UserName)
     {
-        Guid UserId = this.GetUserId();
-        var postList = await _postService.GetAllAsync(UserId);
+        var profile = await _postService.GetProfileAsync(UserName);
 
-        return new OkObjectResult(new BaseResponse<IEnumerable<PostDetailResponse>>(postList));
+        return new OkObjectResult(new BaseResponse<ProfileResponse>(profile));
     }
 
     /// <summary>

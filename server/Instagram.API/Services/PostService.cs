@@ -31,6 +31,11 @@ public class PostService : IPostService
         return await _postRepository.GetCommentOfPostAsync(PostId, PageNumber, PageSize);
     }
 
+    public async Task<ProfileResponse> GetProfileAsync(string UserName)
+    {
+        return await _postRepository.GetProfileAsync(UserName);
+    }
+
     public async Task<Post> SaveAsync(Stream fileStream, string fileName, string contentType, string Caption, Guid UserId)
     {
         var newPost = new Post();
