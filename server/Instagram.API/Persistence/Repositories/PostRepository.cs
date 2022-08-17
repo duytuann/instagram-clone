@@ -32,7 +32,7 @@ public class PostRepository : BaseRepository, IPostRepository
                             }
                         ).ToListAsync();
 
-    public async Task<PagedList<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
+    public PagedList<CommentResponse> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
         => PagedList<CommentResponse>.ToPagedList(
             _context.Comments
                         .Include(comment => comment.User)

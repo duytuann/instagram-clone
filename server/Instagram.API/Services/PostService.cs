@@ -26,9 +26,9 @@ public class PostService : IPostService
         return await _postRepository.GetAllAsync(UserId);
     }
 
-    public async Task<PagedList<CommentResponse>> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
+    public PagedList<CommentResponse> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize)
     {
-        return await _postRepository.GetCommentOfPostAsync(PostId, PageNumber, PageSize);
+        return _postRepository.GetCommentOfPostAsync(PostId, PageNumber, PageSize);
     }
 
     public async Task<ProfileResponse> GetProfileAsync(string UserName)

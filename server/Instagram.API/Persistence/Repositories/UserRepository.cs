@@ -80,6 +80,7 @@ public class UserRepository : BaseRepository, IUserRepository
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             return false;
         }
     }
@@ -103,6 +104,7 @@ public class UserRepository : BaseRepository, IUserRepository
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             return false;
         }
     }

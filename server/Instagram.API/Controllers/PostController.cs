@@ -56,10 +56,10 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: getComment</returns>
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<Object>>> GetCommentOfPostAsync([FromQuery] GetCommentRequest param)
+    public ActionResult<BaseResponse<Object>> GetCommentOfPostAsync([FromQuery] GetCommentRequest param)
     {
         Guid PostId = Guid.Parse(param.PostId);
-        var data = await _postService.GetCommentOfPostAsync(PostId, param.PageNumber, param.PageSize);
+        var data = _postService.GetCommentOfPostAsync(PostId, param.PageNumber, param.PageSize);
 
         var metadata = new
         {

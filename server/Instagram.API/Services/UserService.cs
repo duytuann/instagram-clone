@@ -27,7 +27,7 @@ public class UserService : IUserService
 
         if (res == null)
             return null; // wrong logic, should be return success : false;
-            
+
         return res;
     }
 
@@ -53,6 +53,7 @@ public class UserService : IUserService
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             return null;
         }
     }
