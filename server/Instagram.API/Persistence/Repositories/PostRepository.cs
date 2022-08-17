@@ -54,42 +54,6 @@ public class PostRepository : BaseRepository, IPostRepository
 
     //.OrderBy() like_count
 
-    public async Task<ProfileResponse> GetProfileAsync(string UserName)
-    {
-        List<Preview> posts = await _context.Posts
-        .Where(post => post.User.Username == UserName)
-        .Include(post => post.User)
-        .Include(post => post.Likes)
-        .Include(post => post.Comments)
-        .Select(
-            data => new Preview
-            {
-                PostId = data.PostId,
-                LikeCount = data.Likes.Count(),
-                CommentCount = data.Comments.Count(),
-                MediaPath = data.MediaPath,
-            }
-        )
-        .ToListAsync();
-
-        return await _context.Users.Where(user => user.Username == UserName)
-                                .Include(user => user.Posts)
-                                .Select(
-                                    data => new ProfileResponse
-                                    {
-                                        UserId = data.UserId,
-                                        Email = data.Email,
-                                        Gender = data.Gender,
-                                        Username = data.Username,
-                                        Name = data.Name,
-                                        Bio = data.Bio,
-                                        PhoneNumber = data.PhoneNumber,
-                                        Avatar = data.Avatar,
-                                        Previews = posts
-                                    }
-                                ).FirstAsync();
-    }
-
     public async Task<Post> SaveAsync(String _MediaPath, string _Caption, Guid _UserId)
     {
         Post post = new Post

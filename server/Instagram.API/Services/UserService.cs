@@ -1,7 +1,7 @@
 using Instagram.API.Domain.Services;
 using Instagram.API.Domain.Repositories;
 using Instagram.API.Domain.Models;
-using Instagram.API.Domain.Services.Communication;
+using Instagram.API.DTO.Response;
 
 namespace Instagram.API.Services;
 
@@ -18,6 +18,11 @@ public class UserService : IUserService
     public async Task<IEnumerable<User>> ListAsync()
     {
         return await _userRepository.ListAsync();
+    }
+
+    public async Task<ProfileResponse> GetProfileAsync(string UserName)
+    {
+        return await _userRepository.GetProfileAsync(UserName);
     }
 
     public async Task<User> SaveAsync(User user)

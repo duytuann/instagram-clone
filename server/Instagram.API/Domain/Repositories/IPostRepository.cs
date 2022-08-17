@@ -8,7 +8,6 @@ public interface IPostRepository
 {
     Task<IEnumerable<PostDetailResponse>> GetAllAsync(Guid UserId);
     PagedList<CommentResponse> GetCommentOfPostAsync(Guid PostId, int PageNumber, int PageSize);
-    Task<ProfileResponse> GetProfileAsync(string UserName);
     Task<Post> SaveAsync(String MediaPath, string Caption, Guid UserId);
     Task Like(Guid UserId, Guid PostId);
     Task Unlike(Guid UserId, Guid PostId);

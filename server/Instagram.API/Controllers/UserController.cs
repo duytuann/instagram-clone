@@ -57,6 +57,20 @@ public class UserController : BaseApiController
         return new OkObjectResult(new BaseResponse<User>(newUser));
     }
 
+    /// <summary>
+    /// Get Profile (with Paging Post).
+    /// </summary>
+    /// <param name="resource">UserId want to get profile.</param>
+    /// <returns>Response for the request: getAllPost</returns>
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<BaseResponse<ProfileResponse>>> GetProfileAsync([FromQuery] string UserName)
+    {
+        var profile = await _userService.GetProfileAsync(UserName);
+
+        return new OkObjectResult(new BaseResponse<ProfileResponse>(profile));
+    }
+
     /// <sumary>
     /// Update a new User/Account
     /// </sumary>

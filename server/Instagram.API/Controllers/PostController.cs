@@ -36,20 +36,6 @@ public class PostController : BaseApiController
     }
 
     /// <summary>
-    /// Get Profile (with Paging Post).
-    /// </summary>
-    /// <param name="resource">UserId want to get profile.</param>
-    /// <returns>Response for the request: getAllPost</returns>
-    [HttpGet]
-    [Authorize]
-    public async Task<ActionResult<BaseResponse<ProfileResponse>>> GetProfileAsync([FromQuery] string UserName)
-    {
-        var profile = await _postService.GetProfileAsync(UserName);
-
-        return new OkObjectResult(new BaseResponse<ProfileResponse>(profile));
-    }
-
-    /// <summary>
     /// List comment in Post (paging).
     /// </summary>
     /// <param name="resource">PostId | PageNumber | PageSize.</param>
