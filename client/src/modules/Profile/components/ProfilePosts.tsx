@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
-
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 
 import { setShowModalPostDetail } from '@/redux/slices/globalSlice';
 import { useIntersectionObserver, useAppDispatch, useAppSelector } from '@/hooks';
-import { useGetPostsLazyQuery } from '~/types/generated';
-
 import { getDetailByPostIdStart, getCommentOfPostStart } from '@/redux/slices/postSlice';
 import IconHeart from '@/components/Icon/IconHeart';
 import IconPhotoVideo from '@/components/Icon/IconPhotoVideo';

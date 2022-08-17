@@ -1,11 +1,12 @@
 using Instagram.API.Domain.Models;
-using Instagram.API.Domain.Services.Communication;
+using Instagram.API.DTO.Response;
 
 namespace Instagram.API.Domain.Services;
 
 public interface IUserService
 {
     Task<IEnumerable<User>> ListAsync();
+    Task<ProfileResponse> GetProfileAsync(string UserName);
     Task<User> SaveAsync(User user);
     Task<User> UpdateAsync(Guid id, User user);
     Task<bool> FollowAsync(Guid _userId1, Guid _userId2);

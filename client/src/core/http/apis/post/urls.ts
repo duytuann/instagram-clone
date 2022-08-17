@@ -1,6 +1,7 @@
 import { GetCommentOfPostParams } from './types';
 
 export const GetAllUrl = '/GetAll';
+export const GetProfileUrl = (username: string) => `GetProfile?UserName=${username}`;
 export const CreateUrl = '/Create';
 export const UpdateUrl = '/Update';
 export const DeleteUrl = (postId: string) => `/Delete?postId=${postId}`;

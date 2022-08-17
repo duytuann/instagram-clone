@@ -1,10 +1,12 @@
 using Instagram.API.Domain.Models;
+using Instagram.API.DTO.Response;
 
 namespace Instagram.API.Domain.Repositories;
 
 public interface IUserRepository
 {
     Task<IEnumerable<User>> ListAsync();
+    Task<ProfileResponse> GetProfileAsync(string UserName);
     Task<User> AddAsync(User user);
     Task<User> FindByIdAsync(Guid id);
     void Update(User user);
