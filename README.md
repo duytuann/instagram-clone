@@ -63,4 +63,15 @@ $ cd server/Instagram.API -> dotnet watch
 
 ![postgif](https://user-images.githubusercontent.com/95377982/185365502-c4b7127b-9271-4ea3-9f53-e5aaf2e92fae.gif)
 
+### Prifile Detail
+
+![image](https://user-images.githubusercontent.com/95377982/185366130-351ee4f1-e9c5-4c4f-ab5a-244b19ac59fb.png)
+
+### Paging Comment and NewFeed
+
+![image](https://user-images.githubusercontent.com/95377982/185366255-cdd4c1d7-1f89-4715-a813-44792d7b6359.png)
+
+### And More (Follow, UnFollow, Inbox, ...) 
+
+I have finished the API but I haven't finished the interface part. :joy: :joy:
 
