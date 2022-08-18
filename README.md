@@ -1,10 +1,17 @@
-<h2>Overview</h2>
+<h1>Instagram clone</h1>
 
+Instagram clone is a fully responsive social media app that is a mimic for Instagram built using ReactJS and ASP.Net Core.
 
-![signin gif](https://user-images.githubusercontent.com/95377982/185359008-5e774d77-33ba-4584-88e5-4d79bd0bf70e.gif)
+## Important Note
+> I am still working on the project, this is not the final verison of it, I just make it public to get feedback and imporve it ... Happay-Eid 🎉🐏
 
+## About
+> Instanews is a fully responsive social media app that is a mimic for [Instagram](https://www.instagram.com/) built using [ReactJS](https://reactjs.org/) and [ASP.NET Core](https://dotnet.microsoft.com/en-us/apps/aspnet)
 
-
-
-https://user-images.githubusercontent.com/95377982/185359034-96d7f2b4-f3e1-4e55-b687-9abe60282845.mp4
+### Build with
+- [ReactJS](https://reactjs.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Redux Saga](https://redux-saga.js.org/)
+- [Axios](https://github.com/axios/axios)
+- [ViteJS](https://vitejs.dev/)
 
