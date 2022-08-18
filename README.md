@@ -65,7 +65,7 @@ $ cd server/Instagram.API -> dotnet watch
 
 ### Prifile Detail
 
-![image](https://user-images.githubusercontent.com/95377982/185366130-351ee4f1-e9c5-4c4f-ab5a-244b19ac59fb.png)
+![image](https://user-images.githubusercontent.com/95377982/185367466-7c887f62-2441-417f-9b93-184032ca0bf8.png)
 
 ### Paging Comment and NewFeed
 
