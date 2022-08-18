@@ -15,3 +15,40 @@ Instagram clone is a fully responsive social media app that is a mimic for Insta
 - [Axios](https://github.com/axios/axios)
 - [ViteJS](https://vitejs.dev/)
 
+- [ASP.NET Core](https://dotnet.microsoft.com/en-us/apps/aspnet)
+- [Entity Framework](https://docs.microsoft.com/en-us/ef/)
+- [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
+- [Auto Mapper](https://automapper.org/)
+- [JWT Token] (https://jwt.io/)
+
+## Getting Started
+> This is an list of needed instructions to set up your project locally, to get a local copy up and running follow these instructuins.
+
+### Installation
+
+1. **_Clone the repository_**
+
+```sh
+$ git clone https://github.com/duytuann/instagram-clone.git
+```
+2. **_Navigate to repository directory_**
+```sh
+$ cd instagram-clone
+```
+
+3. **_Install dependencies_**
+
+```sh
+$ cd client -> npm install
+$ npm install
+```
+
+
+### Running
+
+1. **_Compiles and hot-reloads for development_**
+```sh
+$ cd client -> npm run dev
+$ cd server/Instagram.API -> dotnet watch
+```
+
