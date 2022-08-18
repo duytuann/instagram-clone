@@ -61,5 +61,6 @@ $ cd server/Instagram.API -> dotnet watch
 
 ### Post Media (Storage with Azure Blob Storage)
 
-https://user-images.githubusercontent.com/95377982/185365252-eda881cd-ddf0-427b-8aad-c0d60d910210.mp4
+![postgif](https://user-images.githubusercontent.com/95377982/185365502-c4b7127b-9271-4ea3-9f53-e5aaf2e92fae.gif)
+
 
