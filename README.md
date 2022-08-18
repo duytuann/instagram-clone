@@ -59,4 +59,7 @@ $ cd server/Instagram.API -> dotnet watch
 ![signin](https://user-images.githubusercontent.com/95377982/185363735-37feac8a-ffb5-433a-b2ed-40dcf1cd3086.gif)
 
 
+### Post Media (Storage with Azure Blob Storage)
+
+https://user-images.githubusercontent.com/95377982/185365252-eda881cd-ddf0-427b-8aad-c0d60d910210.mp4
 
