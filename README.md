@@ -19,7 +19,7 @@ Instagram clone is a fully responsive social media app that is a mimic for Insta
 - [Entity Framework](https://docs.microsoft.com/en-us/ef/)
 - [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
 - [Auto Mapper](https://automapper.org/)
-- [JWT Token] (https://jwt.io/)
+- [JWT Token](https://jwt.io/)
 
 ## Getting Started
 > This is an list of needed instructions to set up your project locally, to get a local copy up and running follow these instructuins.
@@ -46,9 +46,17 @@ $ npm install
 
 ### Running
 
-1. **_Compiles and hot-reloads for development_**
+**_Compiles and hot-reloads for development_**
 ```sh
 $ cd client -> npm run dev
 $ cd server/Instagram.API -> dotnet watch
 ```
+
+### Features
+
+### Sign In and Sign Up (Security With JWT Bearer Token)
+
+![signin](https://user-images.githubusercontent.com/95377982/185363735-37feac8a-ffb5-433a-b2ed-40dcf1cd3086.gif)
+
+
 
