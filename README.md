@@ -57,6 +57,7 @@ $ cd server/Instagram.API -> dotnet watch
 ### Sign In and Sign Up (Security With JWT Bearer Token)
 
 ![signin](https://user-images.githubusercontent.com/95377982/185363735-37feac8a-ffb5-433a-b2ed-40dcf1cd3086.gif)
+![image](https://user-images.githubusercontent.com/95377982/185367659-e7a30a28-20bc-4afe-afae-7709871c4d5e.png)
 
 
 ### Post Media (Storage with Azure Blob Storage)
