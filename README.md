@@ -43,6 +43,12 @@ $ cd client -> npm install
 $ npm install
 ```
 
+3. **_Change your Connection String_**
+
+```sh
+In File instagram-clone/server/Instagram.API/appsettings.json, change your postgresSqlConnection to your ConnectionString.
+```
+
 
 ### Running
 
@@ -64,7 +70,7 @@ $ cd server/Instagram.API -> dotnet watch
 
 ![postgif](https://user-images.githubusercontent.com/95377982/185365502-c4b7127b-9271-4ea3-9f53-e5aaf2e92fae.gif)
 
-### Prifile Detail
+### Profile Detail
 
 ![image](https://user-images.githubusercontent.com/95377982/185367466-7c887f62-2441-417f-9b93-184032ca0bf8.png)
 
