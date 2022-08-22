@@ -10,6 +10,7 @@ Instagram clone is a fully responsive social media app that is a mimic for Insta
 
 ### Build with
 - [ReactJS](https://reactjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Redux Saga](https://redux-saga.js.org/)
 - [Axios](https://github.com/axios/axios)
@@ -57,6 +58,10 @@ In File instagram-clone/server/Instagram.API/appsettings.json, change your postg
 $ cd client -> npm run dev
 $ cd server/Instagram.API -> dotnet watch
 ```
+### Database Schema
+
+![image](https://user-images.githubusercontent.com/95377982/185882103-1c14f4eb-10ad-4156-8d08-33a59f511ab3.png)
+
 
 ### Features
 
