@@ -5,6 +5,7 @@ import { calculateElapsedTime } from '@/helpers/time';
 import { setShowModalPostDetail } from '@/redux/slices/globalSlice';
 import { getDetailByPostIdStart, getCommentOfPostStart } from '@/redux/slices/postSlice';
 import Actions from '@/components/Actions';
+import PostComment from '@/components/Post/PostComment';
 import { Post } from '@/core/models/Post';
 
 const PostBody = (post: Post) => {
@@ -53,7 +54,12 @@ const PostBody = (post: Post) => {
                 {/* <div className="space-y-2">
                     {post.comments.length < 5
                         ? post.comments.map((comment) => (
-                              <PostComment key={comment.commentId} postId={post.postId} comment={comment.commentText} commentBy = {comment.commentBy}/>
+                              <PostComment
+                                  key={comment.commentId}
+                                  postId={post.postId}
+                                  comment={comment.commentText}
+                                  commentBy={comment.commentBy}
+                              />
                           ))
                         : null}
                 </div> */}

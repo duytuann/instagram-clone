@@ -55,7 +55,8 @@ public class AuthService : IAuthService
             Gender = user.Gender,
             Name = user.Name,
             Bio = user.Bio,
-            PhoneNumber = user.PhoneNumber
+            PhoneNumber = user.PhoneNumber,
+            Avatar = user.Avatar
         };
 
         return res;

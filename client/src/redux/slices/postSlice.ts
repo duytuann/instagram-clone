@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Post } from '@/core/models/Post';
+import { Comment } from '@/core/models/Post';
 import { CreateComment, GetCommentOfPostParams } from '@/core/http/apis/post/types';
 import { ReduxData, ReduxStateType } from '@/redux/types';
 
@@ -46,6 +47,8 @@ const postSlice = createSlice({
                 post.isLiked = true;
                 post.likes++;
             }
+            state.data.currentPostDetail.isLiked = true;
+            state.data.currentPostDetail.likes = state.data.currentPostDetail.likes + 1;
         },
         putUnlike: (state, action: PayloadAction<string>) => {
             const post = state.data.posts.find((p) => p.postId === action.payload);
@@ -53,12 +56,11 @@ const postSlice = createSlice({
                 post.isLiked = false;
                 post.likes--;
             }
+            state.data.currentPostDetail.isLiked = false;
+            state.data.currentPostDetail.likes = state.data.currentPostDetail.likes - 1;
         },
-        addComment: (state, action: PayloadAction<CreateComment>) => {
-            const post = state.data.posts.find((p) => p.postId === action.payload.postId);
-            if (post) {
-                post.comments.push(action.payload);
-            }
+        addComment: (state, action: PayloadAction<any>) => {
+            state.data.currentComment.data.push(action.payload);
         },
         clearPostDetail: (state, action: PayloadAction) => {
             state.data.currentPostDetail = {};

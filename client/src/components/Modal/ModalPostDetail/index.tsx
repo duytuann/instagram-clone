@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 
-import { getCommentOfPostStart } from '@/redux/slices/postSlice';
+import Actions from '@/components/Actions';
+import { getCommentOfPostStart, addComment } from '@/redux/slices/postSlice';
 import IconShowMore from '@/components/Icon/IconShowMore';
 import { ReduxStateType } from '@/redux/types';
 import { useAppDispatch, useAppSelector, useIntersectionObserver } from '@/hooks';
@@ -24,6 +25,9 @@ const ModalPostDetail = () => {
         data: { currentPostDetail, currentComment, commentPaging },
         status,
     } = useAppSelector((state) => state.post);
+    const {
+        data: { user },
+    } = useAppSelector((state) => state.auth);
 
     const { observerRef, containerObserverRef } = useIntersectionObserver({
         rootMargin: '300px',
@@ -39,6 +43,14 @@ const ModalPostDetail = () => {
             createCommentStart({
                 postId: currentPostDetail.postId,
                 commentText: caption,
+            }),
+        );
+        dispatch(
+            addComment({
+                postId: currentPostDetail.postId,
+                commentText: caption,
+                username: user.username,
+                avatar: user.avatar,
             }),
         );
 
@@ -124,10 +136,10 @@ const ModalPostDetail = () => {
                     </div>
 
                     {currentComment?.data
-                        ? currentComment?.data.map((comment: any) => (
+                        ? currentComment?.data.map((comment: any, index: number) => (
                               <DetailComment
                                   onVisitProfile={handleVisitProfile}
-                                  key={comment.commentId}
+                                  key={index}
                                   postId={currentPostDetail.postId}
                                   comment={comment}
                               />
@@ -162,7 +174,6 @@ const ModalPostDetail = () => {
 
                 <div className="flex-shrink-0 mt-auto px-4 border-t border-line py-3">
                     {/* <Actions post={selectedPost!} />
-
                     <div className="mt-3">
                         {reactions.length === 0 ? (
                             <span>
@@ -172,6 +183,16 @@ const ModalPostDetail = () => {
                             <span className="font-medium">{displayLikeCounts(reactions, 'like')}</span>
                         )}
                     </div> */}
+                    <Actions post={currentPostDetail!} />
+                    <div className="mt-3">
+                        {currentPostDetail.likes === 0 ? (
+                            <span>
+                                Be the first to <span className={clsx('font-medium', 'cursor-pointer')}>like this</span>
+                            </span>
+                        ) : (
+                            <span className="font-medium">{`${currentPostDetail.likes} like`}</span>
+                        )}
+                    </div>
 
                     <div className={clsx('text-xs-1 mt-2', 'text-base-gray')}>4 DAYS AGO</div>
                 </div>

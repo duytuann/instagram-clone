@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import clsx from 'clsx';
 
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import {} from '@/redux/slices/authSlice';
+import Actions from '@/components/Actions';
 import { updateAvatarStart } from '@/redux/slices/userSlice';
 import { SpinnerLogo } from '@/components/Spinner';
 import Skeleton from '@/components/Skeleton';
@@ -43,7 +43,7 @@ const ProfileDetail = () => {
                     )}
                 >
                     <Skeleton
-                        isAvatar={true}
+                        style={{ height: '150px', width: '150px' }}
                         rounded
                         profile
                         onClick={() => {
@@ -89,6 +89,7 @@ const ProfileDetail = () => {
                         <span className="font-medium">{currentProfile?.following}</span> following
                     </span>
                 </div>
+                <div className="pt-6">{user.bio}</div>
             </div>
         </>
     );
