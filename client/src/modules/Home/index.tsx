@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import HomeWidgets from '@/modules/Home/HomeWidget';
 import Post from '@/components/Post';
 import Container from '@/components/Container';
 import ModalPostDetail from '@/components/Modal/ModalPostDetail';
@@ -34,7 +35,7 @@ const Home: React.FC<IHomeProps> = () => {
                 <div ref={observerRef} />
             </section>
             <section className="hidden lg:block lg:col-span-2 pl-5 pt-4">
-                <h1 className="flex items-center text-sm-1">Recommend Flow</h1>
+                <HomeWidgets />
             </section>
             {showModalPostDetails ? <ModalPostDetail /> : null}
         </Container>

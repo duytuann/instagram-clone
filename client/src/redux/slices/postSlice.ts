@@ -37,6 +37,9 @@ const postSlice = createSlice({
     name: 'postSlice',
     initialState,
     reducers: {
+        addNewPostToNewFeed: (state, action: PayloadAction<Post>) => {
+            state.data.posts.unshift(action.payload);
+        },
         putLike: (state, action: PayloadAction<string>) => {
             const post = state.data.posts.find((p) => p.postId === action.payload);
             if (post) {
@@ -147,6 +150,7 @@ const postSlice = createSlice({
 });
 
 export const {
+    addNewPostToNewFeed,
     clearPostDetail,
     putLike,
     putUnlike,

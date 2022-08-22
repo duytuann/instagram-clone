@@ -68,7 +68,7 @@ public class PostController : BaseApiController
     /// <returns>Response for the request: new Post.</returns>
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<BaseResponse<PostResponse>>> CreateAsync([FromForm] CreatePostRequest dto)
+    public async Task<ActionResult<BaseResponse<Post>>> CreateAsync([FromForm] CreatePostRequest dto)
     {
         var formCollection = await Request.ReadFormAsync();
         var file = formCollection.Files.First();
@@ -81,11 +81,9 @@ public class PostController : BaseApiController
             {
                 string fileName = Path.GetRandomFileName();
 
-                Post newPost = await _postService.SaveAsync(file.OpenReadStream(), fileName, file.ContentType, Content, UserId);
+                Post resource = await _postService.SaveAsync(file.OpenReadStream(), fileName, file.ContentType, Content, UserId);
 
-                var resource = _mapper.Map<Post, PostResponse>(newPost);
-
-                return new OkObjectResult(new BaseResponse<PostResponse>(resource));
+                return new OkObjectResult(new BaseResponse<Post>(resource));
             }
             else
             {

@@ -32,7 +32,7 @@ const ModalPostDetail = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const hasFollowBtn = !currentPostDetail.isFollowed;
+    const hasFollowBtn = !currentPostDetail.isFollow;
 
     const handleCreateComment = () => {
         dispatch(
@@ -79,6 +79,7 @@ const ModalPostDetail = () => {
             >
                 <div className="flex items-center px-4 py-3 border-b border-line flex-shrink-0">
                     <Skeleton
+                        isAvatar
                         src={currentPostDetail.avatar ?? avatar}
                         rounded
                         className={clsx('w-8 h-8 mr-3', 'cursor-pointer')}
@@ -87,14 +88,11 @@ const ModalPostDetail = () => {
 
                     <span className={clsx('font-medium mr-3', 'cursor-pointer')}>{currentPostDetail?.username}</span>
 
-                    {hasFollowBtn && (
-                        <button
-                            onClick={() => {}} // handle follow
-                            className={clsx('btn', 'text-primary', 'cursor-pointer')}
-                        >
+                    {hasFollowBtn ? (
+                        <button onClick={() => {}} className={clsx('btn', 'text-primary', 'cursor-pointer')}>
                             {status === ReduxStateType.LOADING ? <SpinnerRing className="text-base-gray" /> : 'Follow'}
                         </button>
-                    )}
+                    ) : null}
 
                     <button onClick={() => {}} className="btn ml-auto">
                         <FontAwesomeIcon className="text-lg" icon={faEllipsis} />
@@ -104,6 +102,7 @@ const ModalPostDetail = () => {
                 <div ref={containerObserverRef} className="px-4 overflow-y-auto">
                     <div className="group flex items-center py-2">
                         <Skeleton
+                            isAvatar
                             onClick={() => handleVisitProfile(currentPostDetail.username)}
                             src={currentPostDetail.avatar ?? avatar}
                             rounded

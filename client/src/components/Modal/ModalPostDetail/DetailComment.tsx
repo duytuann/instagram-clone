@@ -26,6 +26,7 @@ const DetailComment = ({ comment, postId, onVisitProfile }: DetailCommentProps) 
                 onClick={() => onVisitProfile}
                 src={comment.avatar ?? avatar}
                 rounded
+                isAvatar
                 className={clsx('w-8 h-8 mr-3', 'cursor-pointer')}
                 objectFit="cover"
             />

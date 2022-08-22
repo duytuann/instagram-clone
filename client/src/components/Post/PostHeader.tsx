@@ -24,14 +24,15 @@ const PostHeader = (post: Post) => {
 
     return (
         <div className="flex-between py-3 px-4">
-            <div className="flex items-center">
+            <div className="flex items-center w-9">
                 <Skeleton
                     onClick={() => {
                         navigate(`/${post.username}`);
                     }}
                     rounded
                     objectFit="cover"
-                    className={clsx('w-8 h-8 mr-3', 'cursor-pointer')}
+                    isAvatar
+                    className={clsx('mr-3', 'cursor-pointer')}
                     src={post.avatar ?? avatar}
                     alt="Avatar"
                 />
@@ -43,9 +44,7 @@ const PostHeader = (post: Post) => {
                 >
                     {post.username}
                 </span>
-                {post.isFollow ? (
-                    <div className="text-xs font-bold">Following</div>
-                ) : (
+                {post.isFollow ? null : (
                     <button
                         onClick={() => {
                             dispatch(followUserStart(post.userId));

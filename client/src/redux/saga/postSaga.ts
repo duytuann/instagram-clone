@@ -1,4 +1,6 @@
-import { all, call, put, takeLatest } from '@redux-saga/core/effects';
+import { all, call, put, takeLatest, select } from '@redux-saga/core/effects';
+import { Comment } from '@/core/models/Post';
+import { useAppSelector } from '@/hooks';
 import {
     getAllPostApi,
     createPostApi,
@@ -32,6 +34,7 @@ import {
     getCommentOfPostStart,
     getCommentOfPostSuccess,
     getCommentOfPostFailed,
+    addNewPostToNewFeed,
 } from '@/redux/slices/postSlice';
 
 function* getAllPostSaga(action: ReturnType<typeof getAllPostStart>) {
@@ -86,6 +89,9 @@ function* getCommentOfPostSaga(action: ReturnType<typeof getCommentOfPostStart>)
 }
 
 function* createPostSaga(action: ReturnType<typeof createPostStart>) {
+    const {
+        data: { user },
+    } = yield select((state) => state.auth);
     try {
         const response: ResultResponse<any> = yield call(createPostApi, action.payload);
         if (response.success) {
@@ -93,6 +99,18 @@ function* createPostSaga(action: ReturnType<typeof createPostStart>) {
             yield put({
                 type: createPostSuccess,
                 payload: resource,
+            });
+
+            let newResource = {
+                ...resource,
+                likes: 0,
+                avatar: user.avatar,
+                username: user.username,
+                comments: [] as Comment,
+            };
+            yield put({
+                type: addNewPostToNewFeed,
+                payload: newResource,
             });
             yield put({
                 type: setShowModalPostCreator,

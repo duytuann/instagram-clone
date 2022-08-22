@@ -57,7 +57,7 @@ const Skeleton = forwardRef<any, SkeletonProps>(
                             isAvatar
                                 ? clsx(
                                       rounded && 'rounded-full',
-                                      'h-36	w-36',
+                                      'w-8 h-8',
                                       objectFit && [
                                           'h-full',
                                           objectFit === 'cover' ? 'object-cover' : 'object-contain',

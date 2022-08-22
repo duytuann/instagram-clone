@@ -15,6 +15,7 @@ public class PostRepository : BaseRepository, IPostRepository
 
     public async Task<IEnumerable<PostDetailResponse>> GetAllAsync(Guid UserId)
         => await _context.Posts
+                        .OrderByDescending(post => post.Created)
                         .Include(post => post.User)
                         .Include(post => post.Likes)
                         .Include(post => post.Comments)
@@ -61,7 +62,9 @@ public class PostRepository : BaseRepository, IPostRepository
         {
             UserId = _UserId,
             Caption = _Caption,
-            MediaPath = _MediaPath
+            MediaPath = _MediaPath,
+            Likes = new List<Like>(),
+            Comments = new List<Comment>(),
         };
 
         await _context.AddAsync(post);
